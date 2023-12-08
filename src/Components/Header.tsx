@@ -35,7 +35,7 @@ function HeaderTab() {
         <Image
           width={80}
           height={60}
-          src="/assets/LogoByway 4.png"
+          src="/assets/logo.png"
           alt="BYWAY"
         />
         <ul className="flex gap-24 list-none justify-center w-full">
