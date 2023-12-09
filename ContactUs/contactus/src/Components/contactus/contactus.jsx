@@ -9,6 +9,7 @@ import message_icon from '../Assets/message.png';
 import phone_icon from '../Assets/phone.png';
 const contactus = () => {
   return(
+    <div className="Screen">
     <div className = "container">
         <div className = 'header'>
             <div className = 'text'>Contact Us</div>
@@ -42,11 +43,36 @@ const contactus = () => {
                 <input type="text" placeholder='Message' />
             </div>
         </div>
-       
+       {/* Send button */}
      <div className="submit-container">
         <div className="submit">Send</div>
      </div>
+   </div>
+   <div className = "our-container">
+     <div className = 'header1'>
+         <div className = 'text1'>Our Contacts</div>
+         <div className = 'underline1'></div>
+     </div>
+     <div className='Sub-Head'>
+     <img src={address_icon} alt=""/> <div className='texts'>Address</div>
+     <div className='Info'> Boudhha, Kathmandu </div>
+     </div>
+     
+     
+     <div className='Sub-Head'>
+     <img src={phone_icon} alt="" /><div className='texts'>Phone</div>
+     <div className='Info'> 9860689*** </div>
+      </div>
+     
+     
+     <div className='Sub-Head'>
+        <img src={email_icon} alt="" /><div className='texts'>Email</div>
+        <div className='Info'> aa***@gmail.com </div></div>
+     
+    
+     
     </div>
+   </div>
   );
 };
 
