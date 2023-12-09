@@ -1,17 +1,16 @@
-import HeaderTab from "../Components/Header";
 import React from "react";
-
+import Image from "next/image";
 export default function Home() {
   return (
     <>
-      <div
-        className="bg-cover bg-center h-screen "
-        style={{ backgroundImage: `url(${"/assets/coverimage.jpg"})` }}
-      >
-      <HeaderTab/>
-      </div>
-
-      {/* rest of the component goes here... 👇🏻 👇🏻 👇🏻 👇🏻 👇🏻 👇🏻 👇� */}
+      <div style={{height: "80vh", position:"relative"  }}>
+        <Image
+          src="/assets/coverimage.jpg"
+          alt="Welcome To ByWay"
+          layout="fill"
+          objectFit="cover"
+        />
+      </div>    
     </>
   );
 }

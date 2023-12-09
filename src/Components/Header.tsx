@@ -6,6 +6,12 @@ import React, { useEffect, useState } from "react";
 
 function HeaderTab() {
   const [headerState, setHeaderState] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // Add this line
+
+  const [navbarOpen, setNavbarOpen] = useState(false);
+  const navbarToggleHandler = () => {
+    setNavbarOpen(!navbarOpen);
+  };
 
   const scrollHeader = () => {
     if (window.scrollY >= 20) {
@@ -17,28 +23,46 @@ function HeaderTab() {
 
   useEffect(() => {
     window.addEventListener("scroll", scrollHeader);
-    // Cleanup the event listener
     return () => {
       window.removeEventListener("scroll", scrollHeader);
     };
   }, []);
 
   return (
-    <div>
-      <nav
-        className={`flex justify-between items-center h-24 p-4 font-sans font-bold text-lg ${
-          headerState
-            ? "bg-green-800 text-white fixed top-0 left-0 right-0 z-10"
-            : "bg-transparent  text-green-800"
-        }`}
+    <header
+      className={`left-0 top-0 z-40 flex w-full font-sans items-center h-28 px-10 font-bold text-lg ${
+        headerState
+          ? "text-white fixed z-[9999] bg-green-800 !bg-opacity-70 shadow-sticky backdrop-blur-sm transition"
+          : "absolute bg-transparent text-green-700"
+      }`}
+    >
+      <div className="flex items-center flex-shrink-0 text-white mr-6">
+        <Image width={80} height={60} src="/assets/logo.png" alt="BYWAY" />
+      </div>
+      <button
+        onClick={navbarToggleHandler}
+        id="navbarToggler"
+        aria-label="Mobile Menu"
+        className="absolute right-4 top-1/2 block translate-y-[-50%] rounded-lg px-3 py-[6px] ring-green-600 focus:ring-2 lg:hidden"
       >
-        <Image
-          width={80}
-          height={60}
-          src="/assets/logo.png"
-          alt="BYWAY"
+        <span
+          className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white ${
+            navbarOpen ? " top-[7px] rotate-45" : " "
+          }`}
         />
-        <ul className="flex gap-24 list-none justify-center w-full">
+        <span
+          className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white ${
+            navbarOpen ? "opacity-0 " : " "
+          }`}
+        />
+        <span
+          className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white ${
+            navbarOpen ? " top-[-8px] -rotate-45" : " "
+          }`}
+        />
+      </button>
+      <nav className={`${isOpen ? "" : "hidden"} lg:block`}>
+        <ul className="flex gap-24 list-none justify-center w-full fixed z">
           <li>
             <Link href="/">Home</Link>
           </li>
@@ -53,8 +77,10 @@ function HeaderTab() {
           </li>
         </ul>
       </nav>
-    </div>
+    </header>
   );
 }
 
 export default HeaderTab;
+
+

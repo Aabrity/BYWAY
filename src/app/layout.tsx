@@ -1,23 +1,30 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import HeaderTab from "@/Components/Header";
+import FooterTab from "@/Components/Footer/Footer";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'ByWay',
-  description: 'Your Travel Partner',
-}
+  title: "ByWay",
+  description: "Your Travel Partner",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html suppressHydrationWarning lang="en">
       <link rel="icon" href="/assets/logo" sizes="any"></link>
-      <body className={inter.className}>{children}</body>
+      <head />
+      <body>
+        <HeaderTab />
+        {children}
+      <FooterTab />
+      </body>
     </html>
-  )
+  );
 }
