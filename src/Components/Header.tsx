@@ -75,6 +75,9 @@ function HeaderTab() {
           <li>
             <Link href="/contactUs">Contact Us</Link>
           </li>
+          <li>
+            <Link href="/planTrip">Plan Your Trip</Link>
+          </li>
         </ul>
       </nav>
     </header>
