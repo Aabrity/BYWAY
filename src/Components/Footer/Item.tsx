@@ -1,5 +1,3 @@
-import exp from "constants";
-
 interface Link {
   name: string;
   link: string;
@@ -17,7 +15,7 @@ const Item: React.FC<ItemProps> = ({ Links, title }) => {
       {Links.map((link) => (
         <li key={link.name}>
           <a
-            className="text-gray-400 hover:text-teal-400 duration-300 text-sm cursor-pointer leading-6"
+            className="text-gray-400 hover:text-green-600 duration-300 text-sm cursor-pointer leading-6"
             href={link.link}
           >
             {link.name}
@@ -27,5 +25,5 @@ const Item: React.FC<ItemProps> = ({ Links, title }) => {
     </ul>
   );
 };
-
+1
 export default Item;

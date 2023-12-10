@@ -18,7 +18,7 @@ interface SocialIconsProps {
 
 const SocialIcons: FC<SocialIconsProps> = ({ Icons }) => {
   return (
-    <div className="text-teal-500">
+    <div className="text-green-600">
       {Icons.map((icon) => (
         <span
           key={icon.name}
