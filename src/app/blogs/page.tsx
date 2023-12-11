@@ -1,10 +1,20 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import ScrollableContainer from "@/Components/ScrollableContainer.";
+import DetailView from "@/Components/DetailView";
 
 function Blogs() {
+  const [showDetailView, setShowDetailView] = useState(false);
+
+  const openDetailView = () => {
+    setShowDetailView(true);
+  };
+
+  const closeDetailView = () => {
+    setShowDetailView(false);
+  };
   return (
     <>
     <div style={{ height: "60vh", position: "relative" }}>
@@ -47,9 +57,9 @@ function Blogs() {
               backgroundColor: "transparent",
               color: "white",
               border: "0px",
-              transition: "background-color 0.4s",
+              transition: "background-color 0.2s",
             }}
-            onMouseOver={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "white"}
+            onMouseOver={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "green"}
             onMouseOut={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "transparent"} 
           >
             Search
@@ -128,8 +138,51 @@ function Blogs() {
       </p>
           </div>
         </div>
+        <div>
+
+        </div>
 
       </ScrollableContainer>
+
+      <div>
+      <h1 style={{ fontSize: '40px', margin:'30px 0', padding:'10px'}}> 
+        <b>
+          Recent Travels 
+        </b>
+      </h1>
+
+      <ScrollableContainer>
+        {/* Existing containers... */}
+
+        {/* Container for Recent Travels */}
+        <div
+          style={{
+            flexShrink: 0,
+            width: '500px',
+            marginRight: '10px',
+            boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)',
+            borderRadius: '10px',
+            padding: '20px',
+            cursor: 'pointer',
+          }}
+          onClick={openDetailView}
+        >
+          {/* Container content */}
+          <div style={{ height: '500px', position: 'relative' }}>
+            <Image src="/assets/travel-image.jpg" alt="Travel Image" width={600} height={150} />
+            <p>
+              {/* Add content here */}
+            </p>
+          </div>
+        </div>
+
+        {/* Add more containers as needed */}
+      </ScrollableContainer>
+
+      {/* Recent Travels Detail View */}
+      {showDetailView && <DetailView onClose={closeDetailView} />}
+
+    </div>
     </>
   );
 }
