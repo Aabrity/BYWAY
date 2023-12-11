@@ -1,9 +1,20 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import ScrollableContainer from "@/Components/ScrollableContainer.";
+import DetailView from "@/Components/DetailView";
 
 function Blogs() {
+  const [showDetailView, setShowDetailView] = useState(false);
+
+  const openDetailView = () => {
+    setShowDetailView(true);
+  };
+
+  const closeDetailView = () => {
+    setShowDetailView(false);
+  };
   return (
     <>
     <div style={{ height: "60vh", position: "relative" }}>
@@ -34,8 +45,8 @@ function Blogs() {
               width: "70%",
               padding: "10px",
               marginRight: "5px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
+              borderRadius: "2px",
+              border: "0px solid #fff",
             }}
           />
           <button
@@ -45,26 +56,48 @@ function Blogs() {
               borderRadius: "5px",
               backgroundColor: "transparent",
               color: "white",
-              border: "1px solid",
-              transition: "background-color 0.3s",
+              border: "0px",
+              transition: "background-color 0.2s",
             }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#4CAF50")} // Change color on hover
-            onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")} // Restore original color
+            onMouseOver={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "green"}
+            onMouseOut={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "transparent"} 
           >
             Search
           </button>
         </form>
-        <h1>I love you</h1>
       </div>
     </div>
+    <div>
+      <h1 style={{ fontSize: '40px', margin:'30px 0', padding:'10px'}}> 
+        <b>
+          Top Trending Blogs 
+        </b>
+      </h1>
+    </div>
     {/* Scrollable Containers */}
-    <div style={{ display: 'flex', marginTop: '10px', overflowX: 'auto', width: '100%' }}>
-  <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px' }}>
-    {/* Container 1 content */}
-    <div style={{ height: '500px', position: 'relative' }}>
-      <Image src="/assets/pokhera thulokot.webp" alt="Pokhera" width={600} height={150} />
-      <p>
-        "Pokhara," a beautiful city in Nepal known for its stunning
+    <ScrollableContainer>
+
+        <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px' }}>
+          {/* Container 1 content */}
+          <div style={{ height: '500px', position: 'relative' }}>
+            <Image src="/assets/pokhera thulokot.webp" alt="Pokhera" width={600} height={150} />
+            <p>
+          <b>The ABC tre</b>typically kicks off in Nayapul, a bustling town on
+          the outskirts of Pokhara. From here, trekkers embark on a journey
+          that takes them through charming villages, terraced fields, and
+          lush forests. The first leg of the trek introduces travelers to
+          the warm hospitality of the locals and provides a glimpse into
+          the rich culture of the region.
+          </p>
+          </div>
+        </div>
+
+        <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px' }}>
+          {/* Container 2 content */}
+          <div style={{ height: '500px', position: 'relative' }}>
+            <Image src="/assets/ABC.jpg" alt="Pokhera" width={600} height={200} />
+            <p>
+        <b>"Pokhara"</b> a beautiful city in Nepal known for its stunning
         landscapes, including the serene Phewa Lake and the backdrop
         of the Annapurna mountain range? If so, I'd be happy to
         help you draft a blog about Pokhara. Let me know if you
@@ -72,40 +105,87 @@ function Blogs() {
         in the blog, or if you'd like a general overview of the
         city and its attractions.
       </p>
+          </div>
+        </div>
+
+        <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px' }}>
+          {/* Container 1 content */}
+          <div style={{ height: '500px', position: 'relative' }}>
+            <Image src="/assets/pokhera thulokot.webp" alt="Pokhera" width={600} height={150} />
+            <p>
+          <b>The ABC tre</b>typically kicks off in Nayapul, a bustling town on
+          the outskirts of Pokhara. From here, trekkers embark on a journey
+          that takes them through charming villages, terraced fields, and
+          lush forests. The first leg of the trek introduces travelers to
+          the warm hospitality of the locals and provides a glimpse into
+          the rich culture of the region.
+          </p>
+          </div>
+        </div>
+
+        <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px' }}>
+          {/* Container 2 content */}
+          <div style={{ height: '500px', position: 'relative' }}>
+            <Image src="/assets/ABC.jpg" alt="Pokhera" width={600} height={200} />
+            <p>
+        <b>"Pokhara"</b> a beautiful city in Nepal known for its stunning
+        landscapes, including the serene Phewa Lake and the backdrop
+        of the Annapurna mountain range? If so, I'd be happy to
+        help you draft a blog about Pokhara. Let me know if you
+        have any specific topics or themes you'd like to include
+        in the blog, or if you'd like a general overview of the
+        city and its attractions.
+      </p>
+          </div>
+        </div>
+        <div>
+
+        </div>
+
+      </ScrollableContainer>
+
+      <div>
+      <h1 style={{ fontSize: '40px', margin:'30px 0', padding:'10px'}}> 
+        <b>
+          Recent Travels 
+        </b>
+      </h1>
+
+      <ScrollableContainer>
+        {/* Existing containers... */}
+
+        {/* Container for Recent Travels */}
+        <div
+          style={{
+            flexShrink: 0,
+            width: '500px',
+            marginRight: '10px',
+            boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)',
+            borderRadius: '10px',
+            padding: '20px',
+            cursor: 'pointer',
+          }}
+          onClick={openDetailView}
+        >
+          {/* Container content */}
+          <div style={{ height: '500px', position: 'relative' }}>
+            <Image src="/assets/travel-image.jpg" alt="Travel Image" width={600} height={150} />
+            <p>
+              {/* Add content here */}
+            </p>
+          </div>
+        </div>
+
+        {/* Add more containers as needed */}
+      </ScrollableContainer>
+
+      {/* Recent Travels Detail View */}
+      {showDetailView && <DetailView onClose={closeDetailView} />}
+
     </div>
-  </div>
-
-
-  <div style={{ flexShrink: 0, marginRight: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px' }}>
-    {/* Container 2 content */}
-    <Image src="/assets/ABC.jpg" alt="Pokhera" width={400} height={200} />
-    <p>
-      The ABC trek typically kicks off in Nayapul, a bustling town on
-      the outskirts of Pokhara. From here, trekkers embark on a journey
-      that takes them through charming villages, terraced fields, and
-      lush forests. The first leg of the trek introduces travelers to
-      the warm hospitality of the locals and provides a glimpse into
-      the rich culture of the region.
-    </p>
-  </div>
-
-  <div style={{ flexShrink: 0, marginRight: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px' }}>
-    {/* Container 3 content */}
-    <Image src="/everest-base-camp-10.jpg" alt="Pokhera" width={400} height={200} />
-    <p>
-      The ABC trek typically kicks off in Nayapul, a bustling town on
-      the outskirts of Pokhara. From here, trekkers embark on a journey
-      that takes them through charming villages, terraced fields, and
-      lush forests. The first leg of the trek introduces travelers to
-      the warm hospitality of the locals and provides a glimpse into
-      the rich culture of the region.
-    </p>
-  </div>
-</div>
-
-    
     </>
   );
 }
+
 
 export default Blogs;
