@@ -1,9 +1,8 @@
 "use client";
-import Link from "next/link";
+
 import Image from "next/image";
 import React, { useState } from "react";
 import ScrollableContainer from "@/Components/ScrollableContainer.";
-import DetailView from "@/Components/DetailView";
 
 function Blogs() {
   const [showDetailView, setShowDetailView] = useState(false);
@@ -143,6 +142,8 @@ function Blogs() {
         </div>
 
       </ScrollableContainer>
+      <p>
+      </p>
 
       <div>
       <h1 style={{ fontSize: '40px', margin:'30px 0', padding:'10px'}}> 
@@ -150,7 +151,6 @@ function Blogs() {
           Recent Travels 
         </b>
       </h1>
-
       <ScrollableContainer>
         {/* Existing containers... */}
 
@@ -169,9 +169,22 @@ function Blogs() {
         >
           {/* Container content */}
           <div style={{ height: '500px', position: 'relative' }}>
-            <Image src="/assets/travel-image.jpg" alt="Travel Image" width={600} height={150} />
+            <Image src="/everest-base-camp-10.jpg" alt="Travel Image" width={600} height={150} />
             <p>
-              {/* Add content here */}
+            <b>1. Mountain views that leave you spellbound </b>
+
+            The Annapurna range whets your appetite for mountain views right from Pokhara. This is even before you start 
+            the trek. At Ghandruk, you get distinct views of Machapuchare, Annapurna South and Hiunchuli. Views of 
+            different peaks of the Annapurna massif and Machapuchare stay with you all the way till Sinuwa. The tip of 
+            Machapuchare teases you at Dovan. As you burst out of the forest past Himalaya and Deurali, Machapuchare 
+            appears before you in its full glory.
+            Machapuchare, the ‘fish tailed mountain’, is revered by the Nepalese for its exquisite beauty. It is believed 
+            to be one of the homes of Lord Shiva. It has never been officially summitted! At the Machapuchare base camp, 
+            in addition to Machapuchare, you will see Annapurna I, Annapurna South, Gangapurna and Hiunchuli up close.
+
+            The Annapurna Base Camp is a small cluster of lodges opposite the Annapurna glacier. As you look up from the 
+            edge of the glacier, you come face to face with the Annapurna massif. Annapurna I, III and South, Gangapurna, 
+            Gandharvachuli and Machapuchare are all there to meet your gaze when your eyes rest upon them.
             </p>
           </div>
         </div>
@@ -179,8 +192,6 @@ function Blogs() {
         {/* Add more containers as needed */}
       </ScrollableContainer>
 
-      {/* Recent Travels Detail View */}
-      {showDetailView && <DetailView onClose={closeDetailView} />}
 
     </div>
     </>
