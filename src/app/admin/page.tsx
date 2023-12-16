@@ -36,7 +36,7 @@ const AdminPage = () => {
               <textarea
                 id="blogContent"
                 name="blogContent"
-                rows= '10'
+                rows= {10}
                 className="mt-1 p-2 w-full border rounded-md"
               ></textarea>
             </div>
