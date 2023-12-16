@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import Features from "@/Components/Features";
+import RootLayout from "./layout";
+import AdminPage from "./admin/page"
 export default function Home() {
   return (
     <>  
@@ -13,6 +15,11 @@ export default function Home() {
         />
       </div>
       <Features/>  
+
+      <RootLayout>
+      <AdminPage />
+    </RootLayout>
     </>
+    
   );
 }
