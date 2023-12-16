@@ -1,208 +1,210 @@
+"use client";
 import React from "react";
-import "./tpackages.css";
-
 import Image from "next/image";
+import Card from "@/Components/Cards";
 
-const PackageItem = ({ imageSrc, duration, packageName, description }) => {
-  return (
-    <div className="package_list-wrap group relative overflow-hidden">
-      <div className="package-item">
-        <div className="package-image relative">
-          <Image
-            src={imageSrc}
-            alt="Package Image"
-            width={300}
-            height={200}
-            className="group-hover:opacity-80 transition-opacity duration-300"
-          />
-          <div className="duration">{duration}</div>
-          <div className="text-black">{packageName}</div>
-          <div className="opacity-0 group-hover:opacity-100 absolute inset-0 flex items-center justify-center">
-            <div className="text-white text-center p-4">
-            <p className="font-bold">
-                        {description}
-                      </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+const packagesData = [
+  
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-1352722699-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-866904464-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-935947682-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-1352722699-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-866904464-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-935947682-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-1352722699-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-866904464-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-935947682-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-1352722699-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-866904464-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+  {
+    title: "Package Name",
+    imageSrc: "/images/istockphoto-935947682-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+  },
+];
+
+type PackageItemProps = {
+  title: string;
+  imageSrc: string;
+  price: string;
+  description: string;
+  duration: string;
 };
-
-const Tpackages = () => {
-  const packagesData = [
-    {
-      imageSrc: "/images/istockphoto-1352722699-612x612.jpg",
-      duration: "Duration: 66 days",
-      packageName: "Package Name",
-      description:
-        "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    },
-  ];
-  const packagesData2 = [
-    {
-      imageSrc: "/images/istockphoto-866904464-612x612.jpg",
-      duration: "Duration: 66 days",
-      packageName: "Package Name",
-      description:
-        "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    },
-  ];
-
+const PackageItem: React.FC<PackageItemProps> = ({
+  title,
+  imageSrc,
+  price,
+  description,
+  duration,
+}) => {
   return (
-    <div 
-    id="main_wrapper"
-    style={{
-      backgroundColor: "lightgray",
-      width: "100vw",
-      height: "100",
-      margin: 0,
-      padding: 0,
-    }}>
-      
-      <div className="Container_img_quote flex justify-center items-center overflow-x-auto">
-        <div className="inputs" >
-          <div className="input relative h-full">
-            <input
-              type="search"
-              placeholder=""
-              className="pl-4 pr-10 py-3 border rounded text-black w-1000 opacity-75"
-            />
-            <button
-              className="absolute right-3 top-3 h-full text-gray-500 focus:outline-none"
-              // onClick={() => {
-              //   // Handle button click
-              // }}
-            >
-              <img
-                src="/images/searchicon.png"
-                alt="Search Icon"
-                className="w-5 h-5"
-              />
+    <div className="mx-3 overflow-hidden border border-slate-200 group">
+      <div className="overflow-hidden relative">
+        <Card imageSrc={imageSrc}>
+          <div className="text-bold flex justify-between">
+            <strong className=" hover:text-green-800 transition">{title}</strong>
+            <span>{price}</span>
+          </div>
+          <hr className="mt-2 mb-2 border-green-700" /> 
+          <div className="mt-2">{description}</div>
+          <hr className="mt-2 mb-2 border-black" /> 
+          <div className="mt-2 flex justify-between items-center">
+            <span>{duration}</span>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+              Learn More
             </button>
           </div>
-        </div>
-      </div>
-      <div className="Main_Content overflow-auto" style={{ height: "400px" }}>
-        <div className="list_packages packages_grid grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                    {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                              {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-                                        {packagesData.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-          {packagesData2.map((packageData, index) => (
-            <PackageItem key={index} {...packageData} />
-          ))}
-        </div>
+        </Card>
       </div>
     </div>
   );
 };
-export default Tpackages;
+const Packages: React.FC = () => {
+  return (
+    <div>
+ <div className="mb-0" style={{ position: "relative" }}>
+  <div
+    style={{
+      position: "absolute",
+      top: "70%", 
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: "700px",
+      textAlign: "center",
+    }}
+  >
+    <form>
+      <input
+        type="text"
+        placeholder="Search..."
+        style={{
+          width: "70%",
+          padding: "10px",
+          marginRight: "5px",
+          borderRadius: "2px",
+          border: "0px solid #fff",
+        }}
+      />
+      <button
+        type="submit"
+        style={{
+          padding: "7px",
+          borderRadius: "5px",
+          backgroundColor: "transparent",
+          color: "white",
+          border: "0px",
+          transition: "background-color 0.2s",
+        }}
+        onMouseOver={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "green"}
+        onMouseOut={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "transparent"} 
+      >
+        Search
+      </button>
+    </form>
+  </div >
+  <img src="/images/coverimage.jpg" alt="Background" className="w-full" />
+</div>
+
+      
+      <section className="main-container padding-container pb-4">
+      <h3 className='font-bold text-4xl text-left bg-indigo-950 text-white p-4 pb-4 mb-0'>Our Packages</h3>
+
+
+        <div className="flex flex-col flex-wrap gap-10 lg:flex-row pb-2">
+          {packagesData.map((card) => (
+            <PackageItem
+              key={card.title}
+              title={card.title}
+              imageSrc={card.imageSrc}
+              price={card.price}
+              description={card.description}
+              duration={card.duration}
+            />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Packages;
