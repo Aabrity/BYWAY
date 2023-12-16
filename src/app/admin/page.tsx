@@ -48,12 +48,12 @@ const AdminPage = () => {
               Post
             </button>
             {/* Image Container */}
-            <div className="bg-green-500 p-4">
+            <div className="bg-gray-400-500 p-4">
               {/* Image upload button example */}
               <input type="file" accept="image/*" className="mb-2" />
               {/* Display uploaded image example */}
               <img
-                src="https://placekitten.com/200/200" // Replace with the actual image source
+                src="images/Mountains 1.jpg"
                 alt="Uploaded"
                 className="max-w-90% h-auto"
               />
