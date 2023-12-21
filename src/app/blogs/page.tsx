@@ -4,9 +4,13 @@ import Image from "next/image";
 import React, { useState } from "react";
 import ScrollableContainer from "@/Components/ScrollableContainer.";
 import DetailView from "@/Components/DetailView";
+import Paragraph from "@/Components/Paragraph";
+
 
 function Blogs() {
   const [showDetailView, setShowDetailView] = useState(false);
+  const [showFullContent, setShowFullContent] = useState(false);
+
 
   const openDetailView = () => {
     setShowDetailView(true);
@@ -14,6 +18,10 @@ function Blogs() {
 
   const closeDetailView = () => {
     setShowDetailView(false);
+  };
+
+  const toggleFullContent = () => {
+    setShowFullContent(!showFullContent);
   };
   return (
     <>
@@ -33,7 +41,7 @@ function Blogs() {
           top: "90%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: "700px",
+          width: "750px",
           textAlign: "center",
         }}
       >
@@ -77,70 +85,123 @@ function Blogs() {
     {/* Scrollable Containers */}
     <ScrollableContainer>
 
-        <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px' }}>
-          {/* Container 1 content */}
-          <div style={{ height: '500px', position: 'relative' }}>
+      {/* COntainer number 1 */}
+
+      <div>
+      <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px', overflow: 'hidden' }}>
+        <div style={{ height: '500px', position: 'relative' }}>
+          <Image src="/assets/pokhera thulokot.webp" alt="Pokhera" width={600} height={150} />
+          <b style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>The ABC trek</b>
+          <Paragraph />
+        </div>
+      </div>
+
+      {showFullContent && (
+        <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '100', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ background: '#fff', padding: '20px', borderRadius: '10px', width: '80%', height: '80%', overflow: 'auto' }}>
+            {/* Full content goes here */}
             <Image src="/assets/pokhera thulokot.webp" alt="Pokhera" width={600} height={150} />
-            <p>
-          <b>The ABC tre</b>typically kicks off in Nayapul, a bustling town on
-          the outskirts of Pokhara. From here, trekkers embark on a journey
-          that takes them through charming villages, terraced fields, and
-          lush forests. The first leg of the trek introduces travelers to
-          the warm hospitality of the locals and provides a glimpse into
-          the rich culture of the region.
-          </p>
+            <b>The ABC trek</b>
+            <Paragraph />
           </div>
         </div>
+      )}
+      <button onClick={toggleFullContent}>Read More</button>
+    </div>
 
-        <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px' }}>
-          {/* Container 2 content */}
-          <div style={{ height: '500px', position: 'relative' }}>
-            <Image src="/assets/ABC.jpg" alt="Pokhera" width={600} height={200} />
-            <p>
-        <b>"Pokhara"</b> a beautiful city in Nepal known for its stunning
-        landscapes, including the serene Phewa Lake and the backdrop
-        of the Annapurna mountain range? If so, I'd be happy to
-        help you draft a blog about Pokhara. Let me know if you
-        have any specific topics or themes you'd like to include
-        in the blog, or if you'd like a general overview of the
-        city and its attractions.
-      </p>
-          </div>
-        </div>
+          {/* COntainer number 2 */}
 
-        <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px' }}>
-          {/* Container 1 content */}
-          <div style={{ height: '500px', position: 'relative' }}>
-            <Image src="/assets/pokhera thulokot.webp" alt="Pokhera" width={600} height={150} />
-            <p>
-          <b>The ABC tre</b>typically kicks off in Nayapul, a bustling town on
-          the outskirts of Pokhara. From here, trekkers embark on a journey
-          that takes them through charming villages, terraced fields, and
-          lush forests. The first leg of the trek introduces travelers to
-          the warm hospitality of the locals and provides a glimpse into
-          the rich culture of the region.
-          </p>
-          </div>
+          <div>
+      <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px', overflow: 'hidden' }}>
+        <div style={{ height: '500px', position: 'relative' }}>
+          <Image src="/images/coverimage.jpg" alt="CoverImage" width={600} height={150} />
+          <b style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>The ABC trek</b>
+          <Paragraph />
         </div>
+      </div>
 
-        <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px' }}>
-          {/* Container 2 content */}
-          <div style={{ height: '500px', position: 'relative' }}>
-            <Image src="/assets/ABC.jpg" alt="Pokhera" width={600} height={200} />
-            <p>
-        <b>"Pokhara"</b> a beautiful city in Nepal known for its stunning
-        landscapes, including the serene Phewa Lake and the backdrop
-        of the Annapurna mountain range? If so, I'd be happy to
-        help you draft a blog about Pokhara. Let me know if you
-        have any specific topics or themes you'd like to include
-        in the blog, or if you'd like a general overview of the
-        city and its attractions.
-      </p>
+      {showFullContent && (
+        <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '100', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ background: '#fff', padding: '20px', borderRadius: '10px', width: '80%', height: '80%', overflow: 'auto' }}>
+            {/* Full content goes here */}
+            <Image src="/images/coverimage.jpg" alt="CoverImage" width={600} height={150} />
+            <b>The ABC trek</b>
+            <Paragraph />
           </div>
         </div>
+      )}
+      <button onClick={toggleFullContent}>Read More</button>
+    </div>
+
+            {/* Container number 3 */}
+            <div>
+      <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px', overflow: 'hidden' }}>
+        <div style={{ height: '500px', position: 'relative' }}>
+          <Image src="/images/Mountains 1.jpg" alt="Mountaines" width={600} height={150} />
+          <b style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>The ABC trek</b>
+          <Paragraph />
+        </div>
+      </div>
+
+      {showFullContent && (
+        <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '100', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ background: '#fff', padding: '20px', borderRadius: '10px', width: '80%', height: '80%', overflow: 'auto' }}>
+            {/* Full content goes here */}
+            <Image src="/images/Mountains 1.jpg" alt="Mountains" width={600} height={150} />
+            <b>The ABC trek</b>
+            <Paragraph />
+          </div>
+        </div>
+      )}
+      <button onClick={toggleFullContent}>Read More</button>
+    </div>
+
+            {/* Container number 4 */}
+
+            <div>
+      <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px', overflow: 'hidden' }}>
+        <div style={{ height: '500px', position: 'relative' }}>
+          <Image src="/images/istockphoto-866904464-612x612.jpg" alt="Instock" width={600} height={150} />
+          <b style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>The ABC trek</b>
+          <Paragraph />
+        </div>
+      </div>
+
+      {showFullContent && (
+        <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '100', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ background: '#fff', padding: '20px', borderRadius: '10px', width: '80%', height: '80%', overflow: 'auto' }}>
+            {/* Full content goes here */}
+            <Image src="/images/istockphoto-866904464-612x612.jpg" alt="Instock" width={600} height={150} />
+            <b>The ABC trek</b>
+            <Paragraph />
+          </div>
+        </div>
+      )}
+      <button onClick={toggleFullContent}>Read More</button>
+    </div>
+
+            {/* {The container 5} */}
         <div>
-
+      <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px', overflow: 'hidden' }}>
+        <div style={{ height: '500px', position: 'relative' }}>
+          <Image src="/everest-base-camp-10.jpg" alt="Everest" width={600} height={150} />
+          <b style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>The ABC trek</b>
+          <Paragraph />
         </div>
+      </div>
+
+      {showFullContent && (
+        <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '100', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ background: '#fff', padding: '20px', borderRadius: '10px', width: '80%', height: '80%', overflow: 'auto' }}>
+            {/* Full content goes here */}
+            <Image src="/everest-base-camp-10.jpg" alt="Everest" width={600} height={150} />
+            <b>The ABC trek</b>
+            <Paragraph />
+          </div>
+        </div>
+      )}
+      <button onClick={toggleFullContent}>Read More</button>
+    </div>
 
       </ScrollableContainer>
 

@@ -66,7 +66,7 @@ const AdminPage: React.FC = () => {
 
 
             
-            {/* <div className="bg-green-400 p-4">
+            <div className="bg-green-200 p-4">
               
               <input type="file" accept="image/*" className="mb-2" />
             
@@ -75,7 +75,7 @@ const AdminPage: React.FC = () => {
                 alt="Uploaded"
                 className="max-w-full h-auto"
               />
-            </div> */}
+            </div>
           </div>
         </div>
       )}

@@ -16,9 +16,9 @@ export default function Home() {
       </div>
       <Features/>  
 
-      <RootLayout>
+      {/* <RootLayout>
       <AdminPage />
-    </RootLayout>
+    </RootLayout> */}
     </>
     
   );
