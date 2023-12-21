@@ -10,22 +10,19 @@ const AdminPage: React.FC = () => {
     try {
       const formData = new FormData();
       formData.append('content', blogContent);
-
+  
       if (imageFile) {
         formData.append('image', imageFile);
       }
-
-      await axios.post('http://localhost:3000/api/storeContent', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
+  
+      await axios.post('http://localhost:3000/api/storeContent', formData);
+  
       console.log('Content posted successfully');
     } catch (error) {
       console.error('Error posting content:', error);
     }
   };
+
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
