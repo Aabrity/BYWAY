@@ -12,20 +12,24 @@ import './style.css';
 
 function AdminPage() {
   const [blogContent, setBlogContent] = useState('');
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState('');   
   const [imageFile, setImageFile] = useState<File | null>(null);
   
 
   const handlePost = async () => {
     try {
       const formData = new FormData();
+      formData.append('title', title);  
+      formData.append('date', date);    
       formData.append('content', blogContent);
-  
+
       if (imageFile) {
         formData.append('image', imageFile);
       }
-  
+
       await axios.post('http://localhost:3001/api/post-blog', formData);
-  
+
       console.log('Content posted successfully');
     } catch (error) {
       console.error('Error posting content:', error);
@@ -43,22 +47,47 @@ function AdminPage() {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
       <div className="w-1/5 bg-gray-800 p-12 text-white">
         {/* ... (your existing code for the sidebar) */}
       </div>
 
-      {/* Add Blog Container */}
       <div className="flex-grow bg-778C49 p-12 mt-16">
         <div className="bg-green-200 p-6 rounded-lg h-full w-full">
           <h2 className="text-2xl font-semibold mb-4">Add Blog Post</h2>
 
-          <div className="editorContainer">
+          {/* Title Input */}
+          <div className="mb-4">
+            <label htmlFor="title" className="block text-sm font-medium text-gray-600">
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              className="border rounded-md p-2 w-full"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+
+          {/* Date Input */}
+          <div className="mb-4">
+            <label htmlFor="date" className="block text-sm font-medium text-gray-600">
+              Date
+            </label>
+            <input
+              type="date"
+              id="date"
+              className="border rounded-md p-2"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+
+          {/* Blog Content Input */}
+          <div className="editorContainer mb-4 style={{ height: '600px' }}">
             <label htmlFor="blogContent" className="block text-sm font-medium text-gray-600">
               Blog Content
             </label>
-            
-            {/* Render ReactQuill only on the client-side */}
             {ReactQuill && (
               <ReactQuill className="editor" theme="snow" value={blogContent} onChange={setBlogContent} />
             )}
@@ -77,9 +106,11 @@ function AdminPage() {
               src={URL.createObjectURL(imageFile)}
               alt="Uploaded"
               className="max-w-full h-auto mb-2"
+              style={{ maxWidth: '300px', maxHeight: '200px' }}
             />
           )}
 
+          {/* Post Button */}
           <button
             type="button"
             className="bg-blue-500 hover:bg-blue-700 active:bg-blue-800 text-white px-4 py-2 rounded-md"

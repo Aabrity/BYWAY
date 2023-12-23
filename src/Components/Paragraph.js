@@ -4,10 +4,7 @@ const Paragraph = () => (
 
 It's an incredible combination of diverse cultures and nature. This trip is more than just a trek that we will never forget.
 
-Annapurna Base Camp Trekking ABC is one of the most popular hikes in the world. It's truly a trip of a lifetime experience.
-
-Do you want to enjoy the thrills of this epic Annapurna trek without devoting weeks upon weeks to the experience? Ourpopular six-day ABC trek itinerary might be just what you're looking for.
-    </p>
+Annapurna Base Camp Trekking ABC is one of the most popular hikes in the world. </p>
 );
 
 export default Paragraph
