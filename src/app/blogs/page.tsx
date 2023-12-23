@@ -1,11 +1,10 @@
 "use client";
-import Link from "next/link";
+
 import Image from "next/image";
 import React, { useState } from "react";
 import ScrollableContainer from "@/Components/ScrollableContainer.";
 import DetailView from "@/Components/DetailView";
 import Paragraph from "@/Components/Paragraph";
-
 
 function Blogs() {
   const [showDetailView, setShowDetailView] = useState(false);
@@ -189,7 +188,6 @@ function Blogs() {
             )}
           </div>
         </div>
-
             {/* {The container 5} */}
             <div style={{ flexShrink: 0, width: '500px', marginRight: '10px', boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.6)', borderRadius: '10px', padding: '20px', overflow: 'hidden' }}>
           <div style={{ height: '500px', position: 'relative' }}>
@@ -215,7 +213,6 @@ function Blogs() {
         </div>
 
       </ScrollableContainer>
-
     <div style={{
   display: 'flex',
   flexDirection: 'column',
@@ -227,7 +224,7 @@ function Blogs() {
     <b>
       Recent Travels
     </b>
-  </h1>
+  </h1
 
   <ScrollableContainer >
     {/* Container for Recent Travels */}
