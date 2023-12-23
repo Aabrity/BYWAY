@@ -1,5 +1,5 @@
-"use client"
 // Import required modules
+"use client"
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -13,18 +13,19 @@ import './style.css';
 function AdminPage() {
   const [blogContent, setBlogContent] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
+  
 
   const handlePost = async () => {
     try {
       const formData = new FormData();
       formData.append('content', blogContent);
-
+  
       if (imageFile) {
         formData.append('image', imageFile);
       }
-
+  
       await axios.post('http://localhost:3001/api/post-blog', formData);
-
+  
       console.log('Content posted successfully');
     } catch (error) {
       console.error('Error posting content:', error);

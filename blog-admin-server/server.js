@@ -35,11 +35,16 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/api/post-blog', upload.single('image'), (req, res) => {
-    const { content } = req.body;
-    console.log('Received Content:', content);
+  const { content } = req.body;
+  const image = req.file ? req.file.buffer : null;
+
+  console.log('Received Content:', content);
+  console.log('Received Image Size:', image ? image.length : 0);
+
+
   // SQL query to insert data into the blog table
-  const sql = 'INSERT INTO blog (description, image) VALUES (?, ?)';
-  const values = [content, image];
+  const sql = 'INSERT INTO blog (title, description, image, published_date) VALUES (?, ?, ?, NOW())';
+  const values = [null, content, image]; 
 
   // Execute the SQL query
   db.query(sql, values, (err, result) => {
@@ -52,6 +57,7 @@ app.post('/api/post-blog', upload.single('image'), (req, res) => {
     }
   });
 });
+
 
 // Start the server
 app.listen(port, () => {
