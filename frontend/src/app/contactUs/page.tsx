@@ -1,8 +1,41 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
+import axios from "axios";
 import "./contactus.css";
 
 function Contactus() {
+  const [formState, setFormState] = useState({
+    email: "",
+    phone: "",
+    subject: "",
+    address: "",
+    message: "",
+  });
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:8081/api/contactus", formState)
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          alert(`Message sent successfully`);
+        } else {
+          alert(res.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       <div className="container">
