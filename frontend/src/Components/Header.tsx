@@ -35,7 +35,16 @@ function HeaderTab() {
       }`}
     >
       <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <Image width={80} height={60} src="/assets/logo.png" alt="BYWAY" />
+        <Image
+          width={80}
+          height={60}
+          src={
+            headerState
+              ? "/assets/logos/logodark.png"
+              : "/assets/logo.png"
+          }
+          alt="BYWAY"
+        />
       </div>
       <button
         onClick={navbarToggleHandler}
@@ -67,7 +76,7 @@ function HeaderTab() {
             : "invisible top-[120%] opacity-0"
         }`}
       >
-        <ul className="block lg:flex lg:space-x-12">
+        <ul className="block lg:ml-20 lg:mt-4 lg:gap-20 sm:ml-0 lg:flex lg:space-x-12">
           <li>
             <Link href="/">Home</Link>
           </li>
