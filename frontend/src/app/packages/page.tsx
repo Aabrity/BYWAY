@@ -243,6 +243,7 @@ type PackageItemProps = {
   description: string;
   duration: string;
   packageID: number;
+  children: React.ReactNode;
 };
 const PackageItem: React.FC<PackageItemProps> = ({
   title,

@@ -95,7 +95,7 @@ app.get("/api/dash", verifyUser, (req, res) => {
   return res.json({ Status: "Success", name: req.name });
 });
 
-app.post("/api/packages", (req, res) => {
+app.post("/api/addpackages", (req, res) => {
   const {
     title,
     location_id,
@@ -125,11 +125,12 @@ app.post("/api/packages", (req, res) => {
       console.log("Insertion error:", err);
       return res.json("Insertion error");
     }
+    console.log("success");
     return res.json({ Status: "Success" });
   });
 });
 
-app.post("/api/locations", (req, res) => {
+app.post("/api/addlocations", (req, res) => {
   const { location } = req.body;
   const query = "INSERT INTO locationtable (location) VALUES (?)";
 
@@ -160,6 +161,19 @@ app.post("/api/contactus", (req, res) => {
       return res.json(Result);
     }
   );
+});
+
+app.delete("/api/deletepackages/:id", (req, res) => {
+  const packageId = req.params.id;
+  const sqlDelete = "DELETE FROM packagetable WHERE package_id = ?";
+
+  db.query(sqlDelete, packageId, (err, result) => {
+    if (err) {
+      console.log("Deletion error:", err);
+      return res.json("Deletion error");
+    }
+    return res.json({ Status: "Success" });
+  });
 });
 
 app.listen(8081, () => {
