@@ -4,15 +4,14 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function Loginpage() {
-  
-    const [values, setValues] = useState({
+  const [values, setValues] = useState({
     email: "",
     password: "",
   });
-  
+
   const router = useRouter();
   axios.defaults.withCredentials = true;
-  
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     axios
@@ -31,7 +30,7 @@ export default function Loginpage() {
     <div className="grid grid-cols-1 sm:grid-cols-2 h-auto w-full">
       <div className="hidden sm:block">
         <img
-          className="w-full h-full object-cover"
+          className="w-3/4 h-full object-cover"
           src="/assets/login.png"
           alt=""
         />
@@ -41,7 +40,14 @@ export default function Loginpage() {
           className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-4x1 dark:text-white font-bold text-center'">
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              src="/assets/logos/logodark.png"
+              width={100}
+              alt="Byway Admin Portal"
+            />
+          </div>
+          <h2 className="text-4xl dark:text-white font-bold text-center mt-10">
             SIGN IN
           </h2>
           <div className="flex flex-col text-gray-400 py-2">

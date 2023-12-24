@@ -25,7 +25,7 @@ const db = mysql.createConnection({
   database: "byway",
 });
 
-app.post("/register", (req, res) => {
+app.post("/api/register", (req, res) => {
   const createQuery =
     "INSERT INTO Admins (`username`, `email`, `password`) VALUES (?)";
   bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
@@ -35,7 +35,7 @@ app.post("/register", (req, res) => {
     const values = [req.body.username, req.body.email, hash];
     db.query(createQuery, [values], (err, result) => {
       if (err) {
-        console.log("Insertion error:", err); // Print the error
+        console.log("Insertion error:", err);
         return res.json("Insertion error");
       }
       return res.json({ Status: "Success" });
@@ -43,7 +43,7 @@ app.post("/register", (req, res) => {
   });
 });
 
-app.post("/login", (req, res) => {
+app.post("/api/login", (req, res) => {
   const loginQuery = "SELECT* FROM Admins WHERE email= ?";
   db.query(loginQuery, [req.body.email], (err, data) => {
     if (err) {
@@ -91,8 +91,89 @@ const verifyUser = (req, res, next) => {
   }
 };
 
-app.get("/dash", verifyUser, (req, res) => {
+app.get("/api/dash", verifyUser, (req, res) => {
   return res.json({ Status: "Success", name: req.name });
+});
+
+app.post("/api/addpackages", (req, res) => {
+  const {
+    title,
+    location_id,
+    about,
+    guidance_language,
+    whats_included,
+    what_to_expect,
+    departure_and_return,
+    accessibility,
+    additional_info,
+  } = req.body;
+  const insertQuery =
+    "INSERT INTO packagetable (package_title, location_id, about, guidance_language, whats_included, what_to_expect, departure_and_return, accessibility, additional_info) VALUES (?)";
+  const values = [
+    title,
+    location_id,
+    about,
+    guidance_language,
+    whats_included,
+    what_to_expect,
+    departure_and_return,
+    accessibility,
+    additional_info,
+  ];
+  db.query(insertQuery, [values], (err, result) => {
+    if (err) {
+      console.log("Insertion error:", err);
+      return res.json("Insertion error");
+    }
+    console.log("success");
+    return res.json({ Status: "Success" });
+  });
+});
+
+app.post("/api/addlocations", (req, res) => {
+  const { location } = req.body;
+  const query = "INSERT INTO locationtable (location) VALUES (?)";
+
+  db.query(query, [location], (err, result) => {
+    if (err) {
+      console.error("Error executing query:", err);
+      res.status(500).json({ status: "Error" });
+    } else {
+      res.status(200).json({ status: "Success", location_id: result.insertId });
+    }
+  });
+});
+
+app.post("/api/contactus", (req, res) => {
+  const sqlInsert =
+    "INSERT INTO contacttable(email, phone,subject,address,message) VALUES (?,?,?,?,?)";
+  const Email = req.body.Email;
+  const contactnum = req.body.contactnum;
+  const subject = req.body.subject;
+  const address = req.body.address;
+  const message = req.body.message;
+
+  db.query(
+    sqlInsert,
+    [Email, contactnum, subject, address, message],
+    (err, result) => {
+      if (err) return res.json(err);
+      return res.json(Result);
+    }
+  );
+});
+
+app.delete("/api/deletepackages/:id", (req, res) => {
+  const packageId = req.params.id;
+  const sqlDelete = "DELETE FROM packagetable WHERE package_id = ?";
+
+  db.query(sqlDelete, packageId, (err, result) => {
+    if (err) {
+      console.log("Deletion error:", err);
+      return res.json("Deletion error");
+    }
+    return res.json({ Status: "Success" });
+  });
 });
 
 app.listen(8081, () => {
