@@ -9,7 +9,7 @@ const FeatureCard: React.FC<Feature> = ({ id, title, description, icon }) => (
     <div className="border rounded-full inline-block p-4 border-slate-800 mb-3">
       {icon}
     </div>
-    <h3 className="text-2xl font-bold text-slate-800 mb-3">{title}</h3>
+    <h3 className="text-2xl font-bold text-green-600 mb-3">{title}</h3>
     <p className="text-lg text-gray-500">{description}</p>
   </div>
 );

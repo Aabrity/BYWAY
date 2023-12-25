@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Features from "@/Components/Features";
+import SectionTitle from "@/Components/Common/SectionTitle";
 export default function Home() {
   return (
     <>
@@ -12,6 +13,12 @@ export default function Home() {
           objectFit="cover"
         />
       </div>
+      <SectionTitle
+        title="Main Features"
+        paragraph="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
+        center
+        mb='0'
+      />
       <Features />
     </>
   );
