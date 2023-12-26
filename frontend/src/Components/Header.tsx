@@ -41,7 +41,7 @@ function HeaderTab() {
           src={
             headerState
               ? "/assets/logos/logodark.png"
-              : "/assets/logo.png"
+              : "/assets/logos/logo.png"
           }
           alt="BYWAY"
         />
