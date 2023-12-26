@@ -15,7 +15,7 @@ export default function Loginpage() {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     axios
-      .post("http://localhost:8081/api/login", values)
+      .post("http://localhost:8081/auth/login", values)
       .then((res) => {
         if (res.data.Status === "Success") {
           router.push("/admin/dash");

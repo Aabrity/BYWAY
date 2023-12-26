@@ -1,17 +1,7 @@
 import express from "express";
 import mysql from "mysql";
-import cors from "cors";
 
-const app = express();
-app.use(express.json());
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["POST", "GET"],
-    credentials: true,
-  })
-);
-
+const router = express.Router();
 const db = mysql.createConnection({
   host: "localhost",
   user: "rohan",
@@ -19,7 +9,7 @@ const db = mysql.createConnection({
   database: "byway",
 });
 
-app.post("/api/addpackages", (req, res) => {
+router.post("/addpackages", (req, res) => {
   const {
     title,
     location_id,
@@ -54,19 +44,20 @@ app.post("/api/addpackages", (req, res) => {
   });
 });
 
-app.delete("/api/deletepackages/:id", (req, res) => {
-  const packageId = req.params.id;
-  const sqlDelete = "DELETE FROM packagetable WHERE package_id = ?";
+router.delete("/deletepackages/:id", (req, res) => {});
 
-  db.query(sqlDelete, packageId, (err, result) => {
+router.post("/addlocations", (req, res) => {
+  const { location } = req.body;
+  const query = "INSERT INTO locationtable (location) VALUES (?)";
+
+  db.query(query, [location], (err, result) => {
     if (err) {
-      console.log("Deletion error:", err);
-      return res.json("Deletion error");
+      console.error("Error executing query:", err);
+      res.status(500).json({ status: "Error" });
+    } else {
+      res.status(200).json({ status: "Success", location_id: result.insertId });
     }
-    return res.json({ Status: "Success" });
   });
 });
 
-app.listen(8081, () => {
-  console.log("8081 is Listening ");
-});
+export default router;

@@ -1,17 +1,7 @@
 import express from "express";
 import mysql from "mysql";
-import cors from "cors";
 
-const app = express();
-app.use(express.json());
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["POST", "GET"],
-    credentials: true,
-  })
-);
-
+const router = express.Router();
 const db = mysql.createConnection({
   host: "localhost",
   user: "rohan",
@@ -19,7 +9,7 @@ const db = mysql.createConnection({
   database: "byway",
 });
 
-app.post("/api/insertcontactus", (req, res) => {
+router.post("/contactus", (req, res) => {
   const sqlInsert =
     "INSERT INTO contacttable(email, phone,subject,address,message) VALUES (?,?,?,?,?)";
   const Email = req.body.Email;
@@ -37,3 +27,5 @@ app.post("/api/insertcontactus", (req, res) => {
     }
   );
 });
+
+export default router;

@@ -12,7 +12,7 @@ export default function Dash() {
   const router = useRouter();
   useEffect(() => {
     axios
-      .get("http://localhost:8081/api/dash")
+      .get("http://localhost:8081/auth/dash")
       .then((res) => {
         if (res.data.Status === "Success") {
           setAuth(true);

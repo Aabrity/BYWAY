@@ -1,31 +1,14 @@
 import express from "express";
-import mysql from "mysql";
-import cors from "cors";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-
 import cookieParser from "cookie-parser";
+
+const router = express.Router();
 const salt = 10;
 
-const app = express();
-app.use(express.json());
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["POST", "GET"],
-    credentials: true,
-  })
-);
-app.use(cookieParser());
+router.use(cookieParser());
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "rohan",
-  password: "357951",
-  database: "byway",
-});
-
-app.post("/api/register", (req, res) => {
+router.post("/register", (req, res) => {
   const createQuery =
     "INSERT INTO Admins (`username`, `email`, `password`) VALUES (?)";
   bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
@@ -43,7 +26,7 @@ app.post("/api/register", (req, res) => {
   });
 });
 
-app.post("/api/login", (req, res) => {
+router.post("/login", (req, res) => {
   const loginQuery = "SELECT* FROM Admins WHERE email= ?";
   db.query(loginQuery, [req.body.email], (err, data) => {
     if (err) {
@@ -91,25 +74,8 @@ const verifyUser = (req, res, next) => {
   }
 };
 
-app.get("/api/dash", verifyUser, (req, res) => {
+router.get("/dash", verifyUser, (req, res) => {
   return res.json({ Status: "Success", name: req.name });
 });
 
-
-
-app.delete("/api/deletepackages/:id", (req, res) => {
-  const packageId = req.params.id;
-  const sqlDelete = "DELETE FROM packagetable WHERE package_id = ?";
-
-  db.query(sqlDelete, packageId, (err, result) => {
-    if (err) {
-      console.log("Deletion error:", err);
-      return res.json("Deletion error");
-    }
-    return res.json({ Status: "Success" });
-  });
-});
-
-app.listen(8081, () => {
-  console.log("8081 is Listening ");
-});
+export default router;
