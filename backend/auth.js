@@ -2,11 +2,18 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
-
+import mysql from "mysql";
 const router = express.Router();
 const salt = 10;
 
 router.use(cookieParser());
+
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "rohan",
+  password: "357951",
+  database: "byway",
+});
 
 router.post("/register", (req, res) => {
   const createQuery =

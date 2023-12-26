@@ -2,6 +2,7 @@ import express from "express";
 import mysql from "mysql";
 
 const router = express.Router();
+
 const db = mysql.createConnection({
   host: "localhost",
   user: "rohan",
@@ -39,7 +40,6 @@ router.post("/addpackages", (req, res) => {
       console.log("Insertion error:", err);
       return res.json("Insertion error");
     }
-    console.log("success");
     return res.json({ Status: "Success" });
   });
 });

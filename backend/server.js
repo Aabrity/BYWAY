@@ -1,9 +1,9 @@
 // server.js
 import express from "express";
 import cors from "cors";
-import authRoutes from "./auth";
-import packagesRoutes from "./packages";
-import contactusRoutes from "./contactus";
+import authRoutes from "./auth.js";
+import packagesRoutes from "./packages.js";
+import contactusRoutes from "./contactus.js";
 
 const app = express();
 app.use(express.json());
