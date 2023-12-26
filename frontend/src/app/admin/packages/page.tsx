@@ -41,7 +41,7 @@ export default function PackageInputForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8081/api/addpackages", formState)
+      .post("http://localhost:8081/packages/addpackages", formState)
       .then((res) => {
         if (res.data.Status === "Success") {
           alert(` ${formState.title} created successfully`);
@@ -56,7 +56,7 @@ export default function PackageInputForm() {
   const handleSubmit1 = (e: React.FormEvent) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8081/api/addlocations", { location })
+      .post("http://localhost:8081/packages/addlocations", { location })
       .then((res) => {
         if (res.data.Status === "Success") {
           console.log(` Rohan`);
