@@ -1,231 +1,238 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import Card from "@/Components/Cards";
 import Link from "next/link";
 
 
 export const packagesData = [
-  
   {
-    packageID:"1",
+    packageID: "1",
     title: "Package Name 1",
-   
+
     location: "here to here",
-    
-    imgSrc: "/images/bob.png",
+
+    imgSrc: "/asses/scenes/istockphoto-1352722699-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
     price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: '4',
-    itinerary:'',
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "4",
+    itinerary: "",
     imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
+      "/assets/scenes/istockphoto-1352722699-612x612.jpg",
+      "/assets/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/scenes/istockphoto-1352722699-612x612.jpg",
+      "/assets/scenes/istockphoto-866904464-612x612.jpg",
     ],
-
   },
   {
-    packageID:"2",
+    packageID: "2",
     title: "Package Name 2",
     location: "here to here",
-    imgSrc: "/images/istockphoto-866904464-612x612.jpg",
+    imgSrc: "/assets/scenes/istockphoto-866904464-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
     price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: 'ggg',
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "ggg",
     imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
-    packageID:"3",
+    packageID: "3",
     title: "Package Name 3",
-   
+
     location: "here to here",
-    imgSrc: "/images/istockphoto-935947682-612x612.jpg",
+    imgSrc: "/asses/scenes/istockphoto-935947682-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
     price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: '4',
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "4",
     imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',]
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    ],
   },
   {
-    packageID:"4",
+    packageID: "4",
     title: "Package Name 4",
-   
+
     location: "here to here",
-    imgSrc: "/images/istockphoto-1352722699-612x612.jpg",
+    imgSrc: "/asses/scenes/istockphoto-1352722699-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
     price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: '4',
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "4",
     imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
- ] },
-  {
-    packageID:"5",
-    title: "Package Name 5",
-    
-    location: "here to here",
-    imgSrc: "/images/istockphoto-866904464-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: '4',
-    imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',]
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    ],
   },
   {
-    packageID:"6",
+    packageID: "5",
     title: "Package Name 5",
+
     location: "here to here",
-    imgSrc: "/images/istockphoto-935947682-612x612.jpg",
+    imgSrc: "/asses/scenes/istockphoto-866904464-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
     price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: '4',
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "4",
     imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',]
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    ],
   },
   {
-    packageID:"7",
+    packageID: "6",
+    title: "Package Name 5",
+    location: "here to here",
+    imgSrc: "/asses/scenes/istockphoto-935947682-612x612.jpg",
+    description:
+      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
+    duration: "6 days",
+    price: "400000",
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "4",
+    imgArray: [
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    ],
+  },
+  {
+    packageID: "7",
     title: "Package Name 6",
     location: "here to here",
-    imgSrc: "/images/istockphoto-1352722699-612x612.jpg",
+    imgSrc: "/asses/scenes/istockphoto-1352722699-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
     price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: '4',
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "4",
     imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',]
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    ],
   },
   {
-    packageID:"8",
+    packageID: "8",
     title: "Package Name",
-    imgSrc: "/images/istockphoto-866904464-612x612.jpg",
+    imgSrc: "/asses/scenes/istockphoto-866904464-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
     price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: '4',
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "4",
     imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',]
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    ],
   },
   {
-    packageID:"9",
+    packageID: "9",
     title: "Package Name",
-    imgSrc: "/images/istockphoto-935947682-612x612.jpg",
+    imgSrc: "/asses/scenes/istockphoto-935947682-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
     price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: '4',
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "4",
     imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',]
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    ],
   },
   {
-    packageID:"10",
+    packageID: "10",
     title: "Package Name",
-    imgSrc: "/images/istockphoto-1352722699-612x612.jpg",
+    imgSrc: "/asses/scenes/istockphoto-1352722699-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
     price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: '4',
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "4",
     imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',]
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    ],
   },
   {
-    packageID:"11",
+    packageID: "11",
     title: "Package Name",
-    imgSrc: "/images/istockphoto-866904464-612x612.jpg",
+    imgSrc: "/asses/scenes/istockphoto-866904464-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
     price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: '4',
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "4",
     imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',]
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    ],
   },
   {
-    packageID:"12",
+    packageID: "12",
     title: "Package Name",
-    imgSrc: "/images/istockphoto-935947682-612x612.jpg",
+    imgSrc: "/asses/scenes/istockphoto-935947682-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
     price: "400000",
-    meals:'bbb',
-    accomodations:'bbb', 
-    recommended_group_size: '4',
+    meals: "bbb",
+    accomodations: "bbb",
+    recommended_group_size: "4",
     imgArray: [
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',
-      '/images/istockphoto-1352722699-612x612.jpg',
-      '/images/istockphoto-866904464-612x612.jpg',]
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    ],
   },
 ];
 
@@ -236,6 +243,7 @@ type PackageItemProps = {
   description: string;
   duration: string;
   packageID: number;
+  children: React.ReactNode;
 };
 const PackageItem: React.FC<PackageItemProps> = ({
   title,
@@ -320,7 +328,7 @@ const Packages: React.FC = () => {
       </button>
     </form>
   </div >
-  <img src="/images/coverimage.jpg" alt="Background" className="w-full" />
+  <img src="/asses/scenes/coverimage.jpg" alt="Background" className="w-full" />
 </div>
 
       
