@@ -28,7 +28,7 @@ router.post("/addpackages", (req, res) => {
     title,
     location_id,
     about,
-    guidance_language,
+    guidance_language, 
     whats_included,
     what_to_expect,
     departure_and_return,
