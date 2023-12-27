@@ -15,7 +15,7 @@ export default function Home() {
       </div>
       <SectionTitle
         title="Our Services"
-        paragraph="Embark on extraordinary adventures with our travel agency. Discover the world's most captivating destinations, tailored to your desires. At ByWay, we redefine travel, offering a seamless and enriching experience that goes beyond the ordinary. Our commitment to excellence ensures every journey is a masterpiece, filled with moments that last a lifetime."
+        paragraph="Embark on extraordinary adventures with seamless and enriching experience that goes beyond the ordinary with Byway"
         center
         mb='0'
       />
