@@ -89,7 +89,7 @@ export default function PackageInputForm() {
   return (
     <div className="container">
       {auth ? (
-        <div className="mt-24 flex flex-row justify-center mb-10">
+        <div className=" py-32 flex flex-row justify-center items-start ">
           <div className="flex flex-col w-1/2">
             <div className="max-w-[600px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg">
               <h2 className="text-4xl dark:text-white font-bold text-center">
