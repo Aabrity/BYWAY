@@ -14,8 +14,8 @@ export default function Home() {
         />
       </div>
       <SectionTitle
-        title="Main Features"
-        paragraph="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
+        title="Our Services"
+        paragraph="Embark on extraordinary adventures with seamless and enriching experience that goes beyond the ordinary with Byway"
         center
         mb='0'
       />
