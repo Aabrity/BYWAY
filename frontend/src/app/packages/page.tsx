@@ -11,7 +11,7 @@ export const packagesData = [
 
     location: "here to here",
 
-    imgSrc: "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -21,17 +21,17 @@ export const packagesData = [
     recommended_group_size: "4",
     itinerary: "",
     imgArray: [
-      "/assets/scenes/istockphoto-1352722699-612x612.jpg",
-      "/assets/scenes/istockphoto-866904464-612x612.jpg",
-      "/assets/scenes/istockphoto-1352722699-612x612.jpg",
-      "/assets/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
     packageID: "2",
     title: "Package Name 2",
     location: "here to here",
-    imgSrc: "/assets/scenes/istockphoto-866904464-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -40,10 +40,10 @@ export const packagesData = [
     accomodations: "bbb",
     recommended_group_size: "ggg",
     imgArray: [
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
@@ -51,7 +51,7 @@ export const packagesData = [
     title: "Package Name 3",
 
     location: "here to here",
-    imgSrc: "/asses/scenes/istockphoto-935947682-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-935947682-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -60,10 +60,10 @@ export const packagesData = [
     accomodations: "bbb",
     recommended_group_size: "4",
     imgArray: [
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
@@ -71,7 +71,7 @@ export const packagesData = [
     title: "Package Name 4",
 
     location: "here to here",
-    imgSrc: "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -80,10 +80,10 @@ export const packagesData = [
     accomodations: "bbb",
     recommended_group_size: "4",
     imgArray: [
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
@@ -91,7 +91,7 @@ export const packagesData = [
     title: "Package Name 5",
 
     location: "here to here",
-    imgSrc: "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -100,17 +100,17 @@ export const packagesData = [
     accomodations: "bbb",
     recommended_group_size: "4",
     imgArray: [
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
     packageID: "6",
     title: "Package Name 5",
     location: "here to here",
-    imgSrc: "/asses/scenes/istockphoto-935947682-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-935947682-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -119,17 +119,17 @@ export const packagesData = [
     accomodations: "bbb",
     recommended_group_size: "4",
     imgArray: [
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
     packageID: "7",
     title: "Package Name 6",
     location: "here to here",
-    imgSrc: "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -138,16 +138,16 @@ export const packagesData = [
     accomodations: "bbb",
     recommended_group_size: "4",
     imgArray: [
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
     packageID: "8",
     title: "Package Name",
-    imgSrc: "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -156,16 +156,16 @@ export const packagesData = [
     accomodations: "bbb",
     recommended_group_size: "4",
     imgArray: [
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
     packageID: "9",
     title: "Package Name",
-    imgSrc: "/asses/scenes/istockphoto-935947682-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-935947682-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -174,16 +174,16 @@ export const packagesData = [
     accomodations: "bbb",
     recommended_group_size: "4",
     imgArray: [
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
     packageID: "10",
     title: "Package Name",
-    imgSrc: "/asses/scenes/istockphoto-1352722699-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -192,16 +192,16 @@ export const packagesData = [
     accomodations: "bbb",
     recommended_group_size: "4",
     imgArray: [
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
     packageID: "11",
     title: "Package Name",
-    imgSrc: "/asses/scenes/istockphoto-866904464-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -210,16 +210,16 @@ export const packagesData = [
     accomodations: "bbb",
     recommended_group_size: "4",
     imgArray: [
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
   {
     packageID: "12",
     title: "Package Name",
-    imgSrc: "/asses/scenes/istockphoto-935947682-612x612.jpg",
+    imgSrc: "/assets/packagesImg/istockphoto-935947682-612x612.jpg",
     description:
       "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
     duration: "6 days",
@@ -228,10 +228,10 @@ export const packagesData = [
     accomodations: "bbb",
     recommended_group_size: "4",
     imgArray: [
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
-      "/asses/scenes/istockphoto-1352722699-612x612.jpg",
-      "/asses/scenes/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
+      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
   },
 ];
@@ -328,7 +328,7 @@ const Packages: React.FC = () => {
       </button>
     </form>
   </div >
-  <img src="/asses/scenes/coverimage.jpg" alt="Background" className="w-full" />
+  <img src="/assets/packagesImg/coverimage.jpg" alt="Background" className="w-full" />
 </div>
 
       
