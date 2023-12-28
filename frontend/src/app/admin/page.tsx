@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 // Check if the document object is available (client-side)
-const isBrowser = typeof window !== 'undefined';
-const ReactQuill = isBrowser ? require('react-quill') : undefined;
+import ReactQuill from 'react-quill';
+
 
 import 'react-quill/dist/quill.snow.css';
 import './style.css';
@@ -89,8 +89,10 @@ function AdminPage() {
               Blog Content
             </label>
             {ReactQuill && (
-              <ReactQuill className="editor" theme="snow" value={blogContent} onChange={setBlogContent} />
-            )}
+            <div className="editor-wrapper">
+              <ReactQuill theme="snow" value={blogContent} onChange={setBlogContent} />
+            </div>
+              )}
           </div>
 
           {/* Displaying the image */}
