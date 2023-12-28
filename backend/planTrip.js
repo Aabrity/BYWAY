@@ -1,10 +1,7 @@
-const express=require('express');
-const mysql=require('mysql')
-const cors=require('cors');
-const { error } = require('console');
+import express from 'express';
+import mysql from 'mysql';
+const router = express.Router();
 
-const app=express()
-app.use(cors())
 
 const db=mysql.createConnection(
     {
@@ -15,8 +12,8 @@ const db=mysql.createConnection(
     }
 )
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
 
 
 // app.get('/',(re,res)=>{
@@ -28,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
   
 // })
 
-app.get('/api/get',(re,res)=>{
+router.get('/api/get',(re,res)=>{
     const sqlSelect = "SELECT * FROM travel";
 
     db.query(sqlSelect,(err,result)=>{
@@ -37,7 +34,7 @@ app.get('/api/get',(re,res)=>{
     });
   
 })
-app.get('/api/get/review',(re,res)=>{
+router.get('/api/get/review',(re,res)=>{
     const sqlSelect = "SELECT * FROM review";
 
     db.query(sqlSelect,(err,result)=>{
@@ -47,7 +44,7 @@ app.get('/api/get/review',(re,res)=>{
   
 })
 
-app.post("/api/insert",(req,res)=>{
+router.post("/api/insert",(req,res)=>{
     const fullName=req.body.fullName;
     const phoneNumber=req.body.phoneNumber;
     const emailAddress=req.body.emailAddress;
@@ -71,7 +68,7 @@ app.post("/api/insert",(req,res)=>{
     });
 })
 
-app.post("/api/insert/review",(req,res)=>{
+router.post("/api/insert/review",(req,res)=>{
     const fullName=req.body.fullName;
     const title=req.body.title;
     const date=req.body.date;
@@ -89,7 +86,7 @@ app.post("/api/insert/review",(req,res)=>{
 })
 
 
-app.delete("/api/delete/:id", async (req, res) => {
+router.delete("/api/delete/:id", async (req, res) => {
     const submissionId = req.params.id;
     const sqlDelete = "DELETE FROM travel WHERE id=?";
 
@@ -106,27 +103,25 @@ app.delete("/api/delete/:id", async (req, res) => {
 
 // ...
 
-app.put('/api/update/review/:id', async (req, res) => {
-    const reviewId = req.params.id;
-    const action = req.body.action; // 'increment' or 'decrement'
-    const sqlUpdate = action === 'increment'
-        ? "UPDATE review SET likes = likes + 1 WHERE id = ?"
-        : "UPDATE review SET dislikes = dislikes + 1 WHERE id = ?";
+// app.put('/api/update/review/:id', async (req, res) => {
+//     const reviewId = req.params.id;
+//     const action = req.body.action; // 'increment' or 'decrement'
+//     const sqlUpdate = action === 'increment'
+//         ? "UPDATE review SET likes = likes + 1 WHERE id = ?"
+//         : "UPDATE review SET dislikes = dislikes + 1 WHERE id = ?";
 
-    try {
-        const result = await db.query(sqlUpdate, [reviewId]);
-        console.log(result);
-        res.json({ message: 'Review updated successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
+//     try {
+//         const result = await db.query(sqlUpdate, [reviewId]);
+//         console.log(result);
+//         res.json({ message: 'Review updated successfully' });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// });
 
 // ...
 
 
 
-app.listen(3001,()=>{
-    console.log('listening')
-})
+export default router;

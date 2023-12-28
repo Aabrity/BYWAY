@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 function HeaderTab() {
   const [headerState, setHeaderState] = useState(false);
@@ -41,7 +41,7 @@ function HeaderTab() {
           src={
             headerState
               ? "/assets/logos/logodark.png"
-              : "/assets/logo.png"
+              : "/assets/logos/logo.png"
           }
           alt="BYWAY"
         />

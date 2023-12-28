@@ -23,6 +23,12 @@ interface TravelData {
   whereDidYouFindUs: string;
 }
 
+function FormValidation(){
+  const[values,setValues]=useState({
+    fullName:'',
+    
+  })
+}
 function PlanTrip() {
   const [fullName,setFullName]=useState("");
   const [phoneNumber,setPhoneNumber]=useState("");
@@ -43,7 +49,7 @@ function PlanTrip() {
   
 
   useEffect(() => {
-    Axios.get('http://localhost:3001/api/get')
+    Axios.get('http://localhost:8081/planTrip/api/get')
       .then((response) => {
         setTravelList(response.data);
         // console.log(response.data);
@@ -54,23 +60,47 @@ function PlanTrip() {
   
   const submit=()=>{
 
-    Axios.post("http://localhost:3001/api/insert",{fullName:fullName,phoneNumber:phoneNumber,emailAddress:emailAddress,selectTrip:selectTrip,
-    approxDate:approxDate,tripLength:tripLength,numberOfAdults:numberOfAdults,numberOfChildren:numberOfChildren,tourType:tourType,
-    hotelType:hotelType,estimatedBudget:estimatedBudget,guideLanguage:guideLanguage,moreInfo:moreInfo,selectCountry:selectCountry,whereDidYouFindUs:whereDidYouFindUs
-
-  })
-  
-  
+   
+    // Proceed with the submission
+    Axios.post("http://localhost:8081/planTrip/api/insert", {
+      fullName,
+      phoneNumber,
+      emailAddress,
+      selectTrip,
+      approxDate,
+      tripLength,
+      numberOfAdults,
+      numberOfChildren,
+      tourType,
+      hotelType,
+      estimatedBudget,
+      guideLanguage,
+      moreInfo,
+      selectCountry,
+      whereDidYouFindUs,
+    });
 
     setTravelList([
-      ...travelList, 
-      {fullName:fullName,phoneNumber:phoneNumber,emailAddress:emailAddress,selectTrip:selectTrip,
-        approxDate:approxDate,tripLength:tripLength,numberOfAdults:numberOfAdults,numberOfChildren:numberOfChildren,tourType:tourType,
-        hotelType:hotelType,estimatedBudget:estimatedBudget,guideLanguage:guideLanguage,moreInfo:moreInfo,selectCountry:selectCountry,whereDidYouFindUs:whereDidYouFindUs},
+      ...travelList,
+      {
+        fullName,
+        phoneNumber,
+        emailAddress,
+        selectTrip,
+        approxDate,
+        tripLength,
+        numberOfAdults,
+        numberOfChildren,
+        tourType,
+        hotelType,
+        estimatedBudget,
+        guideLanguage,
+        moreInfo,
+        selectCountry,
+        whereDidYouFindUs,
+      },
     ]);
- 
   };
- 
 
   return (
     <>
