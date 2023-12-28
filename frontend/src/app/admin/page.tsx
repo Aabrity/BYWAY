@@ -1,81 +1,127 @@
-"use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
+// Import required modules
+"use client"
+import React, { useState } from 'react';
+import axios from 'axios';
 
-export default function Loginpage() {
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-  });
+// Check if the document object is available (client-side)
+const isBrowser = typeof window !== 'undefined';
+const ReactQuill = isBrowser ? require('react-quill') : undefined;
 
-  const router = useRouter();
-  axios.defaults.withCredentials = true;
+import 'react-quill/dist/quill.snow.css';
+import './style.css';
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    axios
-      .post("http://localhost:8081/auth/login", values)
-      .then((res) => {
-        if (res.data.Status === "Success") {
-          router.push("/admin/dash");
-        } else {
-          alert(res.data.Error);
-        }
-      })
-      .then((err) => console.log(err));
+function AdminPage() {
+  const [blogContent, setBlogContent] = useState('');
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState('');   
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  
+
+  const handlePost = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('title', title);  
+      formData.append('date', date);    
+      formData.append('content', blogContent);
+
+      if (imageFile) {
+        formData.append('image', imageFile);
+      }
+
+      await axios.post('http://localhost:3001/api/post-blog', formData);
+
+      console.log('Content posted successfully');
+    } catch (error) {
+      console.error('Error posting content:', error);
+    }
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
+  // Check if ReactQuill is defined before rendering
+  if (!ReactQuill) return null;
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 h-auto w-full">
-      <div className="hidden sm:block">
-        <img
-          className="w-3/4 h-full object-cover"
-          src="/assets/login.png"
-          alt=""
-        />
+    <div className="flex h-screen bg-gray-100">
+      <div className="w-1/5 bg-gray-800 p-12 text-white">
+        {/* ... (your existing code for the sidebar) */}
       </div>
-      <div className="bg-gray-800 flex flex-col justify-center">
-        <form
-          className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg"
-          onSubmit={handleSubmit}
-        >
-          <div style={{ display: "flex", justifyContent: "center" }}>
+
+      <div className="flex-grow bg-778C49 p-12 mt-16">
+        <div className="bg-green-200 p-6 rounded-lg h-full w-full">
+          <h2 className="text-2xl font-semibold mb-4">Add Blog Post</h2>
+
+          {/* Title Input */}
+          <div className="mb-4">
+            <label htmlFor="title" className="block text-sm font-medium text-gray-600">
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              className="border rounded-md p-2 w-full"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+
+          {/* Date Input */}
+          <div className="mb-4">
+            <label htmlFor="date" className="block text-sm font-medium text-gray-600">
+              Date
+            </label>
+            <input
+              type="date"
+              id="date"
+              className="border rounded-md p-2"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+
+          {/* Blog Content Input */}
+          <div className="editorContainer mb-4 style={{ height: '600px' }}">
+            <label htmlFor="blogContent" className="block text-sm font-medium text-gray-600">
+              Blog Content
+            </label>
+            {ReactQuill && (
+              <ReactQuill className="editor" theme="snow" value={blogContent} onChange={setBlogContent} />
+            )}
+          </div>
+
+          {/* Displaying the image */}
+          <input
+            type="file"
+            accept="image/*"
+            className="mb-2"
+            onChange={handleImageChange}
+          />
+
+          {imageFile && (
             <img
-              src="/assets/logos/logodark.png"
-              width={100}
-              alt="Byway Admin Portal"
+              src={URL.createObjectURL(imageFile)}
+              alt="Uploaded"
+              className="max-w-full h-auto mb-2"
+              style={{ maxWidth: '300px', maxHeight: '200px' }}
             />
-          </div>
-          <h2 className="text-4xl dark:text-white font-bold text-center mt-10">
-            SIGN IN
-          </h2>
-          <div className="flex flex-col text-gray-400 py-2">
-            <label>Username</label>
-            <input
-              type="email"
-              className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-              onChange={(e) => setValues({ ...values, email: e.target.value })}
-            />
-          </div>
-          <div className="flex flex-col text-gray-400 py-2">
-            <label>Password</label>
-            <input
-              type="password"
-              className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-              onChange={(e) =>
-                setValues({ ...values, password: e.target.value })
-              }
-            />
-          </div>
+          )}
+
+          {/* Post Button */}
           <button
-            type="submit"
-            className="w-full my-5 py-2 bg-green-600 shadow-lg shadow-green-600/50 hover:shadow-green-500/80 text-white font-semibold rounded-lg"
+            type="button"
+            className="bg-blue-500 hover:bg-blue-700 active:bg-blue-800 text-white px-4 py-2 rounded-md"
+            onClick={handlePost}
           >
-            Sign In
+            Post
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );
 }
+
+export default AdminPage;
