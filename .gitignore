@@ -37,3 +37,6 @@ yarn-error.log*
 next-env.d.ts
 
 dashboard/
+# Exclude specific large files
+frontend/node_modules/@next/swc-linux-x64-musl/
+frontend/node_modules/@next/swc-linux-x64-gnu/
