@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid rgb(166, 181, 166);
+            text-align: left;
+            padding: 10px;
+            background-color: rgb(219, 229, 219);
+            width: 5.88%; /* Equal width for all th and td elements (100% / 17 columns) */
+        }
+
+        th {
+            background-color: #c0cdbf;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+       button{
+        background-color: #2206ae;
+            color: #fff;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+       }
+    </style>
+</head>
+<body>
+
+    <table class="w-full text-gray-700">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Select Trip</th>
+                <th>Trip Length</th>
+                <th>Approx Date</th>
+                <th>Adults</th>
+                <th>Children</th>
+                <th>Hotel Type</th>
+                <th>Tour Type</th>
+                <th>Estimated Budget</th>
+                <th>Guide Language</th>
+                <th>More Info</th>
+                <th>Select Country</th>
+                <th>Where Did You Find Us</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="submission"></tbody>
+    </table>
+
+    <script src="trip.js"></script>
+</body>
+</html>
