@@ -1,9 +1,9 @@
 // Import required modules
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const multer = require('multer');
-const mysql = require('mysql');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import multer from 'multer';
+import mysql from 'mysql';
 
 // Create an Express app
 const app = express();
