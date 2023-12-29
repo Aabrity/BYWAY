@@ -3,6 +3,7 @@
     "react-quill": "^2.0.0"
   },
   "devDependencies": {
+    "nodemon": "^3.0.2",
     "webpack-cli": "^5.1.4"
   }
 }
