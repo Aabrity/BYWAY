@@ -10,8 +10,8 @@ router.use(cookieParser());
 
 const db = mysql.createConnection({
   host: "localhost",
-  user: "rohan",
-  password: "357951",
+  user: "anup",
+  password: "15akc#",
   database: "byway",
 });
 
@@ -32,6 +32,7 @@ router.post("/register", (req, res) => {
     });
   });
 });
+
 
 router.post("/login", (req, res) => {
   const loginQuery = "SELECT* FROM Admins WHERE email= ?";
@@ -65,6 +66,7 @@ router.post("/login", (req, res) => {
   });
 });
 
+
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
@@ -81,8 +83,10 @@ const verifyUser = (req, res, next) => {
   }
 };
 
+
 router.get("/dash", verifyUser, (req, res) => {
   return res.json({ Status: "Success", name: req.name });
 });
+
 
 export default router;

@@ -5,8 +5,8 @@ const router = express.Router();
 
 const db = mysql.createConnection({
   host: "localhost",
-  user: "rohan",
-  password: "357951",
+  user: "anup",
+  password: "15akc#",
   database: "byway",
 });
 
@@ -28,7 +28,7 @@ router.post("/addpackages", (req, res) => {
     title,
     location_id,
     about,
-    guidance_language,
+    guidance_language, 
     whats_included,
     what_to_expect,
     departure_and_return,
@@ -58,6 +58,56 @@ router.post("/addlocations", (req, res) => {
       res.status(200).json({ status: "Success", location_id: result.insertId });
     }
   });
+});
+
+router.put("/editpackages/:id", async (req, res) => {
+  try {
+    const packageId = req.params.id;
+    const {
+      title,
+      location_id,
+      about,
+      guidance_language,
+      whats_included,
+      what_to_expect,
+      departure_and_return,
+      accessibility,
+      additional_info,
+    } = req.body;
+
+    const updateQuery = `
+      UPDATE packagetable 
+      SET 
+        package_title = ?,
+        location_id = ?,
+        about = ?,
+        guidance_language = ?,
+        whats_included = ?,
+        what_to_expect = ?,
+        departure_and_return = ?,
+        accessibility = ?,
+        additional_info = ?
+      WHERE id = ?`;
+
+    const values = [
+      title,
+      location_id,
+      about,
+      guidance_language,
+      whats_included,
+      what_to_expect,
+      departure_and_return,
+      accessibility,
+      additional_info,
+      packageId,
+    ];
+
+    await db.query(updateQuery, values);
+    return res.json({ status: "Success", message: "Package updated successfully" });
+  } catch (err) {
+    console.error("Update error:", err);
+    return res.status(500).json({ status: "Error", message: "Update error" });
+  }
 });
 
 export default router;
