@@ -7,7 +7,7 @@ interface ScrollableContainerProps {
 
 const ScrollableContainer: React.FC<ScrollableContainerProps> = ({ children }) => {
   return (
-    <div style={{ display: 'flex', marginTop: '20px', overflowX: 'auto', width: '100%' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', overflowX: 'auto', width: '100%', paddingBottom: '10px' }}>
       {children}
     </div>
   );
