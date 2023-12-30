@@ -2,7 +2,6 @@
 import React from "react";
 import Card from "@/Components/Cards";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export const packagesData = [
   {
@@ -378,11 +377,12 @@ const Packages: React.FC = () => {
         <div className="flex  flex-wrap gap-10 lg:flex-row pb-2 pt-2 ">
           {packagesData.map((card) => (
             <PackageItem
-              key={card.title}
+              key={card.packageID}
               title={card.title}
               imgSrc={card.imgSrc}
               price={card.price}
               description={card.description}
+              packageID={card.packageID}
               duration={card.duration}
               discount={card.discount}
             />
