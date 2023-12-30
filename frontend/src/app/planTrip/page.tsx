@@ -1,9 +1,9 @@
-"use client"
-import Axios from 'axios';
-import { useEffect, useState } from 'react';
-import './planTrip.css';
+"use client";
+import Axios from "axios";
+import { useEffect, useState } from "react";
+import "./planTrip.css";
 
-import App from './ReviewApp';
+import App from "../reviews/ReviewApp";
 
 interface TravelData {
   fullName: string;
@@ -23,44 +23,37 @@ interface TravelData {
   whereDidYouFindUs: string;
 }
 
-function FormValidation(){
-  const[values,setValues]=useState({
-    fullName:'',
-    
-  })
+function FormValidation() {
+  const [values, setValues] = useState({
+    fullName: "",
+  });
 }
 function PlanTrip() {
-  const [fullName,setFullName]=useState("");
-  const [phoneNumber,setPhoneNumber]=useState("");
-  const[emailAddress,setEmailAddress]=useState("");
-  const[selectTrip,setTrip]=useState("");
-  const[approxDate,setApproxDate]=useState("");
-  const[tripLength,setTripLength]=useState("");
-  const[numberOfAdults,setNumberOfAdults]=useState("");
-  const[numberOfChildren,setNumberOfChildren]=useState("");
-  const[tourType,setTourType]=useState("");
-  const[hotelType,setHotelType]=useState("");
-  const[estimatedBudget,setEstimatedBudget]=useState("");
-  const[guideLanguage,setGuideLanguage]=useState("");
-  const[moreInfo,setMoreInfo]=useState("");
-  const[selectCountry,setSelectCountry]=useState("");
-  const[whereDidYouFindUs,setWhereDidYouFindUs]=useState("");
+  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [selectTrip, setTrip] = useState("");
+  const [approxDate, setApproxDate] = useState("");
+  const [tripLength, setTripLength] = useState("");
+  const [numberOfAdults, setNumberOfAdults] = useState("");
+  const [numberOfChildren, setNumberOfChildren] = useState("");
+  const [tourType, setTourType] = useState("");
+  const [hotelType, setHotelType] = useState("");
+  const [estimatedBudget, setEstimatedBudget] = useState("");
+  const [guideLanguage, setGuideLanguage] = useState("");
+  const [moreInfo, setMoreInfo] = useState("");
+  const [selectCountry, setSelectCountry] = useState("");
+  const [whereDidYouFindUs, setWhereDidYouFindUs] = useState("");
   const [travelList, setTravelList] = useState<TravelData[]>([]);
-  
 
   useEffect(() => {
-    Axios.get('http://localhost:8081/planTrip/api/get')
-      .then((response) => {
-        setTravelList(response.data);
-        // console.log(response.data);
-
-      })
-      
+    Axios.get("http://localhost:8081/planTrip/api/get").then((response) => {
+      setTravelList(response.data);
+      // console.log(response.data);
+    });
   }, []); // Empty dependency array
-  
-  const submit=()=>{
 
-   
+  const submit = () => {
     // Proceed with the submission
     Axios.post("http://localhost:8081/planTrip/api/insert", {
       fullName,
@@ -104,19 +97,19 @@ function PlanTrip() {
 
   return (
     <>
-    <div className="container-1">
-<div className="page-banner ">
-        <div className="page-title">
-          <h1 className="customizeH1">Plan Your Trip</h1>
+      <div className="container-1">
+        <div className="page-banner ">
+          <div className="page-title">
+            <h1 className="customizeH1">Plan Your Trip</h1>
+          </div>
         </div>
       </div>
-    </div>
-      
+
       <div className="common-box" role="main">
         <div className="container">
           <div className="col-lg-12">
             <div className="standard-form booking-form common-module bg-white shadow">
-              <h3 className='details'>Trip Details</h3>
+              <h3 className="details">Trip Details</h3>
               <div className="inner-box">
                 <div className="row">
                   <div className="col-md-6">
@@ -128,7 +121,7 @@ function PlanTrip() {
                           name="package_name"
                           id="package_name"
                           required
-                          onChange={(e)=>{
+                          onChange={(e) => {
                             setTrip(e.target.value);
                           }}
                         >
@@ -167,7 +160,7 @@ function PlanTrip() {
                           required
                           // data-type="date"
                           autoComplete=""
-                          onChange={(e)=>{
+                          onChange={(e) => {
                             setApproxDate(e.target.value);
                           }}
                         />
@@ -187,7 +180,7 @@ function PlanTrip() {
                         name="trip_length"
                         id="trip_length"
                         required
-                        onChange={(e)=>{
+                        onChange={(e) => {
                           setTripLength(e.target.value);
                         }}
                       />
@@ -203,7 +196,7 @@ function PlanTrip() {
                         name="adult"
                         id="adult"
                         required
-                        onChange={(e)=>{
+                        onChange={(e) => {
                           setNumberOfAdults(e.target.value);
                         }}
                       />
@@ -221,7 +214,7 @@ function PlanTrip() {
                         name="num_child"
                         id="num_child"
                         required
-                        onChange={(e)=>{
+                        onChange={(e) => {
                           setNumberOfChildren(e.target.value);
                         }}
                       />
@@ -233,9 +226,8 @@ function PlanTrip() {
                       <div className="custom_select">
                         <select
                           className="form-control "
-                          
                           required
-                          onChange={(e)=>{
+                          onChange={(e) => {
                             setTourType(e.target.value);
                           }}
                         >
@@ -261,15 +253,13 @@ function PlanTrip() {
                         <select
                           className="form-control "
                           required
-                          onChange={(e)=>{
+                          onChange={(e) => {
                             setHotelType(e.target.value);
                           }}
                         >
                           <option value="">---Select One Option---</option>
                           <option value="5-star">5-star</option>
-                          <option value="Normal Hotel">
-                            Normal Hotel
-                          </option>
+                          <option value="Normal Hotel">Normal Hotel</option>
                           <option value="Medium Hotel">Medium Hotel</option>
                         </select>
                       </div>
@@ -282,7 +272,7 @@ function PlanTrip() {
                         <select
                           className="form-control "
                           required
-                          onChange={(e)=>{
+                          onChange={(e) => {
                             setEstimatedBudget(e.target.value);
                           }}
                         >
@@ -305,9 +295,8 @@ function PlanTrip() {
                   <div className="custom_select">
                     <select
                       className="form-control "
-                      
                       required
-                      onChange={(e)=>{
+                      onChange={(e) => {
                         setGuideLanguage(e.target.value);
                       }}
                     >
@@ -326,7 +315,7 @@ function PlanTrip() {
                     name="comments"
                     id="comments"
                     required
-                    onChange={(e)=>{
+                    onChange={(e) => {
                       setMoreInfo(e.target.value);
                     }}
                     rows={8}
@@ -338,145 +327,116 @@ function PlanTrip() {
                   ></textarea>
                 </div>
 
-                <div className='Personal-info'>
-                <h2>Personal information</h2>
-              </div>
+                <div className="Personal-info">
+                  <h2>Personal information</h2>
+                </div>
 
-              <div className='row'>
-                  <div className='col-md-6'>
-                    <div className='form-group'>
-                      <label className='required'> Full Name</label> 
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label className="required"> Full Name</label>
                       <input
-                      type='text'
-                      className='form-control'
-                      name='fullName'
-                      id='fullName'
-                      required
-                      onChange={(e)=>{
-                        setFullName(e.target.value);
-                      }}
-                      >
-                       </input>
+                        type="text"
+                        className="form-control"
+                        name="fullName"
+                        id="fullName"
+                        required
+                        onChange={(e) => {
+                          setFullName(e.target.value);
+                        }}
+                      ></input>
                     </div>
                   </div>
-                  <div className='col-md-6'>
-                    <div className='form-group'>
-                      <label className='required'> Phone Number</label> 
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label className="required"> Phone Number</label>
                       <input
-                      
-                      className='form-control'
-                      name='phoneNumber'
-                      id='phoneNumber'
-                    max='15'
-                      required
-                      onChange={(e)=>{
-                        setPhoneNumber(e.target.value);
-                      }}> 
-                      </input>
-                    </div>
-                  </div>  
-              </div>
-              <div className='row'>
-                  <div className='col-md-6'>
-                    <div className='form-group'>
-                      <label className='required'> Email Address</label> 
-                      <input
-                      type='text'
-                      className='form-control'
-                      name='emailAddress'
-                      id='emailAddress'
-                      required
-                      onChange={(e)=>{
-                        setEmailAddress(e.target.value);
-                      }}
-                      >
-
-                      </input>
+                        className="form-control"
+                        name="phoneNumber"
+                        id="phoneNumber"
+                        max="15"
+                        required
+                        onChange={(e) => {
+                          setPhoneNumber(e.target.value);
+                        }}
+                      ></input>
                     </div>
                   </div>
-                  <div className='col-md-6'>
-                    <div className='form-group'>
-                      <label className='required'> Select Your Country</label> 
-                      <div className='custom_select'>
-                      <select className='form-control' onChange={(e)=>{
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label className="required"> Email Address</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="emailAddress"
+                        id="emailAddress"
+                        required
+                        onChange={(e) => {
+                          setEmailAddress(e.target.value);
+                        }}
+                      ></input>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label className="required"> Select Your Country</label>
+                      <div className="custom_select">
+                        <select
+                          className="form-control"
+                          onChange={(e) => {
                             setSelectCountry(e.target.value);
-                          }}>
-                        <option value={''}>Select Your Country</option>
-                        <option value="Afghanistan">Afghanistan</option>
-                        <option value="Albania">Albania</option>
-                        <option value="Algeria">Algeria</option>
-                        <option value="American Samoa">American Samoa</option>
-                        <option value="Andorra">Andorra</option>
-                        <option value="Angola">Angola</option>
-                        <option value="Anguilla">Anguilla</option>
-                        <option value="Antartica">Antartica</option>
-
-                        
-                      </select>
-                      
-                    </div>
-                  </div>
-                      </div>    
-                  </div>
-
-                  
-                    <div className='form-group'>
-                      <label className='required'> Where did you find us</label> 
-                      <div className='custom_select'>
-                      <select
-                      className='form-control'
-                      name='wheredidyou'
-                      id='wheredidyou'
-                      required 
-                      onChange={(e)=>{
-                        setWhereDidYouFindUs(e.target.value);
-                      }}>
-                        <option value={''}>Where did you find us</option> 
-                        <option value='Facebook'>Facebook</option>
-                        <option value='Friends'>Friends</option>
-                        <option value='Google'>Google</option>
-                      </select>
+                          }}
+                        >
+                          <option value={""}>Select Your Country</option>
+                          <option value="Afghanistan">Afghanistan</option>
+                          <option value="Albania">Albania</option>
+                          <option value="Algeria">Algeria</option>
+                          <option value="American Samoa">American Samoa</option>
+                          <option value="Andorra">Andorra</option>
+                          <option value="Angola">Angola</option>
+                          <option value="Anguilla">Anguilla</option>
+                          <option value="Antartica">Antartica</option>
+                        </select>
                       </div>
                     </div>
-<div className='button-submit'>
- <button
-                  
-                  className='btn'
-                  onClick={submit}
-                >
-                  SUBMIT
-                </button>
-</div>
-                   
+                  </div>
+                </div>
 
-                
-               
-                
+                <div className="form-group">
+                  <label className="required"> Where did you find us</label>
+                  <div className="custom_select">
+                    <select
+                      className="form-control"
+                      name="wheredidyou"
+                      id="wheredidyou"
+                      required
+                      onChange={(e) => {
+                        setWhereDidYouFindUs(e.target.value);
+                      }}
+                    >
+                      <option value={""}>Where did you find us</option>
+                      <option value="Facebook">Facebook</option>
+                      <option value="Friends">Friends</option>
+                      <option value="Google">Google</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="button-submit">
+                  <button className="btn" onClick={submit}>
+                    SUBMIT
+                  </button>
+                </div>
               </div>
-
-                  </div>
-                  </div>
-                
-
             </div>
           </div>
-       
-          {/* {travelList.map((val) => {
-                   return <div className='card'>
-                    <h1>FullName: {val.fullName} | PhoneNumber: {val.phoneNumber} | Email:{val.emailAddress}
-                      </h1> 
-                      <p>selectTRIP: {val['selectTrip']} | ApproximateDate: {val['approxDate']} | tripLENGTH: {val['tripLength']}
-               | Adults: {val['numberOfAdults']} | Child: {val['numberOfChildren']} | TourType: {val['tourType']} |
-               <p> HotelType: {val['hotelType']}  | Budget: {val['estimatedBudget']}
-               | GuideLanguage: {val['guideLanguage']} | MoreInfo: {val['moreInfo']} | Country: {val['selectCountry']} | WhereDidYouFindUs: {val['whereDidYouFindUs']}
-                </p>
-                        </p>   
-                </div> */}
-{/* })} */}
+        </div>
+      </div>
 
-<div>
-<App/>
-</div>
+      <div>
+        <App />
+      </div>
     </>
   );
 }

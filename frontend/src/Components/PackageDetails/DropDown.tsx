@@ -11,7 +11,6 @@ const ExpandableSection = ({ buttonLabel, expandedContent }) => {
 
   return (
     <div>
-   {/* <hr className=" border-black p-px2" /> */}
     <div className="bg-white pt-4 rounded-lg ">
     
    

@@ -1,4 +1,3 @@
-// ReviewCard.jsx
 import React from 'react';
 import './reviewPage.css';
 interface Review {
