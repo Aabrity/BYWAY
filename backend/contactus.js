@@ -10,18 +10,26 @@ const db = mysql.createConnection({
   database: "byway",
 });
 
-router.post("/contactus", (req, res) => {
+router.post("/addcontact", (req, res) => {
+  const {
+    email,
+    phone,
+    subject,
+    address,
+    message
+  }=req.body;
   const sqlInsert =
-    "INSERT INTO contacttable(email, phone,subject,address,message) VALUES (?,?,?,?,?)";
-  const Email = req.body.Email;
-  const contactnum = req.body.contactnum;
-  const subject = req.body.subject;
-  const address = req.body.address;
-  const message = req.body.message;
-
+    "INSERT INTO contacttable(email, phone,subject,address,message) VALUES (?)";
+  const values= [
+    email,
+    phone,
+    subject,
+    address,
+    message,
+  ];
   db.query(
     sqlInsert,
-    [Email, contactnum, subject, address, message],
+    [values],
     (err, result) => {
       if (err) return res.json(err);
       return res.json(Result);
