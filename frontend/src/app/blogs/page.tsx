@@ -50,15 +50,7 @@ function Blogs() {
     blog.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleLogout = () => {
-    setIsLogoutModalOpen(true);
-  };
-
-  const handleCloseLogoutModal = () => {
-    setIsLogoutModalOpen(false);
-  };
-
-  const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 10);
+  const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 3);
   const recentBlogs = filteredBlogData.filter(blog => blog.category === 'Normal');
 
   return (
@@ -197,8 +189,6 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({ title, description,
         </div>
       </div>
     </div>
-
-    
   );
 };
 
