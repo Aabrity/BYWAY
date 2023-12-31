@@ -43,15 +43,7 @@ function Blogs() {
     blog.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleLogout = () => {
-    setIsLogoutModalOpen(true);
-  };
-
-  const handleCloseLogoutModal = () => {
-    setIsLogoutModalOpen(false);
-  };
-
-  const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 10);
+  const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 3);
   const recentBlogs = filteredBlogData.filter(blog => blog.category === 'Normal');
 
   return (
@@ -150,25 +142,6 @@ function Blogs() {
           />
         ))}
       </div>
-
-      <div>
-        <button onClick={handleLogout} style={{ marginRight: '10px' }}>Log Out</button>
-      </div>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: "20px", paddingLeft: "20px" }}>
-        {recentBlogs.map((blog, index) => (
-          <RecentBlogContainer
-            key={index}
-            title={blog.title}
-            description={blog.description.slice(0, 150) + '...'}
-            publishedDate={blog.published_date}
-            imageSrc={blog.image ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString('base64')}` : ''}
-          />
-        ))}
-      </div>
-
-      {isLogoutModalOpen && <LogoutModal onClose={handleCloseLogoutModal} />}
-
     </>
   );
 }
@@ -194,8 +167,6 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({ title, description,
         </div>
       </div>
     </div>
-
-    
   );
 };
 
