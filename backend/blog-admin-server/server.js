@@ -7,9 +7,8 @@ import mysql from 'mysql';
 
 // Create an Express app
 const app = express();
-const port = 3001; // You can change this to your desired port
+const port = 3001;
 
-// Configure Multer for handling file uploads
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -35,7 +34,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/api/post-blog', upload.single('image'), (req, res) => {
-  const { title, date, content } = req.body;
+  const { title, date, content, category } = req.body;
   const image = req.file ? req.file.buffer : null;
 
   console.log('Received Title:', title);
@@ -43,11 +42,11 @@ app.post('/api/post-blog', upload.single('image'), (req, res) => {
   console.log('Received Content:', content);
   console.log('Received Image:', image);
 
-  // SQL query to insert data into the blog table
-  const sql = 'INSERT INTO blog (title, description, image, published_date) VALUES (?, ?, ?, ?)';
-  const values = [title, content, image, date];
 
-  // Execute the SQL query
+  const sql = 'INSERT INTO blog (title, description, image, published_date, category) VALUES (?, ?, ?, ?,?)';
+  const values = [title, content, image, date ,category];
+
+ 
   db.query(sql, values, (err, result) => {
     if (err) {
       console.error('Error inserting data into the database:', err);
@@ -71,10 +70,6 @@ app.get('/api/get-blogs', (req, res) => {
   });
 });
 
-
-
-
-// Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

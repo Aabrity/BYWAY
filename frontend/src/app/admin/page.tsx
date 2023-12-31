@@ -2,7 +2,6 @@
 "use client"
 import React, { useState } from 'react';
 import axios from 'axios';
-
 // Check if the document object is available (client-side)
 import ReactQuill from 'react-quill';
 
@@ -15,6 +14,7 @@ function AdminPage() {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');   
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [category, setCategory] = useState('Normal');
   
 
   const handlePost = async () => {
@@ -23,6 +23,7 @@ function AdminPage() {
       formData.append('title', title);  
       formData.append('date', date);    
       formData.append('content', blogContent);
+      formData.append('category', category);
 
       if (imageFile) {
         formData.append('image', imageFile);
@@ -48,7 +49,7 @@ function AdminPage() {
   return (
     <div className="flex h-screen bg-gray-100">
       <div className="w-1/5 bg-gray-800 p-12 text-white">
-        {/* ... (your existing code for the sidebar) */}
+      
       </div>
 
       <div className="flex-grow bg-778C49 p-12 mt-16">
@@ -81,6 +82,23 @@ function AdminPage() {
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
+          </div>
+
+          {/* the category  */}
+
+          <div className="mb-4">
+          <label htmlFor="category" className="block text-sm font-medium text-gray-600">
+              Category
+            </label>
+            <select
+              id="category"
+              className="border rounded-md p-2"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="Normal">Normal</option>
+              <option value="Trending">Trending</option>
+            </select>
           </div>
 
           {/* Blog Content Input */}
