@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <div style={{ height: "80vh", position: "relative" }}>
         <Image
-          src="/assets/scenes/coverimage.jpg"
+          src="/assets/coverimage.jpg"
           alt="Welcome To ByWay"
           layout="fill"
           objectFit="cover"
