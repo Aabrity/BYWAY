@@ -2,9 +2,11 @@
 
 import cors from "cors";
 import express from "express";
-// import authRoutes from "./auth.js";
-// import contactusRoutes from "./contactus.js";
-// import packagesRoutes from "./packages.js";
+
+import authRoutes from "./auth.js";
+import contactusRoutes from "./contactus.js";
+import packagesRoutes from "./packages.js";
+import blogRoutes from "./blog.js";
 import planTripRoutes from "./planTrip.js";
 
 
