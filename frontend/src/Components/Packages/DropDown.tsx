@@ -11,7 +11,7 @@ const ExpandableSection = ({ buttonLabel, expandedContent }) => {
 
   return (
     <div>
-    <div className="bg-amber-50 pt-4 rounded-lg ">
+    <div className="bg-white pt-4 rounded-lg ">
     
    
       <button
