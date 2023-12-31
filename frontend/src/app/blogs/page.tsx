@@ -9,8 +9,9 @@ interface Blog {
   title: string;
   description: string;
   published_date: string;
-  image: Buffer; // Assuming image is a Buffer, adjust if needed
-  // Add other properties as needed
+  image: Buffer; 
+  category: 'Trending' | 'Normal';
+ 
 }
 
 
@@ -37,6 +38,9 @@ function Blogs() {
   const filteredBlogData = blogData.filter((blog) =>
     blog.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 3);
+  const recentBlogs = filteredBlogData.filter(blog => blog.category === 'Normal');
 
   return (
     <>
@@ -106,7 +110,7 @@ function Blogs() {
       </div>
 
       <div style={{ display: "flex", gap: "1.3%", overflowX: "auto", paddingLeft: "1%", paddingRight: "1%" }}>
-      {filteredBlogData?.map((blog, index) => (
+        {trendingBlogs.map((blog, index) => (
           <BlogContainer
             key={index}
             title={blog.title}
@@ -116,11 +120,50 @@ function Blogs() {
           />
         ))}
       </div>
-      
+
+      <div>
+        <h1 style={{ fontSize: "40px", margin: "30px 0", padding: "10px" }}>
+          <b>Recent Blogs</b>
+        </h1>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "20px", paddingLeft: "20px" }}>
+        {recentBlogs.map((blog, index) => (
+          <RecentBlogContainer
+            key={index}
+            title={blog.title}
+            description={blog.description.slice(0, 350) + '...'} // Limit description to 150 characters
+            publishedDate={blog.published_date}
+            imageSrc={blog.image ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString('base64')}` : ''}
+          />
+        ))}
+      </div>
     </>
-    
-    
   );
 }
+
+const RecentBlogContainer: React.FC<BlogContainerProps> = ({ title, description, publishedDate, imageSrc }) => {
+  return (
+    <div style={{ display: 'flex', width: '80%', margin: 'auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
+      {/* Left side for Image */}
+      <div style={{ flex: '0 0 30%', marginRight: '20px' }}>
+        <img
+          src={imageSrc}
+          alt="Blog Cover"
+          style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+        />
+      </div>
+
+      {/* Right side for Content */}
+      <div style={{ flex: '1' }}>
+        <h2 style={{ fontSize: '24px', marginBottom: '10px' }}>{title}</h2>
+        <p style={{ fontSize: '16px', color: '#555' }}>{description}</p>
+        <div style={{ marginTop: 'auto', textAlign: 'right' }}>
+          <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#888' }}>{publishedDate}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Blogs;
