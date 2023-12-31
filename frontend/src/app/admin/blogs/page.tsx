@@ -2,11 +2,7 @@
 "use client"
 import React, { useState } from 'react';
 import axios from 'axios';
-
-// Check if the document object is available (client-side)
 import ReactQuill from 'react-quill';
-
-
 import 'react-quill/dist/quill.snow.css';
 import './style.css';
 
@@ -41,8 +37,6 @@ function AdminPage() {
       setImageFile(e.target.files[0]);
     }
   };
-
-  // Check if ReactQuill is defined before rendering
   if (!ReactQuill) return null;
 
   return (
@@ -69,7 +63,6 @@ function AdminPage() {
             />
           </div>
 
-          {/* Date Input */}
           <div className="mb-4">
             <label htmlFor="date" className="block text-sm font-medium text-gray-600">
               Date
@@ -95,7 +88,6 @@ function AdminPage() {
               )}
           </div>
 
-          {/* Displaying the image */}
           <input
             type="file"
             accept="image/*"
