@@ -7,6 +7,7 @@ import BlogContainer from './BlogContainer';
 import LogoutModal from './LogoutModel';
 
 
+
 interface Blog {
   title: string;
   description: string;
@@ -21,6 +22,7 @@ function Blogs() {
   const [searchQuery, setSearchQuery] = useState('');
   const [blogData, setBlogData] = useState<Array<Blog>>([]);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  
   
   
   useEffect(() => {
@@ -43,7 +45,9 @@ function Blogs() {
     blog.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 3);
+
+
+  const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 10);
   const recentBlogs = filteredBlogData.filter(blog => blog.category === 'Normal');
 
   return (
@@ -142,6 +146,21 @@ function Blogs() {
           />
         ))}
       </div>
+
+    
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "20px", paddingLeft: "20px" }}>
+        {recentBlogs.map((blog, index) => (
+          <RecentBlogContainer
+            key={index}
+            title={blog.title}
+            description={blog.description.slice(0, 150) + '...'}
+            publishedDate={blog.published_date}
+            imageSrc={blog.image ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString('base64')}` : ''}
+          />
+        ))}
+      </div>
+
     </>
   );
 }
@@ -167,6 +186,8 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({ title, description,
         </div>
       </div>
     </div>
+
+    
   );
 };
 
