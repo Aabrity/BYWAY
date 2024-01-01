@@ -24,7 +24,7 @@ function Blogs() {
   
   
   useEffect(() => {
-    axios.get('http://localhost:3001/api/get-blogs')
+    axios.get('http://localhost:8081/blogs/getblogs')
       .then((response) => {
         setBlogData(response.data);
       })
