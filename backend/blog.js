@@ -56,5 +56,18 @@ router.get("/getblogs", (req, res) => {
   });
 });
 
+router.delete("/deleteblogs/:id", (req, res) => {
+  const id = req.params.id;
+  const deleteQuery = "DELETE FROM blogtable WHERE id = ?";
+
+  db.query(deleteQuery, [id], (err, result) => {
+    if (err) {
+      console.log("Deletion error:", err);
+      return res.json("Deletion error");
+    }
+    return res.json({ Status: "Success" });
+  });
+});
+
 export default router;
 

@@ -39,6 +39,24 @@ function AdminPage() {
       setImageFile(e.target.files[0]);
     }
   };
+  const [id, setId] = useState("");
+
+  const handleBlogDelete = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await axios.delete(
+        `http://localhost:8081/blogs/deleteblogs/${id}`
+      );
+      if (response.data.Status === "Success") {
+        alert("Blog deleted successfully");
+      } else {
+        alert("Deletion error");
+      }
+    } catch (error) {
+      console.error("Deletion error:", error);
+    }
+  };
+
   if (!ReactQuill) return null;
 
   return (
@@ -51,7 +69,6 @@ function AdminPage() {
         <div className="bg-green-200 p-6 rounded-lg h-full w-full">
           <h2 className="text-2xl font-semibold mb-4">Add Blog Post</h2>
 
-          {/* Title Input */}
           <div className="mb-4">
             <label
               htmlFor="title"
@@ -101,7 +118,23 @@ function AdminPage() {
             </select>
           </div>
 
-          {/* Blog Content Input */}
+          {/* the category  */}
+
+          <div className="mb-4">
+          <label htmlFor="category" className="block text-sm font-medium text-gray-600">
+              Category
+            </label>
+            <select
+              id="category"
+              className="border rounded-md p-2"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="Normal">Normal</option>
+              <option value="Trending">Trending</option>
+            </select>
+          </div>
+
           <div className="editorContainer mb-4 style={{ height: '600px' }}">
             <label
               htmlFor="blogContent"
@@ -136,7 +169,6 @@ function AdminPage() {
             />
           )}
 
-          {/* Post Button */}
           <button
             type="button"
             className="bg-blue-500 hover:bg-blue-700 active:bg-blue-800 text-white px-4 py-2 rounded-md"
@@ -145,6 +177,34 @@ function AdminPage() {
             Post
           </button>
         </div>
+      </div>
+      <div></div>
+      <div className="App flex flex-col justify-center">
+        <form
+          onSubmit={handleBlogDelete}
+          className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg text-gray-400"
+        >
+          <h2 className="text-4xl dark:text-white font-bold text-center">
+            Delete Blog
+          </h2>
+          <label>
+            Blog ID:
+            <input
+              type="text"
+              name="id"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+              required
+            />
+          </label>
+          <button
+            type="submit"
+            className="w-full my-5 py-2 bg-red-600 text-white font-semibold rounded-lg"
+          >
+            Delete Blog
+          </button>
+        </form>
       </div>
     </div>
   );
