@@ -19,7 +19,7 @@ function Blogs() {
   const [blogData, setBlogData] = useState<Array<Blog>>([]);
   
   useEffect(() => {
-    axios.get('http://localhost:3001/api/get-blogs')
+    axios.get('http://localhost:8081/blogs/getblogs')
       .then((response) => {
         setBlogData(response.data);
       })
