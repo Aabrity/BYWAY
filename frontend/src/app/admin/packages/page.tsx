@@ -15,6 +15,8 @@ export default function PackageInputForm() {
     departure_and_return: "",
     accessibility: "",
     additional_info: "",
+    price: 0,
+    discount: 0,
   });
   const [auth, setAuth] = useState(false);
   axios.defaults.withCredentials = true;
@@ -57,7 +59,7 @@ export default function PackageInputForm() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handlePackageSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     axios
       .post("http://localhost:8081/packages/addpackages", formState)
@@ -72,7 +74,7 @@ export default function PackageInputForm() {
   };
 
   const [location, setLocation] = useState("");
-  const handleSubmit1 = (e: React.FormEvent) => {
+  const handleLocationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     axios
       .post("http://localhost:8081/packages/addlocations", { location })
@@ -85,9 +87,26 @@ export default function PackageInputForm() {
       })
       .catch((err) => console.log(err));
   };
+  const [id, setId] = useState("");
+
+  const handlePackageDelete = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await axios.delete(
+        `http://localhost:8081/packages/deletepackages/${id}`
+      );
+      if (response.data.Status === "Success") {
+        alert("Package deleted successfully");
+      } else {
+        alert("Deletion error");
+      }
+    } catch (error) {
+      console.error("Deletion error:", error);
+    }
+  };
 
   return (
-    <div className="container">
+    <div className=" flex justify-center w-full">
       {auth ? (
         <div className=" py-32 flex flex-row justify-center items-start ">
           <div className="flex flex-col w-1/2">
@@ -96,7 +115,7 @@ export default function PackageInputForm() {
                 Package Information
               </h2>
               <form
-                onSubmit={handleSubmit}
+                onSubmit={handlePackageSubmit}
                 className="flex flex-col text-gray-400 mt-4"
               >
                 <div className="flex flex-col mb-4">
@@ -183,6 +202,26 @@ export default function PackageInputForm() {
                     className="rounded-lg bg-gray-700 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
                   />
                 </div>
+                <div className="flex flex-col mb-4">
+                  <label className="mb-1">Marked Price:</label>
+                  <input
+                    type="number"
+                    name="price"
+                    value={formState.price}
+                    onChange={handleNumberChange}
+                    className="rounded-lg bg-gray-700 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+                  />
+                </div>
+                <div className="flex flex-col mb-4">
+                  <label className="mb-1">Discount Percent:</label>
+                  <input
+                    type="number"
+                    name="discount"
+                    value={formState.discount}
+                    onChange={handleNumberChange}
+                    className="rounded-lg bg-gray-700 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+                  />
+                </div>
                 <button
                   type="submit"
                   className="w-full my-5 py-2 bg-blue-500 text-white font-semibold rounded-lg"
@@ -197,8 +236,8 @@ export default function PackageInputForm() {
 
           <div className="App flex flex-col justify-center">
             <form
-              onSubmit={handleSubmit1}
-              className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg"
+              onSubmit={handleLocationSubmit}
+              className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg text-gray-400"
             >
               <h2 className="text-4xl dark:text-white font-bold text-center">
                 Add Location
@@ -220,10 +259,39 @@ export default function PackageInputForm() {
               </button>
             </form>
           </div>
+
+          <div className="bg-transparent w-20 "></div>
+
+          <div className="App flex flex-col justify-center">
+            <form
+              onSubmit={handlePackageDelete}
+              className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg text-gray-400"
+            >
+              <h2 className="text-4xl dark:text-white font-bold text-center">
+                Delete Package
+              </h2>
+              <label>
+                Package ID:
+                <input
+                  type="text"
+                  name="id"
+                  value={id}
+                  onChange={(e) => setId(e.target.value)}
+                  className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+                  required
+                />
+              </label>
+              <button
+                type="submit"
+                className="w-full my-5 py-2 bg-red-600 text-white font-semibold rounded-lg"
+              >
+                Delete Package
+              </button>
+            </form>
+          </div>
         </div>
       ) : (
         <div>
-          {/* Your non-authenticated content for Packages component goes here */}
           <h3>Login now</h3>
           <Link href="/admin" className="btn btn-primary">
             Login
@@ -233,4 +301,3 @@ export default function PackageInputForm() {
     </div>
   );
 }
-

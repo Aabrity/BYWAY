@@ -5,8 +5,8 @@ const router = express.Router();
 
 const db = mysql.createConnection({
   host: "localhost",
-  user: "anup",
-  password: "15akc#",
+  user: "rohan",
+  password: "357951",
   database: "byway",
 });
 
@@ -21,9 +21,11 @@ router.post("/addpackages", (req, res) => {
     departure_and_return,
     accessibility,
     additional_info,
+    price,
+    discount
   } = req.body;
   const insertQuery =
-    "INSERT INTO packagetable (package_title, location_id, about, guidance_language, whats_included, what_to_expect, departure_and_return, accessibility, additional_info) VALUES (?)";
+  "INSERT INTO packagetable (package_title, location_id, about, guidance_language, whats_included, what_to_expect, departure_and_return, accessibility, additional_info,price, discount) VALUES (?)";
   const values = [
     title,
     location_id,
@@ -34,6 +36,8 @@ router.post("/addpackages", (req, res) => {
     departure_and_return,
     accessibility,
     additional_info,
+    price,
+    discount
   ];
   db.query(insertQuery, [values], (err, result) => {
     if (err) {
@@ -44,7 +48,19 @@ router.post("/addpackages", (req, res) => {
   });
 });
 
-router.delete("/deletepackages/:id", (req, res) => {});
+router.delete("/deletepackages/:id", (req, res) => {
+  const id = req.params.id;
+  const deleteQuery = "DELETE FROM packagetable WHERE package_id = ?";
+
+  db.query(deleteQuery, [id], (err, result) => {
+    if (err) {
+      console.log("Deletion error:", err);
+      return res.json("Deletion error");
+    }
+    return res.json({ Status: "Success" });
+  });
+});
+
 
 router.post("/addlocations", (req, res) => {
   const { location } = req.body;

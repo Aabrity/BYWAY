@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Card from "@/Components/Cards";
+import Card from "@/Components/Packages/Cards";
 import Link from "next/link";
 
 export const packagesData = [
@@ -283,7 +283,7 @@ const PackageItem: React.FC<PackageItemProps> = ({
   return (
     <div className="mx-3 overflow-hidden border border-slate-200 group">
     <div className="overflow-hidden relative">
-      <Card imgSrc={imgSrc}>
+      <Card imgSrc={imgSrc} >
         <div className="text-bold flex justify-between">
           <strong className="text-xl">{title}</strong>
           <div>

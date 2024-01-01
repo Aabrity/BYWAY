@@ -1,5 +1,6 @@
 import cors from "cors";
 import express from "express";
+
 import authRoutes from "./auth.js";
 import contactusRoutes from "./contactus.js";
 import packagesRoutes from "./packages.js";
