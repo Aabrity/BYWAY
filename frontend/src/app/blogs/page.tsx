@@ -52,7 +52,7 @@ function Blogs() {
     blog.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-
+  
 
   const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 10);
   const recentBlogs = filteredBlogData.filter(blog => blog.category === 'Normal');
