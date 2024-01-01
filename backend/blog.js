@@ -6,15 +6,21 @@ const router = express.Router();
 
 const db = mysql.createConnection({
   host: "localhost",
-  user: "root",
-  password: "nothing",
-  database: "Byway",
+  user: "rohan",
+  password: "357951",
+  database: "byway",
 });
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "nothing",
+//   database: "Byway",
+// });
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.post("/api/post-blog", upload.single("image"), (req, res) => {
+router.post("/postblog", upload.single("image"), (req, res) => {
   const { title, date, content } = req.body;
   const image = req.file ? req.file.buffer : null;
 
@@ -24,7 +30,7 @@ router.post("/api/post-blog", upload.single("image"), (req, res) => {
   console.log("Received Image:", image);
 
   const sql =
-    "INSERT INTO blog (title, description, image, published_date) VALUES (?, ?, ?, ?)";
+    "INSERT INTO blogtable (title, description, image, published_date) VALUES (?, ?, ?, ?)";
   const values = [title, content, image, date];
 
   db.query(sql, values, (err, result) => {
@@ -38,8 +44,8 @@ router.post("/api/post-blog", upload.single("image"), (req, res) => {
   });
 });
 
-router.get("/get-blogs", (req, res) => {
-  const sql = "SELECT * FROM blog";
+router.get("/getblogs", (req, res) => {
+  const sql = "SELECT * FROM blogtable";
   db.query(sql, (err, result) => {
     if (err) {
       console.error("Error fetching blog data:", err);
@@ -47,6 +53,19 @@ router.get("/get-blogs", (req, res) => {
     } else {
       res.status(200).json(result);
     }
+  });
+});
+
+router.delete("/deleteblogs/:id", (req, res) => {
+  const id = req.params.id;
+  const deleteQuery = "DELETE FROM blogtable WHERE id = ?";
+
+  db.query(deleteQuery, [id], (err, result) => {
+    if (err) {
+      console.log("Deletion error:", err);
+      return res.json("Deletion error");
+    }
+    return res.json({ Status: "Success" });
   });
 });
 

@@ -1,34 +1,33 @@
 // Import required modules
-"use client"
-import React, { useState } from 'react';
-import axios from 'axios';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import './style.css';
+"use client";
+import React, { useState } from "react";
+import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import "./style.css";
 
 function AdminPage() {
-  const [blogContent, setBlogContent] = useState('');
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');   
+  const [blogContent, setBlogContent] = useState("");
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
-  
 
   const handlePost = async () => {
     try {
       const formData = new FormData();
-      formData.append('title', title);  
-      formData.append('date', date);    
-      formData.append('content', blogContent);
+      formData.append("title", title);
+      formData.append("date", date);
+      formData.append("content", blogContent);
 
       if (imageFile) {
-        formData.append('image', imageFile);
+        formData.append("image", imageFile);
       }
 
-      await axios.post('http://localhost:3001/api/post-blog', formData);
+      await axios.post("http://localhost:8081/blogs/postblog", formData);
 
-      console.log('Content posted successfully');
+      console.log("Content posted successfully");
     } catch (error) {
-      console.error('Error posting content:', error);
+      console.error("Error posting content:", error);
     }
   };
 
@@ -37,21 +36,39 @@ function AdminPage() {
       setImageFile(e.target.files[0]);
     }
   };
+  const [id, setId] = useState("");
+
+  const handleBlogDelete = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await axios.delete(
+        `http://localhost:8081/blogs/deleteblogs/${id}`
+      );
+      if (response.data.Status === "Success") {
+        alert("Blog deleted successfully");
+      } else {
+        alert("Deletion error");
+      }
+    } catch (error) {
+      console.error("Deletion error:", error);
+    }
+  };
+
   if (!ReactQuill) return null;
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <div className="w-1/5 bg-gray-800 p-12 text-white">
-        {/* ... (your existing code for the sidebar) */}
-      </div>
+      <div className="w-1/5 bg-gray-800 p-12 text-white"></div>
 
       <div className="flex-grow bg-778C49 p-12 mt-16">
         <div className="bg-green-200 p-6 rounded-lg h-full w-full">
           <h2 className="text-2xl font-semibold mb-4">Add Blog Post</h2>
 
-          {/* Title Input */}
           <div className="mb-4">
-            <label htmlFor="title" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-600"
+            >
               Title
             </label>
             <input
@@ -64,7 +81,10 @@ function AdminPage() {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="date" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="date"
+              className="block text-sm font-medium text-gray-600"
+            >
               Date
             </label>
             <input
@@ -76,16 +96,22 @@ function AdminPage() {
             />
           </div>
 
-          {/* Blog Content Input */}
           <div className="editorContainer mb-4 style={{ height: '600px' }}">
-            <label htmlFor="blogContent" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="blogContent"
+              className="block text-sm font-medium text-gray-600"
+            >
               Blog Content
             </label>
             {ReactQuill && (
-            <div className="editor-wrapper">
-              <ReactQuill theme="snow" value={blogContent} onChange={setBlogContent} />
-            </div>
-              )}
+              <div className="editor-wrapper">
+                <ReactQuill
+                  theme="snow"
+                  value={blogContent}
+                  onChange={setBlogContent}
+                />
+              </div>
+            )}
           </div>
 
           <input
@@ -100,11 +126,10 @@ function AdminPage() {
               src={URL.createObjectURL(imageFile)}
               alt="Uploaded"
               className="max-w-full h-auto mb-2"
-              style={{ maxWidth: '300px', maxHeight: '200px' }}
+              style={{ maxWidth: "300px", maxHeight: "200px" }}
             />
           )}
 
-          {/* Post Button */}
           <button
             type="button"
             className="bg-blue-500 hover:bg-blue-700 active:bg-blue-800 text-white px-4 py-2 rounded-md"
@@ -113,6 +138,34 @@ function AdminPage() {
             Post
           </button>
         </div>
+      </div>
+      <div></div>
+      <div className="App flex flex-col justify-center">
+        <form
+          onSubmit={handleBlogDelete}
+          className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg text-gray-400"
+        >
+          <h2 className="text-4xl dark:text-white font-bold text-center">
+            Delete Blog
+          </h2>
+          <label>
+            Blog ID:
+            <input
+              type="text"
+              name="id"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+              required
+            />
+          </label>
+          <button
+            type="submit"
+            className="w-full my-5 py-2 bg-red-600 text-white font-semibold rounded-lg"
+          >
+            Delete Blog
+          </button>
+        </form>
       </div>
     </div>
   );
