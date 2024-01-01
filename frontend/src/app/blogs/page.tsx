@@ -4,6 +4,8 @@ import Image from "next/image";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BlogContainer from './BlogContainer';
+import LogoutModal from './LogoutModel';
+
 
 interface Blog {
   title: string;
@@ -18,6 +20,8 @@ interface Blog {
 function Blogs() {
   const [searchQuery, setSearchQuery] = useState('');
   const [blogData, setBlogData] = useState<Array<Blog>>([]);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  
   
   useEffect(() => {
     axios.get('http://localhost:8081/blogs/getblogs')
@@ -39,7 +43,15 @@ function Blogs() {
     blog.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 3);
+  const handleLogout = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleCloseLogoutModal = () => {
+    setIsLogoutModalOpen(false);
+  };
+
+  const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 10);
   const recentBlogs = filteredBlogData.filter(blog => blog.category === 'Normal');
 
   return (
@@ -138,6 +150,25 @@ function Blogs() {
           />
         ))}
       </div>
+
+      <div>
+        <button onClick={handleLogout} style={{ marginRight: '10px' }}>Log Out</button>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "20px", paddingLeft: "20px" }}>
+        {recentBlogs.map((blog, index) => (
+          <RecentBlogContainer
+            key={index}
+            title={blog.title}
+            description={blog.description.slice(0, 150) + '...'}
+            publishedDate={blog.published_date}
+            imageSrc={blog.image ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString('base64')}` : ''}
+          />
+        ))}
+      </div>
+
+      {isLogoutModalOpen && <LogoutModal onClose={handleCloseLogoutModal} />}
+
     </>
   );
 }
@@ -163,6 +194,8 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({ title, description,
         </div>
       </div>
     </div>
+
+    
   );
 };
 
