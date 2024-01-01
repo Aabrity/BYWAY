@@ -15,6 +15,13 @@ const db = mysql.createConnection({
   database: "byway",
 });
 
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "rohan",
+//   password: "357951",
+//   database: "byway",
+// });
+
 router.post("/register", (req, res) => {
   const createQuery =
     "INSERT INTO Admins (`username`, `email`, `password`) VALUES (?)";
