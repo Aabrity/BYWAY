@@ -45,7 +45,7 @@ router.post("/postblog", upload.single("image"), (req, res) => {
 });
 
 router.get("/getblogs", (req, res) => {
-  const sql = "SELECT * FROM blog";
+  const sql = "SELECT * FROM blogtable";
   db.query(sql, (err, result) => {
     if (err) {
       console.error("Error fetching blog data:", err);
