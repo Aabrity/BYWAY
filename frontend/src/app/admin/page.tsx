@@ -2,7 +2,6 @@
 "use client"
 import React, { useState } from 'react';
 import axios from 'axios';
-// Check if the document object is available (client-side)
 import ReactQuill from 'react-quill';
 
 
