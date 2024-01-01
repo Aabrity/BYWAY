@@ -4,13 +4,12 @@ import multer from "multer";
 
 const router = express.Router();
 
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "rohan",
-//   password: "357951",
-//   database: "byway",
-// });
-
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "rohan",
+  password: "357951",
+  database: "byway",
+});
 // const db = mysql.createConnection({
 //   host: "localhost",
 //   user: "root",
