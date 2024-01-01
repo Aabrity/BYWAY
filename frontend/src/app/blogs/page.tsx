@@ -7,6 +7,7 @@ import BlogContainer from './BlogContainer';
 import LogoutModal from './LogoutModel';
 
 
+
 interface Blog {
   title: string;
   description: string;
@@ -30,6 +31,7 @@ function Blogs() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   
   
+  
   useEffect(() => {
     axios.get('http://localhost:8081/blogs/getblogs')
       .then((response) => {
@@ -50,7 +52,9 @@ function Blogs() {
     blog.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 3);
+
+
+  const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 10);
   const recentBlogs = filteredBlogData.filter(blog => blog.category === 'Normal');
 
   return (
@@ -189,6 +193,8 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({ title, description,
         </div>
       </div>
     </div>
+
+    
   );
 };
 
