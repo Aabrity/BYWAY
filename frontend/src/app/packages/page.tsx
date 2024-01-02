@@ -255,6 +255,8 @@ type PackageItemProps = {
   duration: string;
   packageID: string;
   discount: string; 
+  imgArray: Array;
+  imgArray: Array;
 };
 
 const PackageItem: React.FC<PackageItemProps> = ({
@@ -265,6 +267,8 @@ const PackageItem: React.FC<PackageItemProps> = ({
   duration,
   packageID,
   discount,
+  imgArray,
+  imgArray,
 }) => {
   const numericPrice = parseInt(price);
   const discountPercentage = parseInt(discount);
@@ -306,8 +310,8 @@ const PackageItem: React.FC<PackageItemProps> = ({
         <hr className="mt-2 mb-2 border-white" />
         <div className="mt-2 flex justify-between items-center">
           <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            <Link href="/packages/description">
-              Details
+            <Link href="/packages/[description]">  
+            Details
             </Link>
           </button>
         </div>
@@ -385,6 +389,8 @@ const Packages: React.FC = () => {
               packageID={card.packageID}
               duration={card.duration}
               discount={card.discount}
+              imgArray={card.imgArray}
+              imgArray={card.imgArray}
             />
           ))}
         </div>

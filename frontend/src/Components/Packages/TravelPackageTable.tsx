@@ -15,7 +15,7 @@ const TravelPackageTable: React.FC<TravelPackageTableProps> = ({
   accessibility,
 }) => {
   return (
-    <table className="w-full mt-4 border-collapse border border-gray-400">
+    <table className="w-full mt-4 border-collapse border border-amber-50c">
       <tbody>
         <tr>
           <td className="font-semibold pr-2 border border-gray-400">Meals:</td>

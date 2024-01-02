@@ -12,7 +12,6 @@ function AdminPage() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [category, setCategory] = useState('Normal');
 
-
   const handlePost = async () => {
     try {
       const formData = new FormData();
@@ -21,7 +20,6 @@ function AdminPage() {
       formData.append('date', date);    
       formData.append('content', blogContent);
       formData.append('category', category);
-
 
       if (imageFile) {
         formData.append("image", imageFile);
@@ -101,7 +99,6 @@ function AdminPage() {
             />
           </div>
           {/* the category  */}
-
           <div className="mb-4">
           <label htmlFor="category" className="block text-sm font-medium text-gray-600">
               Category
