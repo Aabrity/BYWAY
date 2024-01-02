@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { packagesData } from "../page"; 
-import TravelPackageTable from "@/Components/TravelPackageTable";
-import ExpandableSection from "@/Components/DropDown";
+import TravelPackageTable from "@/Components/Packages/TravelPackageTable";
+import ExpandableSection from "@/Components/Packages/DropDown";
 
 
 const ProductPage = () => {
@@ -34,9 +34,9 @@ const ProductPage = () => {
     numericPrice - (numericPrice * discountPercentage) / 100;
 
   return (
-    <div className="mt-14 bg-white">
-      <div className="flex flex-col items-center justify-center overflow-hidden bg-white mt-4">
-        <div className="max-w-7xl bg-white">
+    <div className="mt-14 bg-amber-200">
+      <div className="flex flex-col items-center justify-center overflow-hidden bg-amber-50 mt-4">
+        <div className="max-w-7xl bg-amber-50">
           <h1 className="text-2xl font-bold mt-20 mb-10">
             {selectedPackage.title}
           </h1>
@@ -45,7 +45,7 @@ const ProductPage = () => {
           </span>
           
           <div className="flex flex-col justify-between lg:flex-row gap-16 ">
-            <div className="flex flex-col gap-6 bg-white  shadow-lg">
+            <div className="flex flex-col gap-6 bg-amber-50  shadow-lg">
               <img
                 src={imgSrc}
                 alt={`Selected Image`}
@@ -121,7 +121,7 @@ const ProductPage = () => {
                   </div>
 
                   {/* Price Box */}
-                  <div className="bg-white p-4 rounded-lg shadow-lg lg:w-1/3 h-44 ">
+                  <div className="bg-amber-50 p-4 rounded-lg shadow-lg lg:w-1/3 h-44 ">
                     <h2 className="text-xl font-bold mb-2">Package Price:</h2>
                     {discountPercentage > 0 ? (
                       <div>
