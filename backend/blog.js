@@ -4,12 +4,13 @@ import multer from "multer";
 
 const router = express.Router();
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "rohan",
-  password: "357951",
-  database: "byway",
-});
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "rohan",
+//   password: "357951",
+//   database: "byway",
+// });
+
 // const db = mysql.createConnection({
 //   host: "localhost",
 //   user: "root",
@@ -21,7 +22,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.post("/postblog", upload.single("image"), (req, res) => {
-  const { title, date, content } = req.body;
+  const { title, date, content , category} = req.body;
   const image = req.file ? req.file.buffer : null;
 
   console.log("Received Title:", title);
@@ -30,8 +31,8 @@ router.post("/postblog", upload.single("image"), (req, res) => {
   console.log("Received Image:", image);
 
   const sql =
-    "INSERT INTO blogtable (title, description, image, published_date) VALUES (?, ?, ?, ?)";
-  const values = [title, content, image, date];
+  "INSERT INTO blogtable (title, description, image, published_date, category) VALUES (?, ?, ?, ?, ?)";
+  const values = [title, content, image, date ,category];
 
   db.query(sql, values, (err, result) => {
     if (err) {
