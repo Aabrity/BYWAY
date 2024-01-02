@@ -1,40 +1,27 @@
-// Import required modules
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import multer from 'multer';
-import mysql from 'mysql';
+import express from "express";
+import mysql from "mysql";
+import multer from "multer";
 
-// Create an Express app
-const app = express();
-const port = 3001;
+const router = express.Router();
+
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "rohan",
+//   password: "357951",
+//   database: "byway",
+// });
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "nothing",
+  database: "Byway",
+});
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// Configure MySQL connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'nothing',
-  database: 'Byway', // Change this to your database name
-});
-
-// Connect to the MySQL database
-db.connect((err) => {
-  if (err) {
-    console.error('Error connecting to MySQL:', err);
-  } else {
-    console.log('Connected to MySQL');
-  }
-});
-
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
-
-app.post('/api/post-blog', upload.single('image'), (req, res) => {
-  const { title, date, content, category } = req.body;
+router.post("/postblog", upload.single("image"), (req, res) => {
+  const { title, date, content , category} = req.body;
   const image = req.file ? req.file.buffer : null;
 
   console.log("Received Title:", title);

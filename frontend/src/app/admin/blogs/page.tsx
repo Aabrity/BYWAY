@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "./style.css";
 
 function AdminPage() {
   const [blogContent, setBlogContent] = useState("");
@@ -96,6 +95,24 @@ function AdminPage() {
             />
           </div>
 
+          {/* the category  */}
+
+          <div className="mb-4">
+          <label htmlFor="category" className="block text-sm font-medium text-gray-600">
+              Category
+            </label>
+            <select
+              id="category"
+              className="border rounded-md p-2"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="Normal">Normal</option>
+              <option value="Trending">Trending</option>
+            </select>
+          </div>
+
+        
           <div className="editorContainer mb-4 style={{ height: '600px' }}">
             <label
               htmlFor="blogContent"
