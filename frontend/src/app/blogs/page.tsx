@@ -4,9 +4,6 @@ import Image from "next/image";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BlogContainer from './BlogContainer';
-import LogoutModal from './LogoutModel';
-
-
 
 interface Blog {
   title: string;
@@ -28,9 +25,6 @@ interface BlogContainerProps {
 function Blogs() {
   const [searchQuery, setSearchQuery] = useState('');
   const [blogData, setBlogData] = useState<Array<Blog>>([]);
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-  
-  
   
   useEffect(() => {
     axios.get('http://localhost:8081/blogs/getblogs')
@@ -53,7 +47,7 @@ function Blogs() {
   );
 
   
-
+  //Two category
   const trendingBlogs = filteredBlogData.filter(blog => blog.category === 'Trending').slice(0, 10);
   const recentBlogs = filteredBlogData.filter(blog => blog.category === 'Normal');
 
