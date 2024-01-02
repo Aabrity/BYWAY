@@ -1,23 +1,27 @@
-// Import required modules
 "use client";
+
 import React, { useState } from "react";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "./style.css";
 
 function AdminPage() {
   const [blogContent, setBlogContent] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [category, setCategory] = useState('Normal');
+
 
   const handlePost = async () => {
     try {
       const formData = new FormData();
-      formData.append("title", title);
-      formData.append("date", date);
-      formData.append("content", blogContent);
+
+      formData.append('title', title);  
+      formData.append('date', date);    
+      formData.append('content', blogContent);
+      formData.append('category', category);
+
 
       if (imageFile) {
         formData.append("image", imageFile);
@@ -58,8 +62,9 @@ function AdminPage() {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <div className="w-1/5 bg-gray-800 p-12 text-white"></div>
-
+      <div className="w-1/5 bg-gray-800 p-12 text-white">
+      
+      </div>
       <div className="flex-grow bg-778C49 p-12 mt-16">
         <div className="bg-green-200 p-6 rounded-lg h-full w-full">
           <h2 className="text-2xl font-semibold mb-4">Add Blog Post</h2>
@@ -95,7 +100,22 @@ function AdminPage() {
               onChange={(e) => setDate(e.target.value)}
             />
           </div>
+          {/* the category  */}
 
+          <div className="mb-4">
+          <label htmlFor="category" className="block text-sm font-medium text-gray-600">
+              Category
+            </label>
+            <select
+              id="category"
+              className="border rounded-md p-2"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="Normal">Normal</option>
+              <option value="Trending">Trending</option>
+            </select>
+          </div>
           <div className="editorContainer mb-4 style={{ height: '600px' }}">
             <label
               htmlFor="blogContent"
