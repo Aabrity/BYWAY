@@ -1,7 +1,5 @@
 import { features } from "./featureData";
 import FeatureCard from "./featureCard";
-import { features } from "./featureData";
-import FeatureCard from "./featureCard";
 
 const Features = () => {
   return (
