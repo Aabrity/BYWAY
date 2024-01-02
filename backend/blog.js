@@ -10,6 +10,7 @@ const router = express.Router();
 //   password: "357951",
 //   database: "byway",
 // });
+
 // const db = mysql.createConnection({
 //   host: "localhost",
 //   user: "root",

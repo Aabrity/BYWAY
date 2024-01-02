@@ -312,7 +312,6 @@ const PackageItem: React.FC<PackageItemProps> = ({
         <hr className="mt-2 mb-2 border-white" />
         <div className="mt-2 flex justify-between items-center">
           <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            <Link href="/packages/[description]">
               Details
             </Link>
           </button>
