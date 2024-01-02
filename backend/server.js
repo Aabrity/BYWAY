@@ -20,8 +20,8 @@ app.use(
 
 app.use("/auth", authRoutes);
 app.use("/packages", packagesRoutes);
-app.use("/contactus", contactusRoutes);
 app.use("/blogs",blogRoutes);
+app.use("/contactus", contactusRoutes);
 app.use("/planTrip",planTripRoutes);
 
 
