@@ -2,7 +2,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import Popup from '@/Components/Popup/index'
+
 export default function Dash() {
   const [auth, setAuth] = useState(false);
   const [message, setMessage] = useState("");
@@ -39,11 +40,7 @@ export default function Dash() {
         </div>
       ) : (
         <div>
-          <h3>{message}</h3>
-          <h3>Login now</h3>
-          <Link href="/admin" className="btn btn-primary">
-            Login
-          </Link>
+        <Popup message="You are not authenticated" buttonText="Login now" onClose={() => {  }} />
         </div>
       )}
     </div>
