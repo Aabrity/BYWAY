@@ -23,6 +23,7 @@ export const packagesData = [
       "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
       "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
       "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      
       "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
     
@@ -255,6 +256,7 @@ type PackageItemProps = {
   duration: string;
   packageID: string;
   discount: string; 
+  imgArray: Array;
 };
 
 const PackageItem: React.FC<PackageItemProps> = ({
@@ -265,6 +267,7 @@ const PackageItem: React.FC<PackageItemProps> = ({
   duration,
   packageID,
   discount,
+  imgArray,
 }) => {
   const numericPrice = parseInt(price);
   const discountPercentage = parseInt(discount);
@@ -306,7 +309,7 @@ const PackageItem: React.FC<PackageItemProps> = ({
         <hr className="mt-2 mb-2 border-white" />
         <div className="mt-2 flex justify-between items-center">
           <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            <Link href="/packages/description">
+            <Link href="/packages/[description]" as={`/packages/${packageID}`}>
               Details
             </Link>
           </button>
@@ -385,6 +388,7 @@ const Packages: React.FC = () => {
               packageID={card.packageID}
               duration={card.duration}
               discount={card.discount}
+              imgArray={card.imgArray}
             />
           ))}
         </div>
