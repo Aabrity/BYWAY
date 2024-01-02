@@ -10,6 +10,7 @@ const router = express.Router();
 //   password: "357951",
 //   database: "byway",
 // });
+
 // const db = mysql.createConnection({
 //   host: "localhost",
 //   user: "root",
@@ -30,7 +31,7 @@ router.post("/postblog", upload.single("image"), (req, res) => {
   console.log("Received Image:", image);
 
   const sql =
-    "INSERT INTO blogtable (title, description, image, published_date, category) VALUES (?, ?, ?, ?, ?)";
+  "INSERT INTO blogtable (title, description, image, published_date, category) VALUES (?, ?, ?, ?, ?)";
   const values = [title, content, image, date ,category];
 
   db.query(sql, values, (err, result) => {
