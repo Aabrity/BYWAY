@@ -10,18 +10,18 @@ const router = express.Router();
 //   password: "357951",
 //   database: "byway",
 // });
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "nothing",
-  database: "Byway",
-});
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "nothing",
+//   database: "Byway",
+// });
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.post("/postblog", upload.single("image"), (req, res) => {
-  const { title, date, content } = req.body;
+  const { title, date, content , category} = req.body;
   const image = req.file ? req.file.buffer : null;
 
   console.log("Received Title:", title);
