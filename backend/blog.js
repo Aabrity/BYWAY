@@ -37,11 +37,10 @@ app.post('/api/post-blog', upload.single('image'), (req, res) => {
   const { title, date, content, category } = req.body;
   const image = req.file ? req.file.buffer : null;
 
-  console.log('Received Title:', title);
-  console.log('Received Date:', date);
-  console.log('Received Content:', content);
-  console.log('Received Image:', image);
-
+  console.log("Received Title:", title);
+  console.log("Received Date:", date);
+  console.log("Received Content:", content);
+  console.log("Received Image:", image);
 
   const sql = 'INSERT INTO blog (title, description, image, published_date, category) VALUES (?, ?, ?, ?,?)';
   const values = [title, content, image, date ,category];
