@@ -17,11 +17,13 @@ app.use(
   })
 );
 
+
 app.use("/auth", authRoutes);
 app.use("/packages", packagesRoutes);
-app.use("/blogs", blogRoutes);
 app.use("/contactus", contactusRoutes);
-app.use("/planTrip", planTripRoutes);
+app.use("/blogs",blogRoutes);
+app.use("/planTrip",planTripRoutes);
+
 
 app.listen(8081, () => {
   console.log("8081 is Listening ");

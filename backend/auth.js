@@ -42,7 +42,7 @@ router.post("/register", (req, res) => {
 
 
 router.post("/login", (req, res) => {
-  const loginQuery = "SELECT* FROM Admins WHERE email= ?";
+  const loginQuery = "SELECT * FROM Admins WHERE email= ?";
   db.query(loginQuery, [req.body.email], (err, data) => {
     if (err) {
       return res.json({ Error: "Login error in server" });
