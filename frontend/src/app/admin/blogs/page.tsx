@@ -62,23 +62,6 @@ function AdminPage() {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <div className="h-full flex flex-col bg-blue-400 border-r shadow-sm">
-      <Sidebar>
-          <Link href="/admin/adminblog">
-            <SidebarItem icon={<Home size={20} />} text="Home" />
-          </Link>
-          <Link href="/admin/packages">
-            <SidebarItem icon={<Package size={20} />} text="Packages" />
-          </Link>
-          <Link href="/admin/adminblog">
-            <SidebarItem icon={<Book size={20} />} text="Blogs" />
-          </Link>
-          <Link href="/admin/planTrip">
-            <SidebarItem icon={<Users size={20} />} text="Clients" />
-          </Link>
-        </Sidebar>
-      </div>
-
       <div className="flex-grow bg-778C49 p-12 mt-16">
         <div className="bg-green-200 p-6 rounded-lg h-full w-full">
           <h2 className="text-2xl font-semibold mb-4">Add Blog Post</h2>
