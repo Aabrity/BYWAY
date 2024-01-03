@@ -256,8 +256,8 @@ type PackageItemProps = {
   duration: string;
   packageID: string;
   discount: string; 
- 
- 
+
+
 };
 
 const PackageItem: React.FC<PackageItemProps> = ({
@@ -311,7 +311,7 @@ const PackageItem: React.FC<PackageItemProps> = ({
         <hr className="mt-2 mb-2 border-white" />
         <div className="mt-2 flex justify-between items-center">
           <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            <Link href="/packages/[description]">  
+            <Link href="/packages/[description]"as={'/packages/${packageID}'}>  
             Details
             </Link>
           </button>
@@ -378,7 +378,6 @@ const Packages: React.FC = () => {
         <h3 className="font-bold text-4xl text-left bg-indigo-950 text-white p-4 pb-4 mb-0">
           Our Packages
         </h3>
-
         <div className="flex  flex-wrap gap-10 lg:flex-row pb-2 pt-2 ">
           {packagesData.map((card) => (
             <PackageItem
