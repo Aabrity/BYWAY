@@ -23,6 +23,7 @@ export const packagesData = [
       "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
       "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
       "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
+      
       "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
     ],
     
@@ -267,8 +268,8 @@ const PackageItem: React.FC<PackageItemProps> = ({
   duration,
   packageID,
   discount,
-  imgArray,
   
+
 }) => {
   const numericPrice = parseInt(price);
   const discountPercentage = parseInt(discount);
