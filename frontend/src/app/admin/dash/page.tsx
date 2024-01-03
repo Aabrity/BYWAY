@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Popup from '@/Components/Popup/index'
+import Sidebar from '@/Components/Sidebar/index'
 
 export default function Dash() {
   const [auth, setAuth] = useState(false);
