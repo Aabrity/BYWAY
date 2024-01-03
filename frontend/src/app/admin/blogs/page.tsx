@@ -4,6 +4,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Sidebar, { SidebarItem } from "@/Components/Sidebaradmins/Sidebar";
+import {  Home, Package, Book, Users} from "lucide-react";
+import Link from "next/link";
+
 
 function AdminPage() {
   const [blogContent, setBlogContent] = useState("");
@@ -57,7 +61,22 @@ function AdminPage() {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <div className="w-1/5 bg-gray-800 p-12 text-white"></div>
+      <div className="h-full flex flex-col bg-blue-400 border-r shadow-sm">
+      <Sidebar>
+          <Link href="/admin/adminblog">
+            <SidebarItem icon={<Home size={20} />} text="Home" />
+          </Link>
+          <Link href="/admin/packages">
+            <SidebarItem icon={<Package size={20} />} text="Packages" />
+          </Link>
+          <Link href="/admin/adminblog">
+            <SidebarItem icon={<Book size={20} />} text="Blogs" />
+          </Link>
+          <Link href="/admin/planTrip">
+            <SidebarItem icon={<Users size={20} />} text="Clients" />
+          </Link>
+        </Sidebar>
+      </div>
 
       <div className="flex-grow bg-778C49 p-12 mt-16">
         <div className="bg-green-200 p-6 rounded-lg h-full w-full">
