@@ -14,6 +14,7 @@ function AdminPage() {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [category, setCategory] = useState('Normal');
 
   const handlePost = async () => {
     try {
@@ -112,6 +113,23 @@ function AdminPage() {
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
+          </div>
+
+          {/* the category  */}
+
+          <div className="mb-4">
+          <label htmlFor="category" className="block text-sm font-medium text-gray-600">
+              Category
+            </label>
+            <select
+              id="category"
+              className="border rounded-md p-2"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="Normal">Normal</option>
+              <option value="Trending">Trending</option>
+            </select>
           </div>
 
           {/* the category  */}
