@@ -1,8 +1,12 @@
 "use client";
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+
+import Sidebar from '@/Components/Sidebar/index'
+
 export default function Dash() {
   const [auth, setAuth] = useState(false);
   const [message, setMessage] = useState("");
@@ -27,10 +31,10 @@ export default function Dash() {
   }, [router]);
 
   return (
-    <div className="container mt-4">
+    <Sidebar>
       {auth ? (
         <div>
-          <h3>You are authorized {name}</h3>
+                    <h3>You are authorized {name}</h3>
           <button
             onClick={() => {
               router.push("/admin/dash");
@@ -46,6 +50,6 @@ export default function Dash() {
           </Link>
         </div>
       )}
-    </div>
+</Sidebar>
   );
 }
