@@ -255,8 +255,8 @@ type PackageItemProps = {
   duration: string;
   packageID: string;
   discount: string; 
-  imgArray: Array;
-  imgArray: Array;
+ 
+ 
 };
 
 const PackageItem: React.FC<PackageItemProps> = ({
@@ -267,8 +267,8 @@ const PackageItem: React.FC<PackageItemProps> = ({
   duration,
   packageID,
   discount,
-  imgArray,
-  imgArray,
+  
+
 }) => {
   const numericPrice = parseInt(price);
   const discountPercentage = parseInt(discount);
@@ -389,7 +389,6 @@ const Packages: React.FC = () => {
               packageID={card.packageID}
               duration={card.duration}
               discount={card.discount}
-              imgArray={card.imgArray}
               imgArray={card.imgArray}
             />
           ))}
