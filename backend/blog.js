@@ -10,7 +10,6 @@ const router = express.Router();
 //   password: "357951",
 //   database: "byway",
 // });
-
 // const db = mysql.createConnection({
 //   host: "localhost",
 //   user: "root",
@@ -30,27 +29,27 @@ router.post("/postblog", upload.single("image"), (req, res) => {
   console.log("Received Content:", content);
   console.log("Received Image:", image);
 
-  const sql =
-  "INSERT INTO blogtable (title, description, image, published_date, category) VALUES (?, ?, ?, ?, ?)";
+  const sql = 'INSERT INTO blog (title, description, image, published_date, category) VALUES (?, ?, ?, ?, ?)';
   const values = [title, content, image, date ,category];
 
+ 
   db.query(sql, values, (err, result) => {
     if (err) {
-      console.error("Error inserting data into the database:", err);
-      res.status(500).json({ error: "Internal Server Error" });
+      console.error('Error inserting data into the database:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
     } else {
-      console.log("Data inserted successfully");
-      res.status(200).json({ message: "Data inserted successfully" });
+      console.log('Data inserted successfully');
+      res.status(200).json({ message: 'Data inserted successfully' });
     }
   });
 });
 
-router.get("/getblogs", (req, res) => {
-  const sql = "SELECT * FROM blogtable";
+router.get('/getblogs', (req, res) => {
+  const sql = 'SELECT * FROM blogtable';
   db.query(sql, (err, result) => {
     if (err) {
-      console.error("Error fetching blog data:", err);
-      res.status(500).json({ error: "Internal Server Error" });
+      console.error('Error fetching blog data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
     } else {
       res.status(200).json(result);
     }
@@ -71,4 +70,3 @@ router.delete("/deleteblogs/:id", (req, res) => {
 });
 
 export default router;
-

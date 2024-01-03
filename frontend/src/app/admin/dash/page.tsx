@@ -1,8 +1,10 @@
 "use client";
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Popup from '@/Components/Popup/index'
+import Sidebar from '@/Components/Sidebar/index'
 
 export default function Dash() {
   const [auth, setAuth] = useState(false);
@@ -28,10 +30,10 @@ export default function Dash() {
   }, [router]);
 
   return (
-    <div className="container mt-4">
+    <Sidebar>
       {auth ? (
         <div>
-          <h3>You are authorized {name}</h3>
+                    <h3>You are authorized {name}</h3>
           <button
             onClick={() => {
               router.push("/admin/dash");
@@ -43,6 +45,6 @@ export default function Dash() {
         <Popup message="You are not authenticated" buttonText="Login now" onClose={() => {  }} />
         </div>
       )}
-    </div>
+</Sidebar>
   );
 }
