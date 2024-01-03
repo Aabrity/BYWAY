@@ -377,7 +377,6 @@ const Packages: React.FC = () => {
         <h3 className="font-bold text-4xl text-left bg-indigo-950 text-white p-4 pb-4 mb-0">
           Our Packages
         </h3>
-
         <div className="flex  flex-wrap gap-10 lg:flex-row pb-2 pt-2 ">
           {packagesData.map((card) => (
             <PackageItem
@@ -390,7 +389,6 @@ const Packages: React.FC = () => {
               duration={card.duration}
               discount={card.discount}
               imgArray={card.imgArray}
-              
             />
           ))}
         </div>
