@@ -4,9 +4,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Sidebar, { SidebarItem } from "@/Components/Sidebaradmins/Sidebar";
-import {  Home, Package, Book, Users} from "lucide-react";
-import Link from "next/link";
 
 
 function AdminPage() {
