@@ -2,6 +2,7 @@
 import React from "react";
 import Card from "@/Components/Packages/Cards";
 import Link from "next/link";
+import HeaderTab from "@/Components/Header";
 
 export const packagesData = [
   {
@@ -324,77 +325,83 @@ const PackageItem: React.FC<PackageItemProps> = ({
 
 const Packages: React.FC = () => {
   return (
-    <div>
-      <div className="mb-0" style={{ position: "relative" }}>
-        <div
-          style={{
-            position: "absolute",
-            top: "70%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "700px",
-            textAlign: "center",
-          }}
-        >
-          <form>
-            <input
-              type="text"
-              placeholder="Search..."
-              style={{
-                width: "70%",
-                padding: "10px",
-                marginRight: "5px",
-                borderRadius: "2px",
-                border: "0px solid #fff",
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                padding: "7px",
-                borderRadius: "5px",
-                backgroundColor: "transparent",
-                color: "white",
-                border: "0px",
-                transition: "background-color 0.2s",
-              }}
-              onMouseOver={(e) =>
-                ((e.target as HTMLButtonElement).style.backgroundColor =
-                  "green")
-              }
-              onMouseOut={(e) =>
-                ((e.target as HTMLButtonElement).style.backgroundColor =
-                  "transparent")
-              }
-            >
-              Search
-            </button>
-          </form>
+    <>
+    <HeaderTab/>
+      <div>
+        <div className="mb-0" style={{ position: "relative" }}>
+          <div
+            style={{
+              position: "absolute",
+              top: "70%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "700px",
+              textAlign: "center",
+            }}
+          >
+            <form>
+              <input
+                type="text"
+                placeholder="Search..."
+                style={{
+                  width: "70%",
+                  padding: "10px",
+                  marginRight: "5px",
+                  borderRadius: "2px",
+                  border: "0px solid #fff",
+                }}
+              />
+              <button
+                type="submit"
+                style={{
+                  padding: "7px",
+                  borderRadius: "5px",
+                  backgroundColor: "transparent",
+                  color: "white",
+                  border: "0px",
+                  transition: "background-color 0.2s",
+                }}
+                onMouseOver={(e) =>
+                  ((e.target as HTMLButtonElement).style.backgroundColor =
+                    "green")
+                }
+                onMouseOut={(e) =>
+                  ((e.target as HTMLButtonElement).style.backgroundColor =
+                    "transparent")
+                }
+              >
+                Search
+              </button>
+            </form>
+          </div>
+          <img
+            src="/assets/packagesImg/coverimage.jpg"
+            alt="Background"
+            className="w-full"
+          />
         </div>
-        <img src="/assets/packagesImg/coverimage.jpg" alt="Background" className="w-full" />
-      </div>
 
-      <section className="main-container padding-container pb-4">
-        <h3 className="font-bold text-4xl text-left bg-indigo-950 text-white p-4 pb-4 mb-0">
-          Our Packages
-        </h3>
-        <div className="flex  flex-wrap gap-10 lg:flex-row pb-2 pt-2 ">
-          {packagesData.map((card) => (
-            <PackageItem
-              key={card.packageID}
-              title={card.title}
-              imgSrc={card.imgSrc}
-              price={card.price}
-              description={card.description}
-              packageID={card.packageID}
-              duration={card.duration}
-              discount={card.discount}
-              imgArray={card.imgArray}
-            />
-          ))}
-        </div>
-      </section>
-    </div>
+        <section className="main-container padding-container pb-4">
+          <h3 className="font-bold text-4xl text-left bg-indigo-950 text-white p-4 pb-4 mb-0">
+            Our Packages
+          </h3>
+          <div className="flex  flex-wrap gap-10 lg:flex-row pb-2 pt-2 ">
+            {packagesData.map((card) => (
+              <PackageItem
+                key={card.packageID}
+                title={card.title}
+                imgSrc={card.imgSrc}
+                price={card.price}
+                description={card.description}
+                packageID={card.packageID}
+                duration={card.duration}
+                discount={card.discount}
+              />
+            ))}
+          </div>
+        </section>
+      </div>
+    </>
   );
 };
 

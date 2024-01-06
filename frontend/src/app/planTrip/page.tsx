@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import "./planTrip.css";
 
 import App from "../reviews/ReviewApp";
+import HeaderTab from "@/Components/Header";
 
 interface TravelData {
   fullName: string;
@@ -97,6 +98,7 @@ function PlanTrip() {
 
   return (
     <>
+    <HeaderTab/>
       <div className="container-1">
         <div className="page-banner ">
           <div className="page-title">

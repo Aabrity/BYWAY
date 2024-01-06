@@ -3,6 +3,7 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import "./reviewForm.css";
 import App from './ReviewApp'
+import HeaderTab from "@/Components/Header";
 
 interface ReviewData {
   title: string;
@@ -54,6 +55,7 @@ function PlanTrip() {
 
   return (
     <>
+    <HeaderTab/>
       <div className="container-1">
         <div className="page-banner ">
           <div className="page-title">

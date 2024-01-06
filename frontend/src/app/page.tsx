@@ -2,9 +2,11 @@ import React from "react";
 import Image from "next/image";
 import Features from "@/Components/Features";
 import SectionTitle from "@/Components/Common/SectionTitle";
+import HeaderTab from "@/Components/Header";
 export default function Home() {
   return (
     <>
+    <HeaderTab/>
       <div style={{ height: "80vh", position: "relative" }}>
         <Image
           src="/assets/coverimage.jpg"

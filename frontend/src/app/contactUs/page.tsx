@@ -9,6 +9,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { FaBook } from "react-icons/fa6";
 import { FaMapPin } from "react-icons/fa";
 import { FiMessageCircle } from "react-icons/fi";
+import HeaderTab from "@/Components/Header";
 
 function Contactus() {
   const [Email, setEmail] = useState("");
@@ -31,6 +32,7 @@ function Contactus() {
 
   return (
     <>
+    <HeaderTab/>
       <div className="container">
         <div className="header">
           <div className="text">Contact Us</div>
