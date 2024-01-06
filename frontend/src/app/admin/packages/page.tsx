@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { PackageTable } from "@/Components/Packages/PackageTable";
+
 
 export default function PackageInputForm() {
   const [formState, setFormState] = useState({
@@ -288,6 +290,9 @@ export default function PackageInputForm() {
                 Delete Package
               </button>
             </form>
+          </div>
+          <div className="mt-40 flex flex-col justify-center">
+              <PackageTable/>
           </div>
         </div>
       ) : (

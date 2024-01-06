@@ -5,10 +5,17 @@ const router = express.Router();
 
 const db = mysql.createConnection({
   host: "localhost",
-  user: "rohan",
-  password: "357951",
+  user: "anup",
+  password: "15akc#",
   database: "byway",
 });
+
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "rohan",
+//   password: "357951",
+//   database: "byway",
+// });
 
 router.post("/addpackages", (req, res) => {
   const {
@@ -76,54 +83,84 @@ router.post("/addlocations", (req, res) => {
   });
 });
 
-router.put("/editpackages/:id", async (req, res) => {
-  try {
-    const packageId = req.params.id;
-    const {
-      title,
-      location_id,
-      about,
-      guidance_language,
-      whats_included,
-      what_to_expect,
-      departure_and_return,
-      accessibility,
-      additional_info,
-    } = req.body;
+router.put("/updatepackage/:id", (req, res) => {
+  const packageId = req.params.id;
+  const {
+    title,
+    location_id,
+    about,
+    guidance_language,
+    whats_included,
+    what_to_expect,
+    departure_and_return,
+    accessibility,
+    additional_info,
+    price,
+    discount,
+  } = req.body;
 
-    const updateQuery = `
-      UPDATE packagetable 
-      SET 
-        package_title = ?,
-        location_id = ?,
-        about = ?,
-        guidance_language = ?,
-        whats_included = ?,
-        what_to_expect = ?,
-        departure_and_return = ?,
-        accessibility = ?,
-        additional_info = ?
-      WHERE id = ?`;
+  const updateQuery =
+    "UPDATE packagetable SET package_title=?, location_id=?, about=?, guidance_language=?, whats_included=?, what_to_expect=?, departure_and_return=?, accessibility=?, additional_info=?, price=?, discount=? WHERE package_id = ?";
 
-    const values = [
-      title,
-      location_id,
-      about,
-      guidance_language,
-      whats_included,
-      what_to_expect,
-      departure_and_return,
-      accessibility,
-      additional_info,
-      packageId,
-    ];
+  const values = [
+    title,
+    location_id,
+    about,
+    guidance_language,
+    whats_included,
+    what_to_expect,
+    departure_and_return,
+    accessibility,
+    additional_info,
+    price,
+    discount,
+    packageId,
+  ];
 
-    await db.query(updateQuery, values);
-    return res.json({ status: "Success", message: "Package updated successfully" });
-  } catch (err) {
-    console.error("Update error:", err);
-    return res.status(500).json({ status: "Error", message: "Update error" });
-  }
+  db.query(updateQuery, values, (err, result) => {
+    if (err) {
+      console.log("Update error:", err);
+      return res.status(500).json({ status: "Error", message: "Update error", error: err.message });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ status: "Error", message: "Package not found" });
+    }
+    return res.status(200).json({ status: "Success" });
+  });
 });
+
+
+
+router.get("/getpackages", (req, res) => {
+  const selectQuery = "SELECT * FROM packagetable";
+
+  db.query(selectQuery, (err, result) => {
+    if (err) {
+      console.error("Error executing query:", err);
+      return res.status(500).json({ status: "Error", message: "Fetch error" });
+    }
+    return res.status(200).json({ status: "Success", packages: result });
+  });
+});
+
+router.get("/getselectedpackage/:id", (req, res) => {
+  const packageId = req.params.id;
+  const selectQuery = "SELECT * FROM packagetable WHERE package_id = ?";
+
+  db.query(selectQuery, [packageId], (err, result) => {
+    if (err) {
+      console.error("Error executing query:", err);
+      return res.status(500).json({ status: "Error", message: "Fetch error" });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ status: "Error", message: "Package not found" });
+    }
+
+    return res.status(200).json({ status: "Success", package: result[0] });
+  });
+});
+
+
 
 export default router;

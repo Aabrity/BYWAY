@@ -10,8 +10,8 @@ router.use(cookieParser());
 
 const db = mysql.createConnection({
   host: "localhost",
-  user: "rohan",
-  password: "357951",
+  user: "anup",
+  password: "15akc#",
   database: "byway",
 });
 
