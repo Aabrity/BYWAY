@@ -8,19 +8,19 @@ const salt = 10;
 
 router.use(cookieParser());
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "anup",
-  password: "15akc#",
-  database: "byway",
-});
-
 // const db = mysql.createConnection({
 //   host: "localhost",
-//   user: "rohan",
-//   password: "357951",
+//   user: "anup",
+//   password: "15akc#",
 //   database: "byway",
 // });
+
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "rohan",
+  password: "357951",
+  database: "byway",
+});
 
 router.post("/register", (req, res) => {
   const createQuery =

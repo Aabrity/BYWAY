@@ -1,17 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-
+import { useRouter } from "next/navigation";
+import Popup from "@/Components/Popup";
 
 function AdminPage() {
   const [blogContent, setBlogContent] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [category, setCategory] = useState('Normal');
+  const [category, setCategory] = useState("Normal");
+  
+  const [auth, setAuth] = useState(false);
+  const [name, setName] = useState("");
+  axios.defaults.withCredentials = true;
+
+  const router = useRouter();
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/auth/dash")
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          setAuth(true);
+          setName(res.data.name);
+        } else {
+          setAuth(false);
+
+        }
+      })
+      .then((err) => console.log(err));
+  }, [router]);
 
   const handlePost = async () => {
     try {
@@ -58,7 +79,9 @@ function AdminPage() {
   if (!ReactQuill) return null;
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <>
+      {auth ? (
+        <div className="flex h-screen bg-gray-100">
       <div className="flex-grow bg-778C49 p-12 mt-16">
         <div className="bg-green-200 p-6 rounded-lg h-full w-full">
           <h2 className="text-2xl font-semibold mb-4">Add Blog Post</h2>
@@ -94,11 +117,13 @@ function AdminPage() {
               onChange={(e) => setDate(e.target.value)}
             />
           </div>
-
           {/* the category  */}
 
           <div className="mb-4">
-          <label htmlFor="category" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="category"
+              className="block text-sm font-medium text-gray-600"
+            >
               Category
             </label>
             <select
@@ -112,25 +137,7 @@ function AdminPage() {
             </select>
           </div>
 
-          {/* the category  */}
-
-          <div className="mb-4">
-          <label htmlFor="category" className="block text-sm font-medium text-gray-600">
-              Category
-            </label>
-            <select
-              id="category"
-              className="border rounded-md p-2"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="Normal">Normal</option>
-              <option value="Trending">Trending</option>
-            </select>
-          </div>
-
-        
-          <div className="editorContainer mb-4" style={{ height: '600px' }}>
+          <div className="editorContainer mb-4" style={{ height: "600px" }}>
             <label
               htmlFor="blogContent"
               className="block text-sm font-medium text-gray-600"
@@ -202,6 +209,19 @@ function AdminPage() {
         </form>
       </div>
     </div>
+      ) : (
+        <div>
+          <Popup
+            message="You are not authenticated"
+            buttonText="Login now"
+            onClose={() => {
+              router.push("/auth");
+            }}
+          />
+        </div>
+      )}
+    </>
+    
   );
 }
 

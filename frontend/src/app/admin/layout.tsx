@@ -1,5 +1,5 @@
 "use client"
-import {Sidebar} from "@/Components/Sidebar/Sidebar";
+import {Index} from "@/Components/Sidebar/Index";
 
 export default function DashboardLayout({
   children,
@@ -8,7 +8,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="flex">
-      <Sidebar />
+      <Index />
       <main className="flex-grow">{children}</main>
     </div>
   );
