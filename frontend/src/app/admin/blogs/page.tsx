@@ -130,7 +130,7 @@ function AdminPage() {
           </div>
 
         
-          <div className="editorContainer mb-4 style={{ height: '600px' }}">
+          <div className="editorContainer mb-4" style={{ height: '600px' }}>
             <label
               htmlFor="blogContent"
               className="block text-sm font-medium text-gray-600"
