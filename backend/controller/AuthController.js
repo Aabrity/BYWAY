@@ -79,8 +79,8 @@ router.post("/login", async (req, res) => {
     // Securely store the token in an HttpOnly cookie
     res.cookie("token", response.Token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "development", // Set to true in production if using HTTPS
-      sameSite: "strict", // Prevent CSRF attacks
+      secure: process.env.NODE_ENV === "development", 
+      sameSite: "strict", 
     });
 
     res.json(response);
