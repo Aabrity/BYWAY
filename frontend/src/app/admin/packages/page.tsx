@@ -28,11 +28,11 @@ export default function PackageInputForm() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/auth/dash")
+      .get("http://localhost:8081/admin/dash")
       .then((res) => {
         if (res.data.Status === "Success") {
           setAuth(true);
-          setName(res.data.name);
+          setName(res.data.UserData.username);
         } else {
           setAuth(false);
         }

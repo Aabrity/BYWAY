@@ -1,31 +1,127 @@
-
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
 
-export default function Loginpage() {
-  const [values, setValues] = useState({
+import React, { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
+import Admin from "@/../../backend/model/AdminModel";
+
+interface FormData {
+  email: string;
+  password: string;
+}
+const LoginForm: React.FC = () => {
+  const router = useRouter();
+
+  const [values, setValues] = useState<FormData>({
     email: "",
     password: "",
   });
 
-  const router = useRouter();
-  axios.defaults.withCredentials = true;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    axios
-      .post("http://localhost:8081/auth/login", values)
-      .then((res) => {
-        if (res.data.Status === "Success") {
-          router.push("/admin/dash");
-        } else {
-          alert(res.data.Error);
-        }
-      })
-      .then((err) => console.log(err));
+    const user = new Admin(values.email, values.password);
+
+    const email = user.getEmail();
+    const password = user.getPassword();
+
+    setValidationError({
+      email: validateEmail(email) ? "" : "Invalid email address.",
+      password: validatePassword(password)
+        ? ""
+        : "Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character.",
+    });
+
+    if (Object.values(validationError).some((error) => error !== "")) {
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:8081/auth/login", {
+        email: email,
+        password: password,
+      });
+
+      if (response.data.Status === "Success") {
+        console.log("Login successful");
+        router.push("/admin/dash");
+      } else {
+        console.error(response.data.Error);
+      }
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+    }
   };
+
+  const [validationError, setValidationError] = useState<{
+    [key in keyof FormData]: string;
+  }>({
+    email: "",
+    password: "",
+  });
+
+  const [touchedFields, setTouchedFields] = useState<
+    Record<keyof FormData, boolean>
+  >({
+    email: false,
+    password: false,
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleFocus = (name: keyof FormData) => {
+    if (validationError[name]) {
+      setValidationError((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const handleBlur = (field: keyof FormData) => {
+    setTouchedFields((prev) => ({
+      ...prev,
+      [field]: true,
+    }));
+
+    switch (field) {
+      case "email":
+        setValidationError((prev) => ({
+          ...prev,
+          [field]: validateEmail(values.email) ? "" : "Invalid email address.",
+        }));
+        break;
+      case "password":
+        setValidationError((prev) => ({
+          ...prev,
+          [field]: validatePassword(values.password)
+            ? ""
+            : "Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character.",
+        }));
+        break;
+      default:
+        break;
+    }
+  };
+
+  const validatePassword = (password: string) => {
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+  axios.defaults.withCredentials = true;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 h-auto w-full">
@@ -52,22 +148,42 @@ export default function Loginpage() {
             SIGN IN
           </h2>
           <div className="flex flex-col text-gray-400 py-2">
-            <label>Username</label>
+            <label>Email</label>
             <input
               type="email"
-              className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-              onChange={(e) => setValues({ ...values, email: e.target.value })}
+              name="email"
+              value={values.email}
+              onBlur={() => handleBlur("email")}
+              onChange={handleChange}
+              onFocus={() => handleFocus("email")}
+              className={`rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none ${
+                touchedFields.email && validationError.email
+                  ? "border-red-500"
+                  : ""
+              }`}
             />
+            {touchedFields.email && validationError.email && (
+              <p className="text-red-500">{validationError.email}</p>
+            )}
           </div>
           <div className="flex flex-col text-gray-400 py-2">
             <label>Password</label>
             <input
               type="password"
-              className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-              onChange={(e) =>
-                setValues({ ...values, password: e.target.value })
-              }
+              name="password"
+              value={values.password}
+              onBlur={() => handleBlur("password")}
+              onChange={handleChange}
+              onFocus={() => handleFocus("password")}
+              className={`rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none ${
+                touchedFields.password && validationError.password
+                  ? "border-red-500"
+                  : ""
+              }`}
             />
+            {touchedFields.password && validationError.password && (
+              <p className="text-red-500">{validationError.password}</p>
+            )}
           </div>
           <button
             type="submit"
@@ -79,4 +195,6 @@ export default function Loginpage() {
       </div>
     </div>
   );
-}
+};
+
+export default LoginForm;
