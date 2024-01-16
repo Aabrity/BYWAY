@@ -2,14 +2,13 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
-import mysql from "mysql";
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 
 import Admin from "../model/AdminModel.js";
-import connectToDatabase from '../db.js'
+import connectToDatabase from "../db.js";
 const router = express.Router();
 router.use(cookieParser());
-const salt=10;
+const salt = 10;
 
 let db;
 (async function () {
@@ -20,7 +19,7 @@ let db;
     process.exit(1);
   }
 })();
-dotenv.config()
+dotenv.config();
 
 //Login API call
 const loginUser = async (user) => {
@@ -82,8 +81,8 @@ router.post("/login", async (req, res) => {
     // Securely store the token in an HttpOnly cookie
     res.cookie("token", response.Token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "development", 
-      sameSite: "strict", 
+      secure: process.env.NODE_ENV === "development",
+      sameSite: "strict",
     });
 
     res.json(response);
@@ -92,6 +91,83 @@ router.post("/login", async (req, res) => {
   }
 });
 
+const registerUser = async (user) => {
+  const checkUserQueryByEmail = "SELECT * FROM Admins WHERE email = ?";
+  const checkUserQueryByUsername = "SELECT * FROM Admins WHERE username = ?";
 
+  return new Promise((resolve, reject) => {
+    // Check if the user already exists by email
+    db.query(
+      checkUserQueryByEmail,
+      [user.getEmail()],
+      (errEmail, dataEmail) => {
+        if (errEmail) {
+          reject({ Error: "Database error" });
+        }
+
+        // Check if the user already exists by username
+        db.query(
+          checkUserQueryByUsername,
+          [user.getUsername()],
+          (errUsername, dataUsername) => {
+            if (errUsername) {
+              reject({ Error: "Database error" });
+            }
+
+            if (dataEmail.length > 0 || dataUsername.length > 0) {
+              // User with the given email or username already exists
+              reject({
+                Error: "User with this email or username already exists",
+              });
+            } else {
+              // User doesn't exist, proceed with registration
+              bcrypt.hash(
+                user.getPassword().toString(),
+                salt,
+                (hashErr, hash) => {
+                  if (hashErr) {
+                    reject({ Error: "Hashing error" });
+                  }
+
+                  const registerQuery =
+                    "INSERT INTO Admins (`username`, `email`, `password`) VALUES (?, ?, ?)";
+                  const values = [user.getUsername(), user.getEmail(), hash];
+
+                  // Insert new user into the database
+                  db.query(registerQuery, values, (insertErr) => {
+                    if (insertErr) {
+                      console.log("Insertion error:", insertErr);
+                      reject({ Error: "Insertion error" });
+                    } else {
+                      // Registration successful
+                      resolve({ Status: "Success" });
+                    }
+                  });
+                }
+              );
+            }
+          }
+        );
+      }
+    );
+  });
+};
+
+// Controller endpoint for registration
+router.post("/register", async (req, res) => {
+  const { email, password, username } = req.body;
+  const user = new Admin(email, password, username);
+
+  try {
+    // Register the user
+    const registrationResponse = await registerUser(user);
+
+    // You can modify the response format as needed
+    res.json(registrationResponse);
+  } catch (error) {
+    console.error("An error occurred during registration:", error);
+    res.json(error);
+  }
+});
 
 export default router;
