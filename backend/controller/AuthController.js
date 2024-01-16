@@ -6,17 +6,20 @@ import mysql from "mysql";
 import dotenv from 'dotenv'
 
 import Admin from "../model/AdminModel.js";
-
+import connectToDatabase from '../db.js'
 const router = express.Router();
 router.use(cookieParser());
 const salt=10;
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "rohan",
-  password: "357951",
-  database: "byway",
-});
+let db;
+(async function () {
+  try {
+    db = await connectToDatabase();
+  } catch (err) {
+    console.error("Failed to connect to database:", err);
+    process.exit(1);
+  }
+})();
 dotenv.config()
 
 //Login API call
