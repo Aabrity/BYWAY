@@ -33,23 +33,30 @@ const dbConfigs = {
   },
 };
 
-async function connectToDatabase() {
+export default async function connectToDatabase() {
+  // Try each user in the dbConfigs object
   for (let user in dbConfigs) {
-    const dbConfig = dbConfigs[user];
-    const connection = mysql.createConnection(dbConfig);
-
     try {
-      await connection.connect();
-      console.log(`Connected to ${user}'s database!`);
+      // Try to create a connection
+      let connection = mysql.createConnection(dbConfigs[user]);
+      await new Promise((resolve, reject) => {
+        connection.connect((error) => {
+          if (error) {
+            connection.end();
+            reject(error);
+          } else {
+            console.log(`Connected as ${user}`);
+            resolve(connection);
+          }
+        });
+      });
       return connection;
-    } catch (err) {
-      console.log(
-        `Failed to connect to ${user}'s database. Trying next user...`
-      );
+    } catch (error) {
+      // Continue to the next iteration if the connection fails
+      continue;
     }
   }
 
-  throw new Error("Failed to connect to any database.");
+  // If no connection could be established, throw an error
+  throw new Error("Could not establish a database connection");
 }
-
-export default connectToDatabase;
