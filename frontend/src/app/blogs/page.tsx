@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BlogContainer from "./BlogContainer";
 import HeaderTab from "@/Components/Header";
+import FooterTab from '@/Components/Footer';
 
 interface Blog {
   title: string;
@@ -201,6 +202,7 @@ function Blogs() {
           />
         ))}
       </div>
+      <FooterTab/>
     </>
   );
 }

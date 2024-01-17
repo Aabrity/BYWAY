@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import "./reviewForm.css";
 import App from './ReviewApp'
 import HeaderTab from "@/Components/Header";
+import FooterTab from "@/Components/Footer";
 
 interface ReviewData {
   title: string;
@@ -167,6 +168,7 @@ function PlanTrip() {
       <div>
         <App/>
       </div>
+      <FooterTab/>
     </>
   );
 }

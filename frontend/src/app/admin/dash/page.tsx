@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Popup from "@/Components/Popup/index";
 
 export default function Dash() {
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState<boolean | undefined>();
   const [name, setName] = useState("");
   axios.defaults.withCredentials = true;
 
@@ -27,16 +27,9 @@ export default function Dash() {
 
   return (
     <>
-      {auth ? (
-        <div>
-          <h3>You are authorized {name}</h3>
-          <button
-            onClick={() => {
-              router.push("/admin/dash");
-            }}
-          ></button>
-        </div>
-      ) : (
+      {auth === undefined ? (
+        <>loading....</>
+      ) : auth === false ? (
         <div>
           <Popup
             message="You are not authenticated"
@@ -45,6 +38,15 @@ export default function Dash() {
               router.push("/auth");
             }}
           />
+        </div>
+      ) : (
+        <div>
+          <h3>You are authorized {name}</h3>
+          <button
+            onClick={() => {
+              router.push("/admin/dash");
+            }}
+          ></button>
         </div>
       )}
     </>

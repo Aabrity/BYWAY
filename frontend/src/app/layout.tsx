@@ -21,9 +21,7 @@ export default function RootLayout({
       <link rel="icon" href="/assets/logo" sizes="any"></link>
       <head />
       <body>
-        {/* <HeaderTab /> */}
         {children}
-      {/* <FooterTab /> */}
       </body>
     </html>
   );

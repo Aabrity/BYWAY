@@ -4,6 +4,7 @@ import { packagesData } from "../page";
 import TravelPackageTable from "@/Components/Packages/TravelPackageTable";
 import ExpandableSection from "@/Components/Packages/DropDown";
 import HeaderTab from "@/Components/Header";
+import FooterTab from "@/Components/Footer";
 
 
 const ProductPage = () => {
@@ -147,6 +148,7 @@ const ProductPage = () => {
           </div>
         </div>
       </div>
+      <FooterTab/>
     </>
   );
 };
