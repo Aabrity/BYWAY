@@ -14,7 +14,7 @@ interface SidebarContextProps {
 
 const SidebarContext = createContext<SidebarContextProps | undefined>(undefined);
 
-const Sidebar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const Sidebar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [expanded, setExpanded] = useState(true);
 
   return (
@@ -67,5 +67,3 @@ export function SidebarItem({ icon, text, active, alert }: SidebarItemProps) {
     </li>
   );
 }
-
-export default Sidebar;

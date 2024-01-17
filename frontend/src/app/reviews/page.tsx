@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import App from './ReviewApp';
 import "./reviewForm.css";
 
+import HeaderTab from "@/Components/Header";
+
 interface ReviewData {
   title: string;
   fullName: string;
@@ -54,6 +56,7 @@ function PlanTrip() {
 
   return (
     <>
+    <HeaderTab/>
       <div className="container-1">
         <div className="page-banner ">
           <div className="page-title">

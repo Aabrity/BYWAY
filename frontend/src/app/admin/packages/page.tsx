@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { PackageTable } from "@/Components/Packages/PackageTable";
+import Popup from "@/Components/Popup";
+
 
 export default function PackageInputForm() {
   const [formState, setFormState] = useState({
@@ -19,16 +21,18 @@ export default function PackageInputForm() {
     discount: 0,
   });
   const [auth, setAuth] = useState(false);
+  const [name, setName] = useState("");
   axios.defaults.withCredentials = true;
 
   const router = useRouter();
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/auth/dash")
+      .get("http://localhost:8081/admin/dash")
       .then((res) => {
         if (res.data.Status === "Success") {
           setAuth(true);
+          setName(res.data.UserData.username);
         } else {
           setAuth(false);
         }
@@ -289,13 +293,19 @@ export default function PackageInputForm() {
               </button>
             </form>
           </div>
+          <div className="mt-40 flex flex-col justify-center">
+            <PackageTable />
+          </div>
         </div>
       ) : (
         <div>
-          <h3>Login now</h3>
-          <Link href="/admin" className="btn btn-primary">
-            Login
-          </Link>
+          <Popup
+            message="You are not authenticated"
+            buttonText="Login now"
+            onClose={() => {
+              router.push("/auth");
+            }}
+          />
         </div>
       )}
     </div>
