@@ -2,9 +2,9 @@ import cors from "cors";
 import express from "express";
 
 import authRoutes from "./auth.js";
+import blogRoutes from "./blog.js";
 import contactusRoutes from "./contactus.js";
 import packagesRoutes from "./packages.js";
-import blogRoutes from "./blog.js";
 import planTripRoutes from "./planTrip.js";
 
 const app = express();
@@ -23,6 +23,7 @@ app.use("/packages", packagesRoutes);
 app.use("/contactus", contactusRoutes);
 app.use("/blogs",blogRoutes);
 app.use("/planTrip",planTripRoutes);
+// app.use("/planTrip",planTripRoutes);
 
 
 

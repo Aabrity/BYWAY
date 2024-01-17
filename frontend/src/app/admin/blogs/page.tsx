@@ -1,211 +1,248 @@
 "use client";
 
-import React, { useState } from "react";
+import HeaderTab from "@/Components/Header";
 import axios from "axios";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import Sidebar, { SidebarItem } from "@/Components/Sidebaradmins/Sidebar";
-import {  Home, Package, Book, Users} from "lucide-react";
-import Link from "next/link";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import BlogContainer from "./BlogContainer";
 
+interface Blog {
+  title: string;
+  description: string;
+  published_date: string;
+  image: Buffer;
+  category: "Trending" | "Normal";
+}
 
-function AdminPage() {
-  const [blogContent, setBlogContent] = useState("");
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [category, setCategory] = useState('Normal');
+interface BlogContainerProps {
+  title: string;
+  description: string;
+  publishedDate: string;
+  imageSrc: string;
+}
 
-  const handlePost = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("date", date);
-      formData.append("content", blogContent);
+function Blogs() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [blogData, setBlogData] = useState<Array<Blog>>([]);
 
-      if (imageFile) {
-        formData.append("image", imageFile);
-      }
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/blogs/getblogs")
+      .then((response) => {
+        setBlogData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching blog data:", error);
+      });
+  }, []);
 
-      await axios.post("http://localhost:8081/blogs/postblog", formData);
-
-      console.log("Content posted successfully");
-    } catch (error) {
-      console.error("Error posting content:", error);
-    }
+  //Searched box filtered
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setImageFile(e.target.files[0]);
-    }
-  };
-  const [id, setId] = useState("");
+  const filteredBlogData = blogData.filter((blog) =>
+    blog.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-  const handleBlogDelete = async (event: React.FormEvent) => {
-    event.preventDefault();
-    try {
-      const response = await axios.delete(
-        `http://localhost:8081/blogs/deleteblogs/${id}`
-      );
-      if (response.data.Status === "Success") {
-        alert("Blog deleted successfully");
-      } else {
-        alert("Deletion error");
-      }
-    } catch (error) {
-      console.error("Deletion error:", error);
-    }
-  };
-
-  if (!ReactQuill) return null;
+  //Two category
+  const trendingBlogs = filteredBlogData
+    .filter((blog) => blog.category === "Trending")
+    .slice(0, 10);
+  const recentBlogs = filteredBlogData.filter(
+    (blog) => blog.category === "Normal"
+  );
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <div className="flex-grow bg-778C49 p-12 mt-16">
-        <div className="bg-green-200 p-6 rounded-lg h-full w-full">
-          <h2 className="text-2xl font-semibold mb-4">Add Blog Post</h2>
+    <>
+      <HeaderTab />
+      <div style={{ height: "60vh", position: "relative" }}>
+        <Image
+          src="/assets/coverimage.jpg"
+          alt="Cover Image "
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center center"
+        />
 
-          <div className="mb-4">
-            <label
-              htmlFor="title"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Title
-            </label>
+        {/* Search bar */}
+        <div
+          style={{
+            position: "absolute",
+            top: "90%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "750px",
+            textAlign: "center",
+          }}
+        >
+          <form>
             <input
               type="text"
-              id="title"
-              className="border rounded-md p-2 w-full"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Search..."
+              style={{
+                width: "70%",
+                padding: "10px",
+                marginRight: "5px",
+                borderRadius: "2px",
+                border: "0px solid #fff",
+              }}
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="date"
-              className="block text-sm font-medium text-gray-600"
+            <button
+              type="submit"
+              style={{
+                padding: "7px",
+                borderRadius: "5px",
+                backgroundColor: "transparent",
+                color: "white",
+                border: "0px",
+                transition: "background-color 0.2s",
+              }}
+              onMouseOver={(e) =>
+                ((e.target as HTMLButtonElement).style.backgroundColor =
+                  "green")
+              }
+              onMouseOut={(e) =>
+                ((e.target as HTMLButtonElement).style.backgroundColor =
+                  "transparent")
+              }
             >
-              Date
-            </label>
-            <input
-              type="date"
-              id="date"
-              className="border rounded-md p-2"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </div>
-
-          {/* the category  */}
-
-          <div className="mb-4">
-          <label htmlFor="category" className="block text-sm font-medium text-gray-600">
-              Category
-            </label>
-            <select
-              id="category"
-              className="border rounded-md p-2"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="Normal">Normal</option>
-              <option value="Trending">Trending</option>
-            </select>
-          </div>
-
-          {/* the category  */}
-
-          <div className="mb-4">
-          <label htmlFor="category" className="block text-sm font-medium text-gray-600">
-              Category
-            </label>
-            <select
-              id="category"
-              className="border rounded-md p-2"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="Normal">Normal</option>
-              <option value="Trending">Trending</option>
-            </select>
-          </div>
-
-        
-          <div className="editorContainer mb-4 style={{ height: '600px' }}">
-            <label
-              htmlFor="blogContent"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Blog Content
-            </label>
-            {ReactQuill && (
-              <div className="editor-wrapper">
-                <ReactQuill
-                  theme="snow"
-                  value={blogContent}
-                  onChange={setBlogContent}
-                />
-              </div>
-            )}
-          </div>
-
-          <input
-            type="file"
-            accept="image/*"
-            className="mb-2"
-            onChange={handleImageChange}
-          />
-
-          {imageFile && (
-            <img
-              src={URL.createObjectURL(imageFile)}
-              alt="Uploaded"
-              className="max-w-full h-auto mb-2"
-              style={{ maxWidth: "300px", maxHeight: "200px" }}
-            />
-          )}
-
-          <button
-            type="button"
-            className="bg-blue-500 hover:bg-blue-700 active:bg-blue-800 text-white px-4 py-2 rounded-md"
-            onClick={handlePost}
-          >
-            Post
-          </button>
+              Search
+            </button>
+          </form>
         </div>
       </div>
-      <div></div>
-      <div className="App flex flex-col justify-center">
-        <form
-          onSubmit={handleBlogDelete}
-          className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg text-gray-400"
-        >
-          <h2 className="text-4xl dark:text-white font-bold text-center">
-            Delete Blog
-          </h2>
-          <label>
-            Blog ID:
-            <input
-              type="text"
-              name="id"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-              className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-              required
-            />
-          </label>
-          <button
-            type="submit"
-            className="w-full my-5 py-2 bg-red-600 text-white font-semibold rounded-lg"
-          >
-            Delete Blog
-          </button>
-        </form>
+      <div>
+        <h1 style={{ fontSize: "40px", margin: "30px 0", padding: "10px" }}>
+          <b>Top Trending Blogs</b>
+        </h1>
       </div>
-    </div>
+
+      <div
+        style={{
+          display: "flex",
+          gap: "1.3%",
+          overflowX: "auto",
+          paddingLeft: "1%",
+          paddingRight: "1%",
+        }}
+      >
+        {trendingBlogs.map((blog, index) => (
+          <BlogContainer
+            key={index}
+            title={blog.title}
+            description={blog.description}
+            publishedDate={blog.published_date}
+            imageSrc={
+              blog.image
+                ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString(
+                    "base64"
+                  )}`
+                : ""
+            }
+          />
+        ))}
+      </div>
+
+      <div>
+        <h1 style={{ fontSize: "40px", margin: "30px 0", padding: "10px" }}>
+          <b>Recent Blogs</b>
+        </h1>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          paddingLeft: "20px",
+        }}
+      >
+        {recentBlogs.map((blog, index) => (
+          <RecentBlogContainer
+            key={index}
+            title={blog.title}
+            description={blog.description.slice(0, 350) + "..."} // Limit description to 150 characters
+            publishedDate={blog.published_date}
+            imageSrc={
+              blog.image
+                ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString(
+                    "base64"
+                  )}`
+                : ""
+            }
+          />
+        ))}
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          paddingLeft: "20px",
+        }}
+      >
+        {recentBlogs.map((blog, index) => (
+          <RecentBlogContainer
+            key={index}
+            title={blog.title}
+            description={blog.description.slice(0, 150) + "..."}
+            publishedDate={blog.published_date}
+            imageSrc={
+              blog.image
+                ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString(
+                    "base64"
+                  )}`
+                : ""
+            }
+          />
+        ))}
+      </div>
+    </>
   );
 }
 
-export default AdminPage;
+const RecentBlogContainer: React.FC<BlogContainerProps> = ({
+  title,
+  description,
+  publishedDate,
+  imageSrc,
+}) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        width: "80%",
+        margin: "auto",
+        padding: "20px",
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+      }}
+    >
+      {/* Left side for Image */}
+      <div style={{ flex: "0 0 30%", marginRight: "20px" }}>
+        <img
+          src={imageSrc}
+          alt="Blog Cover"
+          style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+        />
+      </div>
+
+      {/* Right side for Content */}
+      <div style={{ flex: "1" }}>
+        <h2 style={{ fontSize: "24px", marginBottom: "10px" }}>{title}</h2>
+        <p style={{ fontSize: "16px", color: "#555" }}>{description}</p>
+        <div style={{ marginTop: "auto", textAlign: "right" }}>
+          <p style={{ fontSize: "14px", fontWeight: "bold", color: "#888" }}>
+            {publishedDate}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Blogs;

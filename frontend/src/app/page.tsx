@@ -1,7 +1,6 @@
-import React from "react";
-import Image from "next/image";
-import Features from "@/Components/Features";
 import SectionTitle from "@/Components/Common/SectionTitle";
+import Features from "@/Components/Features";
+import Image from "next/image";
 export default function Home() {
   return (
     <>

@@ -1,11 +1,10 @@
 import React from "react";
 
-import { RiCustomerServiceLine } from "react-icons/ri";
 import { FaMapSigns } from "react-icons/fa";
-import { MdOutlineContactSupport } from "react-icons/md";
+import { FaClockRotateLeft, FaRegCommentDots } from "react-icons/fa6";
 import { LuMousePointerClick } from "react-icons/lu";
-import { FaRegCommentDots } from "react-icons/fa6";
-import { FaClockRotateLeft } from "react-icons/fa6";
+import { MdOutlineContactSupport } from "react-icons/md";
+import { RiCustomerServiceLine } from "react-icons/ri";
 
 export type Feature = {
   id: number;
@@ -59,3 +58,5 @@ export const features = [
     icon: <FaClockRotateLeft size={35} />,
   },
 ];
+
+

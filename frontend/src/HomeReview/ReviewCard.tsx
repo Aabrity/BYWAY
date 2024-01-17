@@ -24,7 +24,7 @@ const ReviewCard: React.FC<CardProps> = (props) => {
 
   return (
     <div className='card-container flex flex-col'>
-      <a className='review ' href="./reviews">Write a review</a>
+      <a className='review mb-4' href="./reviews">Write a review</a>
       <div className='underline w-full border-b-2 mb-4'></div>
       {review && (
         <div key={review.id}>

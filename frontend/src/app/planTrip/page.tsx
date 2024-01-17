@@ -3,7 +3,7 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import "./planTrip.css";
 
-import App from "../reviews/ReviewApp";
+
 
 interface TravelData {
   fullName: string;
@@ -47,7 +47,7 @@ function PlanTrip() {
   const [travelList, setTravelList] = useState<TravelData[]>([]);
 
   useEffect(() => {
-    Axios.get("http://localhost:8081/planTrip/api/get").then((response) => {
+    Axios.get("http://localhost:8081/planTrip/gettrip").then((response) => {
       setTravelList(response.data);
       // console.log(response.data);
     });
@@ -55,7 +55,7 @@ function PlanTrip() {
 
   const submit = () => {
     // Proceed with the submission
-    Axios.post("http://localhost:8081/planTrip/api/insert", {
+    Axios.post("http://localhost:8081/planTrip/inserttrip", {
       fullName,
       phoneNumber,
       emailAddress,
@@ -309,12 +309,11 @@ function PlanTrip() {
                   </div>
                 </div>
                 <div className="form-group ">
-                  <label className="required">More information </label>
+                  <label >More information </label>
                   <textarea
                     className="form-control"
-                    name="comments"
-                    id="comments"
-                    required
+                    
+                  
                     onChange={(e) => {
                       setMoreInfo(e.target.value);
                     }}
@@ -349,13 +348,13 @@ function PlanTrip() {
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label className="required"> Phone Number</label>
+                      <label > Phone Number</label>
                       <input
                         className="form-control"
                         name="phoneNumber"
                         id="phoneNumber"
                         max="15"
-                        required
+                        
                         onChange={(e) => {
                           setPhoneNumber(e.target.value);
                         }}
@@ -434,9 +433,7 @@ function PlanTrip() {
         </div>
       </div>
 
-      <div>
-        <App />
-      </div>
+   
     </>
   );
 }

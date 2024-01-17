@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/admin/planTripAdmin/Admin.js"
-  ],
+, ".next/types/app/admin/planTrip/page.tsx", ".next/types/app/planTrip/page.tsx"  ],
   "exclude": ["node_modules", "./dist"]
 }

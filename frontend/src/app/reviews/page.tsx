@@ -1,8 +1,8 @@
 "use client";
 import Axios from "axios";
 import { useEffect, useState } from "react";
+import App from './ReviewApp';
 import "./reviewForm.css";
-import App from './ReviewApp'
 
 interface ReviewData {
   title: string;
@@ -23,14 +23,14 @@ function PlanTrip() {
   const [reviewList, setReviewList] = useState<ReviewData[]>([]);
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/get/review").then((response) => {
+    Axios.get("http://localhost:8081/planTrip/getreview").then((response) => {
       setReviewList(response.data);
-      // console.log(response.data);
+      console.log(response.data);
     });
   }, []); // Empty dependency array
 
   const submit = () => {
-    Axios.post("http://localhost:3001/api/insert/review", {
+    Axios.post("http://localhost:8081/planTrip/insertreview", {
       fullName: fullName,
       selectCountry: selectCountry,
       date: date,

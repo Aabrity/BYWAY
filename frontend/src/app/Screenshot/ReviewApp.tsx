@@ -30,7 +30,7 @@ const App = () => {
 
   return (
     <section className='flex flex-col justify-center items-center w-full h-screen space-y-16'>
-      <h1 className='font-bold text-4xl border-b-4 border-blue-300 pb-1'>Our Reviews</h1>
+      {/* <h1 className='font-bold text-4xl border-b-4 border-blue-300 pb-1'>Our Reviews</h1> */}
       <ReviewCard
         reviews={reviews}
         currentIndex={currentIndex}
