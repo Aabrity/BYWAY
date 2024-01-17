@@ -12,6 +12,7 @@
     "@ionic/react": "^7.6.5",
     "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.6.2",
+    "ionicons": "^7.2.2",
     "lucide-react": "^0.303.0",
     "next": "14.0.3",
     "react": "^18.2.0",
