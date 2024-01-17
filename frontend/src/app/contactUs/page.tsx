@@ -10,6 +10,7 @@ import { FaBook } from "react-icons/fa6";
 import { FaMapPin } from "react-icons/fa";
 import { FiMessageCircle } from "react-icons/fi";
 import HeaderTab from "@/Components/Header";
+import FooterTab from "@/Components/Footer";
 
 function Contactus() {
   const [Email, setEmail] = useState("");
@@ -141,6 +142,7 @@ function Contactus() {
           <div className="Info"> aa***@gmail.com </div>
         </div>
       </div>
+      <FooterTab/>
     </>
   );
 }

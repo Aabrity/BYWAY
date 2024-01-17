@@ -3,6 +3,7 @@ import React from "react";
 import Card from "@/Components/Packages/Cards";
 import Link from "next/link";
 import HeaderTab from "@/Components/Header";
+import FooterTab from "@/Components/Footer";
 
 export const packagesData = [
   {
@@ -401,6 +402,7 @@ const Packages: React.FC = () => {
           </div>
         </section>
       </div>
+      <FooterTab/>
     </>
   );
 };
