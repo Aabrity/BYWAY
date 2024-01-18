@@ -9,9 +9,6 @@ import {
   logoInstagram,
 } from "ionicons/icons";
 
-// Import your logo
-import logo from "@/public/next.svg"; // replace 'path-to-your-logo-file' with the actual path
-
 interface Link {
   name: string;
   link: string;
@@ -23,12 +20,12 @@ interface FooterProps {
 
 const SocialIcons: React.FC<FooterProps> = ({ Icons }) => {
   return (
-    <div className="text-teal-500">
+    <div className="text-green-600">
       {Icons.map((icon) => (
         <span
           key={icon.name}
           className="p-2 cursor-pointer inline-flex items-center
-            rounded-full bg-gray-700 mx-1.5 text-xl hover:text-gray-100 hover:bg-teal-500
+            rounded-full bg-gray-700 mx-1.5 text-xl hover:text-gray-100 hover:bg-green-600
             duration-300 "
         >
           <IonIcon icon={icon.name} />
@@ -48,23 +45,24 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-gray-700 text-white">
-      <div className=" md:flex md:justify-between md:items-center sm:px-12 px-4 bg-[#ffffff19] py-7">
-        <div className="bg-transparent flex justify-between items-center text-center pt-2 text-gray-400 text-sm pb-8 w-full px-10">
-          <div className=" flex justify-start items-center">
-            <img src={logo} alt="logo" className="h-10 w-10" />{" "}
-            {/* Adjust the size as needed */}
+    <footer className="bg-gray-800 text-white">
+      <div className="md:flex md:justify-center md:items-center sm:px-12 px-4 bg-[#ffffff19]">
+        <div className="flex flex-col md:flex-row justify-between items-center text-center text-gray-400 text-sm py-5 w-full md:px-10">
+          <div className="flex justify-start items-center mb-4 md:mb-0">
+            <img src="/assets/logos/logodark.png" alt="logo" className="h-16" />
           </div>
-          <div className="animate-pulse">Myway or Byway</div>
-          <div className="flex justify-end items-center">
+          <div className="animate-pulse text-2xl text-green-500 mb-4 md:mb-0">
+            Myway or Byway
+          </div>
+          <div className="flex justify-center items-center">
             <SocialIcons Icons={Icons} />
           </div>
         </div>
       </div>
       {/* Divider */}
-      <div className="border-t border-gray-600"></div>
+      <div className=" border-gray-300 w-full"></div>
       {/* Copyright information */}
-      <div className="text-center text-gray-400 text-sm">
+      <div className="text-center md:text-end text-gray-400 text-sm py-2 md:mr-10 ">
         <span>© 2020 Appy. All rights reserved.</span>
       </div>
     </footer>
