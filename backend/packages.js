@@ -1,22 +1,16 @@
 import express from "express";
-import mysql from "mysql";
+import connectToDatabase from "./db.js";
 
 const router = express.Router();
-
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "anup",
-  password: "15akc#",
-  database: "byway",
-});
-
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "rohan",
-//   password: "357951",
-//   database: "byway",
-// });
-
+let db;
+(async function () {
+  try {
+    db = await connectToDatabase();
+  } catch (err) {
+    console.error("Failed to connect to database:", err);
+    process.exit(1);
+  }
+})();
 router.post("/addpackages", (req, res) => {
   const {
     title,

@@ -1,21 +1,20 @@
 import express from "express";
-import mysql from "mysql";
 import multer from "multer";
+import connectToDatabase from './db.js'
+import dotenv from 'dotenv';
 
 const router = express.Router();
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "rohan",
-  password: "357951",
-  database: "byway",
-});
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "nothing",
-//   database: "Byway",
-// });
+let db;
+(async function () {
+  try {
+    db = await connectToDatabase();
+  } catch (err) {
+    console.error("Failed to connect to database:", err);
+    process.exit(1);
+  }
+})();
+dotenv.config();
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
