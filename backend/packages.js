@@ -1,9 +1,9 @@
 import express from "express";
-import mysql from "mysql";
+import mysql2 from "mysql";
 
 const router = express.Router();
 
-const db = mysql.createConnection({
+const db = mysql2.createConnection({
   host: "localhost",
   user: "anup",
   password: "15akc#",
