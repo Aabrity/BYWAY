@@ -1,21 +1,16 @@
 import express from "express";
-import mysql2 from "mysql";
+import connectToDatabase from "./db.js";
 
 const router = express.Router();
-
-const db = mysql2.createConnection({
-  host: "localhost",
-  user: "anup",
-  password: "15akc#",
-  database: "byway",
-});
-
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "rohan",
-//   password: "357951",
-//   database: "byway",
-// });
+let db;
+(async function () {
+  try {
+    db = await connectToDatabase();
+  } catch (err) {
+    console.error("Failed to connect to database:", err);
+    process.exit(1);
+  }
+})();
 
 router.post("/addpackages", (req, res) => {
   const {
@@ -69,16 +64,14 @@ router.delete("/deletepackages/:id", (req, res) => {
 });
 
 
-router.post("/addlocations", (req, res) => {
-  const { location } = req.body;
-  const query = "INSERT INTO locationtable (location) VALUES (?)";
-
-  db.query(query, [location], (err, result) => {
+router.get("/fetchAvailableLocations", (req, res) => {
+  const query = "SELECT location_id, location_name FROM locationtable";
+  db.query(query, (err, locations) => {
     if (err) {
-      console.error("Error executing query:", err);
-      res.status(500).json({ status: "Error" });
+      console.error("Error fetching locations:", err);
+      res.status(500).json({ error: "Internal Server Error" });
     } else {
-      res.status(200).json({ status: "Success", location_id: result.insertId });
+      res.json(locations);
     }
   });
 });
