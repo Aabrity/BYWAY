@@ -61,6 +61,8 @@ function Contactus() {
   return (
     <>
       <HeaderTab />
+
+    <div className="parent-con">
       <div className="container">
         <div className="header">
           <div className="text">Contact Us</div>
@@ -137,22 +139,28 @@ function Contactus() {
           <div className="underline1"></div>
         </div>
         <div className="Sub-Head">
+          
           <FaMapPin />
           <div className="texts">Address</div>
           <div className="Info"> Boudhha, Kathmandu </div>
-        </div>
+          </div>
+        
 
         <div className="Sub-Head">
+        
           <FaPhoneAlt />
           <div className="texts">Phone</div>
           <div className="Info"> 9835689*** </div>
         </div>
 
         <div className="Sub-Head">
+       
           <MdOutlineMail />
           <div className="texts">Email</div>
           <div className="Info"> aa***@gmail.com </div>
+          
         </div>
+      </div>
       </div>
     </>
   );
