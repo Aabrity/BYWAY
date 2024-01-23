@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Popup from "@/Components/Popup/index";
+import Popup from "@/Components/Common/Popup";
 
 export default function Dash() {
   const [auth, setAuth] = useState<boolean | undefined>();
@@ -40,14 +40,14 @@ export default function Dash() {
   return (
     <>
       {auth ? (
-        <div className="bg-slate-300 mx-16 rounded-xl h-5/6 mt-16 mb-44">
+        <>
           <h3>You are authorized {name}</h3>
           <button
             onClick={() => {
               router.push("/admin/dash");
             }}
           ></button>
-        </div>
+        </>
       ) : (
         <div>
           <Popup

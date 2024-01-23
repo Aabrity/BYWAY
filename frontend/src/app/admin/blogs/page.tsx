@@ -5,7 +5,7 @@ import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
-import Popup from "@/Components/Popup";
+import Popup from "@/Components/Common/Popup";
 
 function AdminPage() {
   const [blogContent, setBlogContent] = useState("");

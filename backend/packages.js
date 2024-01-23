@@ -63,16 +63,14 @@ router.delete("/deletepackages/:id", (req, res) => {
 });
 
 
-router.post("/addlocations", (req, res) => {
-  const { location } = req.body;
-  const query = "INSERT INTO locationtable (location) VALUES (?)";
-
-  db.query(query, [location], (err, result) => {
+router.get("/fetchAvailableLocations", (req, res) => {
+  const query = "SELECT location_id, location_name FROM locationtable";
+  db.query(query, (err, locations) => {
     if (err) {
-      console.error("Error executing query:", err);
-      res.status(500).json({ status: "Error" });
+      console.error("Error fetching locations:", err);
+      res.status(500).json({ error: "Internal Server Error" });
     } else {
-      res.status(200).json({ status: "Success", location_id: result.insertId });
+      res.json(locations);
     }
   });
 });
