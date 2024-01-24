@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { PackageTable } from "@/Components/Packages/PackageTable";
-import Popup from "@/Components/Popup";
+import Popup from "@/Components/Common/Popup";
 
 
 export default function PackageInputForm() {
