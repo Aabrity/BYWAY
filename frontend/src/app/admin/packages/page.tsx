@@ -1,7 +1,10 @@
 "use client";
 import React, { useState } from "react";
+
 import { PopupModal } from "@/Components/Common/ContainerModal";
 import { PackageForm } from "@/Components/Packages/PackageForm";
+
+import { CiCirclePlus } from "react-icons/ci";
 
 const YourPageComponent: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,14 +19,25 @@ const YourPageComponent: React.FC = () => {
 
   return (
     <div>
-      <h1>Your Page Content</h1>
+      <div className="text-4xl text-green-700 text-center font-semibold p-4">
+        Packages Portal
+      </div>
+      <div className=" mx-16 bg-red-400 p-2"> {/* p-2 just for  div visualization*/}
+        <div className=" flex justify-end bg-blue-400">
+          <button
+            onClick={handleOpenModal}
+            className="bg-green-700 p-3 px-4 rounded"
+          >
+            <div className="flex items-center">
+              <div className="mr-2">
+                <CiCirclePlus size={32} color="white" />
+              </div>
+              <span className="text-white font-semibold">Add Package</span>
+            </div>
+          </button>
+        </div>
+      </div>
 
-      {/* Button to manually open the modal */}
-      <button onClick={handleOpenModal} className="bg-green-600 p-4">
-        Open Modal
-      </button>
-
-      {/* Modal component */}
       <PopupModal isOpen={showModal} onClose={handleCloseModal}>
         <PackageForm />
       </PopupModal>
