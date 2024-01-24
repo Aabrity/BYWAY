@@ -51,9 +51,10 @@ export default function Dash() {
       ) : (
         <div>
           <Popup
+           closable={false}
             message="You are not authenticated"
             buttonText="Login now"
-            onClose={() => {
+            onClick={() => {
               router.push("/auth");
             }}
           />
@@ -62,4 +63,3 @@ export default function Dash() {
     </>
   );
 }
-
