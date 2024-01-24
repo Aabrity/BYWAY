@@ -9,7 +9,6 @@ import packagesRoutes from "./packages.js";
 import blogRoutes from "./blog.js";
 import planTripRoutes from "./planTrip.js";
 import protectedRoutes from "./middleware.js";
-import testRoutes from "./package1.js";
 
 dotenv.config();
 
@@ -34,7 +33,6 @@ app.use("/contactus", contactusRoutes);
 app.use("/blogs", blogRoutes);
 app.use("/planTrip", planTripRoutes);
 app.use("/admin", protectedRoutes);
-app.use("/", testRoutes);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
