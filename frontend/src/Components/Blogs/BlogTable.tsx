@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import StyledTable from "../Common/StyledTable";
+import { PopupModal } from "../Common/ContainerModal";
+
+import BlogForm from "./BlogForm";
 export const BlogTable = () => {
   const [tableData, setTableData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -81,6 +84,16 @@ export const BlogTable = () => {
       image: formState.image,
     });
   };
+
+   const [showModal, setShowModal] = useState(false);
+
+   const handleOpenModal = () => {
+     setShowModal(true);
+   };
+
+   const handleCloseModal = () => {
+     setShowModal(false);
+   };
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormState({
@@ -224,7 +237,7 @@ export const BlogTable = () => {
 
   return (
     <>
-      <div>
+      <div className="mt-8">
         <StyledTable
           data={tableData}
           headers={tableHeaders}
@@ -232,6 +245,11 @@ export const BlogTable = () => {
           onEditClick={handleEditClick}
           onDeleteClick={handleDeleteClick}
         />
+      </div>
+      <div>
+        <PopupModal isOpen={showModal} onClose={handleCloseModal}>
+          <BlogForm />
+        </PopupModal>
       </div>
     </>
   );

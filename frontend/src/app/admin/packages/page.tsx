@@ -5,7 +5,6 @@ import { PopupModal } from "@/Components/Common/ContainerModal";
 import { PackageForm } from "@/Components/Packages/PackageForm";
 import { PackageTable } from "@/Components/Packages/PackageTable";
 import { CiCirclePlus } from "react-icons/ci";
-import { BlogTable } from "@/Components/Blogs/BlogTable";
 
 const YourPageComponent: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
@@ -19,13 +18,12 @@ const YourPageComponent: React.FC = () => {
   };
 
   return (
-    <div>
-      <div className="text-4xl text-green-700 text-center font-semibold p-8">
+    <>
+      <div className="text-4xl text-green-700 text-center font-semibold p-8 ">
         Packages Portal
       </div>
-      <div className=" mx-16 ">
+      <div className=" mx-16">
         {" "}
-        {/* p-2 just for  div visualization*/}
         <div className=" flex justify-end ">
           <button
             onClick={handleOpenModal}
@@ -45,7 +43,7 @@ const YourPageComponent: React.FC = () => {
       <PopupModal isOpen={showModal} onClose={handleCloseModal}>
         <PackageForm />
       </PopupModal>
-    </div>
+    </>
   );
 };
 
