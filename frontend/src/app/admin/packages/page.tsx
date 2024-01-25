@@ -20,13 +20,13 @@ const YourPageComponent: React.FC = () => {
 
   return (
     <div>
-      <div className="text-4xl text-green-700 text-center font-semibold p-4">
+      <div className="text-4xl text-green-700 text-center font-semibold p-8">
         Packages Portal
       </div>
       <div className=" mx-16 ">
         {" "}
         {/* p-2 just for  div visualization*/}
-        <div className=" flex justify-end bg-blue-400">
+        <div className=" flex justify-end ">
           <button
             onClick={handleOpenModal}
             className="bg-green-700 p-3 px-4 rounded"
@@ -39,12 +39,7 @@ const YourPageComponent: React.FC = () => {
             </div>
           </button>
         </div>
-        <div>
           <PackageTable/>
-        </div>
-        <div>
-          <BlogTable/>
-        </div>
       </div>
 
       <PopupModal isOpen={showModal} onClose={handleCloseModal}>

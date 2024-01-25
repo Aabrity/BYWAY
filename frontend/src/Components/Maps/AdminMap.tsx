@@ -43,7 +43,7 @@ export const AdminMap: React.FC<AdminMapProps> = ({id}) => {
         }),
       ],
       view: new View({
-        center: fromLonLat([83.1258, 28.3974]),
+        center: fromLonLat([84.138244, 28.402031]),
         zoom: 3,
         maxZoom: 30,
         minZoom: 7.2,

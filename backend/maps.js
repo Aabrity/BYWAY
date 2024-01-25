@@ -1,39 +1,26 @@
-// server.js
+import express from "express";
+import connectToDatabase from './db.js'
 
-const express = require("express");
-const bodyParser = require("body-parser");
-const mysql = require("mysql");
-const cors = require("cors");
+const router=express.Router();
 
-const app = express();
-const port = 8000;
-
-app.use(bodyParser.json());
-app.use(cors());
-
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "rohan",
-  password: "357951",
-  database: "byway",
-});
-
-connection.connect((err) => {
-  if (err) {
-    console.error("Error connecting to MySQL:", err);
-  } else {
-    console.log("Connected to MySQL");
+let db;
+(async function () {
+  try {
+    db = await connectToDatabase();
+  } catch (err) {
+    console.error("Failed to connect to database:", err);
+    process.exit(1);
   }
-});
+})();
 
-app.post("/api/saveLocation", (req, res) => {
+router.post("/saveLocation", (req, res) => {
   const { location_name, longitude, latitude } = req.body;
 
   const sql =
     "INSERT INTO locationtable (location_name, longitude, latitude) VALUES (?, ?, ?)";
   const values = [location_name, longitude, latitude];
 
-  connection.query(sql, values, (err, result) => {
+  db.query(sql, values, (err, result) => {
     if (err) {
       console.error("Error inserting data into MySQL:", err);
       res.status(500).json({ error: "Error saving location." });
@@ -44,10 +31,10 @@ app.post("/api/saveLocation", (req, res) => {
   });
 });
 
-app.get("/api/getLocations", (req, res) => {
+router.get("/getLocations", (req, res) => {
   const sql = "SELECT longitude, latitude FROM locationtable";
 
-  connection.query(sql, (err, results) => {
+  db.query(sql, (err, results) => {
     if (err) {
       console.error("Error fetching data from MySQL:", err);
       res.status(500).json({ error: "Error fetching locations." });
@@ -58,7 +45,4 @@ app.get("/api/getLocations", (req, res) => {
   });
 });
 
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+export default router;

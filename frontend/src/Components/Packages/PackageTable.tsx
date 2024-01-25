@@ -16,6 +16,22 @@ export const PackageTable = () => {
     discount: number;
   }
 
+
+interface PackageData {
+  title: string;
+  location_id: string;
+  about: string;
+  guidance_language: string;
+  whats_included: string;
+  what_to_expect: string;
+  departure_and_return: string;
+  accessibility: string;
+  additional_info: string;
+  price: number;
+  discount: number;
+}
+
+
   const [tableData, setTableData] = useState([]);
   const [packageData, setPackageData] = useState<PackageData>({
     title: "",
@@ -76,7 +92,6 @@ export const PackageTable = () => {
       .then((res) => {
         const completeData = res.data.package;
         setPackageData({
-          packageid: completeData.package_id || 0,
           title: completeData.title || "",
           location_id: completeData.location_id || 0,
           about: completeData.about || "",
