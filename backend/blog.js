@@ -27,6 +27,7 @@ router.post("/postblog", upload.single("image"), (req, res) => {
   console.log("Received Date:", date);
   console.log("Received Content:", content);
   console.log("Received Image:", image);
+  console.log("Received Category:", category);
 
   const sql = 'INSERT INTO blogtable (title, description, image, published_date, category) VALUES (?, ?, ?, ?, ?)';
   const values = [title, content, image, date ,category];
@@ -38,6 +39,7 @@ router.post("/postblog", upload.single("image"), (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     } else {
       console.log('Data inserted successfully');
+      console.log(category)
       res.status(200).json({ message: 'Data inserted successfully' });
     }
   });

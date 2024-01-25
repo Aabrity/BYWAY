@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { PopupModal } from "@/Components/Common/ContainerModal";
 import { PackageForm } from "@/Components/Packages/PackageForm";
-
+import { PackageTable } from "@/Components/Packages/PackageTable";
 import { CiCirclePlus } from "react-icons/ci";
 
 const YourPageComponent: React.FC = () => {
@@ -22,7 +22,9 @@ const YourPageComponent: React.FC = () => {
       <div className="text-4xl text-green-700 text-center font-semibold p-4">
         Packages Portal
       </div>
-      <div className=" mx-16 bg-red-400 p-2"> {/* p-2 just for  div visualization*/}
+      <div className=" mx-16 ">
+        {" "}
+        {/* p-2 just for  div visualization*/}
         <div className=" flex justify-end bg-blue-400">
           <button
             onClick={handleOpenModal}
