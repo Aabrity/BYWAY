@@ -5,7 +5,6 @@ import { PopupModal } from "@/Components/Common/ContainerModal";
 import { PackageForm } from "@/Components/Packages/PackageForm";
 import { PackageTable } from "@/Components/Packages/PackageTable";
 import { CiCirclePlus } from "react-icons/ci";
-import { PackageTable } from "@/Components/Packages/PackageTable";
 import { BlogTable } from "@/Components/Blogs/BlogTable";
 
 const YourPageComponent: React.FC = () => {
