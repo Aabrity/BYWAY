@@ -13,7 +13,7 @@ import { FiMessageCircle } from "react-icons/fi";
 
 import HeaderTab from "@/Components/Header";
 
-// Define the form data interface
+
 interface YourFormData {
   Email: string;
   contactnum: string;
@@ -22,7 +22,7 @@ interface YourFormData {
   message: string;
 }
 
-// Contactus component
+
 function Contactus() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const form = useRef<HTMLFormElement>(null);
@@ -73,13 +73,19 @@ function Contactus() {
             <div className="input">
               <MdOutlineMail />
               <input
-                type="email"
-                id="Email"
-                name="Email"
-                placeholder="Email"
-                required
-                {...register('Email')}
-              />
+            type="email"
+            id="Email"
+            name="Email"
+            placeholder="Email"
+            {...register('Email', {
+              required: 'Email is required',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Invalid email address'
+              }
+            })}
+          />
+          
             </div>
             <div className="input">
               <FaPhoneAlt />
