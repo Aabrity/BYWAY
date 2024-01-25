@@ -1,333 +1,164 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@/Components/Packages/Cards";
 import Link from "next/link";
 import HeaderTab from "@/Components/Header";
-import FooterTab from "@/Components/Footer";
-
-export const packagesData = [
-  {
-    packageID: "1",
-    title: "Package Name 1",
-    discount: "80",
-    location: "here to here",
-
-    imgSrc: "/assets/packagesImg/bob.png",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "4",
-    itinerary: " Day 1kkkkk day 2 day 5 ......................................",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    
-  },
-  {
-    packageID: "2",
-    title: "Package Name 2",
-    location: "here to here",
-    imgSrc: "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "ggg",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    discount: "20",
-  },
-  {
-    packageID: "3",
-    title: "Package Name 3",
-
-    location: "here to here",
-    imgSrc: "/assets/packagesImg/istockphoto-935947682-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "4",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    discount: "10",
-  },
-  {
-    packageID: "4",
-    title: "Package Name 4",
-
-    location: "here to here",
-    imgSrc: "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "4",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    discount: "45",
-  },
-  {
-    packageID: "5",
-    title: "Package Name 5",
-
-    location: "here to here",
-    imgSrc: "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "4",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    discount: "10",
-  },
-  {
-    packageID: "6",
-    title: "Package Name 5",
-    location: "here to here",
-    imgSrc: "/assets/packagesImg/istockphoto-935947682-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "4",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    discount: "10",
-  },
-  {
-    packageID: "7",
-    title: "Package Name 6",
-    location: "here to here",
-    imgSrc: "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "4",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    discount: "10",
-  },
-  {
-    packageID: "8",
-    title: "Package Name 8",
-    imgSrc: "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "4",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    discount: "10",
-  },
-  {
-    packageID: "9",
-    title: "Package Name 9",
-    imgSrc: "/assets/packagesImg/istockphoto-935947682-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "4",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    discount: "10",
-  },
-  {
-    packageID: "10",
-    title: "Package Name 10",
-    imgSrc: "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "4",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    discount: "10",
-  },
-  {
-    packageID: "11",
-    title: "Package Name 11",
-    imgSrc: "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "4",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    discount: "25",
-  },
-  {
-    packageID: "12",
-    title: "Package Name 12",
-    imgSrc: "/assets/packagesImg/istockphoto-935947682-612x612.jpg",
-    description:
-      "Description goes here njcjcsjcnsjc cjnbcncj cjnxcbdjn cbhsxbcdh cbhnxj cbh cbdh cbhd",
-    duration: "6 days",
-    price: "400000",
-    meals: "bbb",
-    accomodations: "bbb",
-    recommended_group_size: "4",
-    imgArray: [
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-      "/assets/packagesImg/istockphoto-1352722699-612x612.jpg",
-      "/assets/packagesImg/istockphoto-866904464-612x612.jpg",
-    ],
-    discount: "0",
-  },
-];
+import axios from "axios";
 
 type PackageItemProps = {
-  title: string;
-  imgSrc: string;
+  package_title: string;
+  discount: string;
   price: string;
-  description: string;
+  about: string;
   duration: string;
-  packageID: string;
-  discount: string; 
+  package_id: string;
+  image1: string | null;
+  image2: string | null;
+  image3: string | null;
+  image4: string | null;
+  imgSrc?: string;
+};
 
+export const fetchPackagesData = async (): Promise<Array<PackageItemProps>> => {
+  try {
+    const response = await axios.get("http://localhost:8081/packages/getpackages");
 
+    console.log("Raw data from the server:", response.data);
+
+    // Check if "packages" property exists and is an array
+    const packagesArray = response.data.packages;
+    if (!Array.isArray(packagesArray)) {
+      console.error("Invalid data format: 'packages' property is not an array", response.data);
+      throw new Error("Invalid data format");
+    }
+
+    // Convert image data to base64 strings
+    const dataWithBase64Images = packagesArray.map((item: PackageItemProps) => {
+      try {
+        const base64Image1 = item.image1 ? `data:image/jpeg;base64,${Buffer.from(item.image1 as string).toString("base64")}` : null;
+        const base64Image2 = item.image2 ? `data:image/jpeg;base64,${Buffer.from(item.image2 as string).toString("base64")}` : null;
+        const base64Image3 = item.image3 ? `data:image/jpeg;base64,${Buffer.from(item.image3 as string).toString("base64")}` : null;
+        const base64Image4 = item.image4 ? `data:image/jpeg;base64,${Buffer.from(item.image4 as string).toString("base64")}` : null;
+
+        return {
+          ...item,
+          image1: base64Image1,
+          image2: base64Image2,
+          image3: base64Image3,
+          image4: base64Image4,
+        };
+      } catch (imageError) {
+        console.error("Error processing image data for item:", item);
+        throw imageError;
+      }
+    });
+
+    console.log("Data after conversion:", dataWithBase64Images);
+
+    return dataWithBase64Images;
+  } catch (error) {
+    console.error("Error fetching package data:", error);
+    throw error;
+  }
 };
 
 const PackageItem: React.FC<PackageItemProps> = ({
-  title,
-  imgSrc,
+  package_title,
   price,
-  description,
+  about,
   duration,
-  packageID,
+  package_id,
   discount,
-  
+  image1,
 
+  imgSrc = "frontend/public/images/Mountains 1.jpg",
 }) => {
+  // Convert Buffer to base64 string
+  const base64Image = image1
+    ? `data:image/jpeg;base64,${Buffer.from(image1).toString("base64")}`
+    : "/path/to/your/default/image";
+
+  const src = imgSrc || base64Image;
+
   const numericPrice = parseInt(price);
   const discountPercentage = parseInt(discount);
 
-  
   if (isNaN(numericPrice) || isNaN(discountPercentage)) {
     console.error("Invalid price or discount:", price, discount);
-    return null; 
+    return null;
   }
 
-  const discountedPrice = numericPrice - (numericPrice * discountPercentage) / 100;
-  console.log("Original Price:", numericPrice);
-  console.log("Discount Percentage:", discountPercentage);
-  console.log("Discounted Price:", discountedPrice);
+  const discountedPrice =
+    numericPrice - (numericPrice * discountPercentage) / 100;
 
   return (
-    <div className="mx-3 overflow-hidden border border-slate-200 group">
-    <div className="overflow-hidden relative">
-      <Card imgSrc={imgSrc} >
-        <div className="text-bold flex justify-between">
-          <strong className="text-xl">{title}</strong>
-          <div>
+    <div className=" overflow-hidden border border-slate-200 w-80 h-80 group flex justify-center mx-auto">
+      <div className="overflow-hidden relative">
+        <Card title={package_title} price={price} imgSrc={imgSrc}>
+          <div className="text-bold flex justify-between">
+            <strong className="text-xl">{package_title}</strong>
+            <div>
               {discountPercentage > 0 ? (
                 <>
-                  <span className="text-white font-bold ">${discountedPrice.toFixed(2)}</span>
+                  <span className="text-white font-bold ">
+                    ${discountedPrice.toFixed(2)}
+                  </span>
                   <br />
-                  <span className="text-white line-through">${numericPrice.toFixed(2)}</span>
+                  <span className="text-white line-through">
+                    ${numericPrice.toFixed(2)}
+                  </span>
                 </>
               ) : (
                 <span className="font-bold">${numericPrice.toFixed(2)}</span>
               )}
             </div>
           </div>
-        <div className="flex justify-between">
-          <div className="mt-1">{duration}</div>
-        </div>
-        <hr className="mt-2 mb-2 border-white" />
-        <div className="mt-2">{description}</div>
-        <hr className="mt-2 mb-2 border-white" />
-        <div className="mt-2 flex justify-between items-center">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            <Link href="/packages/[description]"as={'/packages/${packageID}'}>  
-            Details
-            </Link>
-          </button>
-        </div>
-      </Card>
+
+          <div className="flex justify-between">
+            <div className="mt-1">{duration}</div>
+          </div>
+          <hr className="mt-2 mb-2 border-white" />
+          <div className="mt-2">{about}</div>
+          <hr className="mt-2 mb-2 border-white" />
+          <div className="mt-2 flex justify-between items-center">
+            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+              <Link
+                href="/packages/[package_id]"
+                as={`/packages/${package_id}`}
+              >
+                Details
+              </Link>
+            </button>
+          </div>
+        </Card>
+      </div>
     </div>
-  </div>
   );
 };
 
 const Packages: React.FC = () => {
+  const [packageData, setPackageData] = useState<Array<PackageItemProps>>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const rawData = await fetchPackagesData();
+        // Ensure rawData is an array and handle the imgSrc conversion
+        if (Array.isArray(rawData)) {
+          setPackageData(rawData);
+        } else {
+          console.error("Invalid data format:", rawData);
+        }
+      } catch (error) {
+        console.error("Error fetching package data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
-    <HeaderTab/>
+      <HeaderTab />
       <div>
         <div className="mb-0" style={{ position: "relative" }}>
           <div
@@ -381,28 +212,30 @@ const Packages: React.FC = () => {
             className="w-full"
           />
         </div>
-
-        <section className="main-container padding-container pb-4">
+        <>
           <h3 className="font-bold text-4xl text-left bg-indigo-950 text-white p-4 pb-4 mb-0">
             Our Packages
           </h3>
-          <div className="flex  flex-wrap gap-10 lg:flex-row pb-2 pt-2 ">
-            {packagesData.map((card) => (
-              <PackageItem
-                key={card.packageID}
-                title={card.title}
-                imgSrc={card.imgSrc}
-                price={card.price}
-                description={card.description}
-                packageID={card.packageID}
-                duration={card.duration}
-                discount={card.discount}
-              />
-            ))}
-          </div>
-        </section>
+          <section className="flex py-16 md:py-20 lg:py-28 justify-center ">
+            <div className="container ">
+              <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center">
+                {packageData.map((card) => (
+                  <PackageItem
+                    key={card.package_id}
+                    package_title={card.package_title}
+                    imgSrc={card.image1}
+                    price={card.price.toString()}
+                    about={card.about}
+                    package_id={card.package_id.toString()} 
+                    duration={card.package_id} 
+                    discount={card.discount.toString()}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        </>
       </div>
-      <FooterTab/>
     </>
   );
 };
