@@ -39,7 +39,6 @@ router.post("/postblog", upload.single("image"), (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     } else {
       console.log('Data inserted successfully');
-      console.log(category)
       res.status(200).json({ message: 'Data inserted successfully' });
     }
   });
