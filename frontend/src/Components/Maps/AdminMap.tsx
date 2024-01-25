@@ -149,7 +149,7 @@ export const AdminMap: React.FC<AdminMapProps> = ({id}) => {
     try {
       if (selectedLocation) {
         const response = await axios.post(
-          "http://localhost:8000/api/saveLocation",
+          "http://localhost:8081/maps/saveLocation",
           {
             location_name: selectedLocation.name,
             longitude: selectedLocation.longitude,
