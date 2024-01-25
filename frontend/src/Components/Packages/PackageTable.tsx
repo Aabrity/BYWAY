@@ -117,7 +117,7 @@ export const PackageTable = () => {
 
   return (
     <>
-      <div className="w-auto mt-40">
+      <div >
         <StyledTable
           data={tableData}
           headers={tableHeaders}
