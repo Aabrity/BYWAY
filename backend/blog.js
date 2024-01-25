@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
-import connectToDatabase from './db.js'
-import dotenv from 'dotenv';
+import connectToDatabase from "./db.js";
+import dotenv from "dotenv";
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ dotenv.config();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.post("/postblog", upload.single("image"), (req, res) => {
+router.post("/postBlog", upload.single("image"), (req, res) => {
   const { title, date, content, category } = req.body;
   const image = req.file ? req.file.buffer : null;
 
@@ -29,36 +29,27 @@ router.post("/postblog", upload.single("image"), (req, res) => {
   console.log("Received Image:", image);
   console.log("Received Category:", category);
 
-  const sql = 'INSERT INTO blogtable (title, description, image, published_date, category) VALUES (?, ?, ?, ?, ?)';
+  const sql =
+    "INSERT INTO blogtable (title, description, image, published_date, category) VALUES (?, ?, ?, ?, ?)";
   const values = [title, content, image, date, category];
 
   db.query(sql, values, (err, result) => {
     if (err) {
-      console.error('Error inserting data into the database:', err);
-      return res.status(500).json({ error: 'Internal Server Error' });
+      console.error("Error inserting data into the database:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      console.log("Data inserted successfully");
+      res.status(200).json({ message: "Data inserted successfully" });
     }
-
-    // After inserting, automatically call the stored procedure to remove HTML tags
-    const removeHtmlTagsQuery = 'CALL RemoveHtmlTags()';
-    db.query(removeHtmlTagsQuery, (removeHtmlTagsError, removeHtmlTagsResult) => {
-      if (removeHtmlTagsError) {
-        console.error('Error calling RemoveHtmlTags stored procedure:', removeHtmlTagsError);
-        return res.status(500).json({ error: 'Internal Server Error' });
-      }
-
-      console.log('RemoveHtmlTags stored procedure called successfully');
-      return res.status(200).json({ message: 'Data inserted successfully' });
-    });
   });
 });
 
-
-router.get('/getblogs', (req, res) => {
-  const sql = 'SELECT * FROM blogtable';
+router.get("/getblogs", (req, res) => {
+  const sql = "SELECT * FROM blogtable";
   db.query(sql, (err, result) => {
     if (err) {
-      console.error('Error fetching blog data:', err);
-      res.status(500).json({ error: 'Internal Server Error' });
+      console.error("Error fetching blog data:", err);
+      res.status(500).json({ error: "Internal Server Error" });
     } else {
       res.status(200).json(result);
     }
