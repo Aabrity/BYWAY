@@ -1,7 +1,11 @@
 import express from "express";
+import multer from "multer";
 import connectToDatabase from "./db.js";
 
 const router = express.Router();
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 let db;
 (async function () {
   try {
@@ -12,7 +16,8 @@ let db;
   }
 })();
 
-router.post("/addpackages", (req, res) => {
+
+router.post("/insertPackage", upload.array("image", 4), async (req, res) => {
   const {
     title,
     location_id,
@@ -24,31 +29,63 @@ router.post("/addpackages", (req, res) => {
     accessibility,
     additional_info,
     price,
-    discount
+    discount,
   } = req.body;
-  const insertQuery =
-  "INSERT INTO packagetable (package_title, location_id, about, guidance_language, whats_included, what_to_expect, departure_and_return, accessibility, additional_info,price, discount) VALUES (?)";
+
+  const images = req.files.map((file) => ({
+    name: file.originalname,
+    data: file.buffer,
+  }));
+
+  const insertQuery = `
+      INSERT INTO packagetable (
+        package_title,
+        location_id,
+        about,
+        guidance_language,
+        whats_included,
+        what_to_expect,
+        departure_and_return,
+        accessibility,
+        additional_info,
+        price,
+        discount,
+        image1,
+        image2,
+        image3,
+        image4
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
   const values = [
     title,
     location_id,
     about,
-    guidance_language, 
+    guidance_language,
     whats_included,
     what_to_expect,
     departure_and_return,
     accessibility,
     additional_info,
     price,
-    discount
+    discount,
+    images[0] ? images[0].data : null,
+    images[1] ? images[1].data : null,
+    images[2] ? images[2].data : null,
+    images[3] ? images[3].data : null,
   ];
-  db.query(insertQuery, [values], (err, result) => {
+
+  db.query(insertQuery, values, (err, result) => {
     if (err) {
-      console.log("Insertion error:", err);
-      return res.json("Insertion error");
+      console.error("Error inserting data:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      console.log("Data inserted successfully");
+      res.status(200).json({ message: "Data inserted successfully" });
     }
-    return res.json({ Status: "Success" });
   });
 });
+
 
 router.delete("/deletepackages/:id", (req, res) => {
   const id = req.params.id;
