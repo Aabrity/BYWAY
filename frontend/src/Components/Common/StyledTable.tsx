@@ -41,8 +41,8 @@ const StyledTable: React.FC<StyledTableProps> = ({
   return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <table className="table-auto border-collapse w-full">
-      <thead>
-          <tr className="bg-green-500 text-white font-bold">
+        <thead>
+          <tr className="bg-green-700 text-white font-bold">
             {headers.map((header, index) => (
               <th key={index} className="px-4 py-2 text-center">
                 {header}
@@ -56,9 +56,9 @@ const StyledTable: React.FC<StyledTableProps> = ({
             <tr
               key={rowIndex}
               className={`${
-                rowIndex % 2 === 0 ? 'bg-gray-200' : ''
+                rowIndex % 2 === 0 ? 'bg-gray-200' : 'bg-slate-300'
               } ${
-                row.isActive ? 'active-row font-bold text-teal-500' : ''
+                row.isActive ? 'active-row font-bold text-green-700' : ''
               }`}
             >
               
@@ -68,12 +68,12 @@ const StyledTable: React.FC<StyledTableProps> = ({
                     
                     <>
                       <td className="px-4 py-2 text-center">
-                        <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={() => handleEditClick(row)}>
+                        <button className="bg-green-700 text-white px-4 py-2 rounded" onClick={() => handleEditClick(row)}>
                           <FaRegEdit/>
                         </button>
                       </td>
                       <td className="px-4 py-2 text-center">
-                        <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={() => handleDeleteClick(row)}>
+                        <button className="bg-green-700 text-white px-4 py-2 rounded" onClick={() => handleDeleteClick(row)}>
                           <MdOutlineDelete /> 
                         </button>
                       </td>

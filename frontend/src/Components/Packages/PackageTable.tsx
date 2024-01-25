@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import StyledTable from "../Common/StyledTable";
+import { PackageForm } from "./PackageForm";
+import { PopupModal } from "../Common/ContainerModal";
 
 export const PackageTable = () => {
   interface PackageItem {
@@ -15,6 +17,19 @@ export const PackageTable = () => {
   }
 
   const [tableData, setTableData] = useState([]);
+  const [packageData, setPackageData] = useState<PackageData>({
+    title: "",
+    location_id: "",
+    about: "",
+    guidance_language: "",
+    whats_included: "",
+    what_to_expect: "",
+    departure_and_return: "",
+    accessibility: "",
+    additional_info: "",
+    price: 0,
+    discount: 0,
+  });
 
   useEffect(() => {
     // Fetching packages data
@@ -42,7 +57,15 @@ export const PackageTable = () => {
     "Discount",
     "Actions",
   ];
+  const [showModal, setShowModal] = useState(false);
 
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   //table button event handlers------------------------------------------
   const handleEditClick = (rowData: Record<string, any>) => {
     // Fetch the complete data for the selected package from the database
@@ -52,9 +75,9 @@ export const PackageTable = () => {
       )
       .then((res) => {
         const completeData = res.data.package;
-        setFormState({
+        setPackageData({
           packageid: completeData.package_id || 0,
-          title: completeData.package_title || "",
+          title: completeData.title || "",
           location_id: completeData.location_id || 0,
           about: completeData.about || "",
           guidance_language: completeData.guidance_language || "",
@@ -66,6 +89,7 @@ export const PackageTable = () => {
           price: completeData.price || "",
           discount: completeData.discount || "",
         });
+        handleOpenModal();
       })
       .catch((err) => console.log(err));
   };
@@ -117,7 +141,7 @@ export const PackageTable = () => {
 
   return (
     <>
-      <div >
+      <div className="mt-8">
         <StyledTable
           data={tableData}
           headers={tableHeaders}
@@ -125,6 +149,11 @@ export const PackageTable = () => {
           onEditClick={handleEditClick}
           onDeleteClick={handleDeleteClick}
         />
+      </div>
+      <div>
+        <PopupModal isOpen={showModal} onClose={handleCloseModal}>
+          <PackageForm />
+        </PopupModal>
       </div>
     </>
   );
