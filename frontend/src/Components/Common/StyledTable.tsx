@@ -1,5 +1,5 @@
-
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 
@@ -9,9 +9,18 @@ interface StyledTableProps {
   tdClass: string;
   onEditClick?: (rowData: Record<string, any>) => void;
   onDeleteClick?: (rowData: Record<string, any>) => void;
+  itemsPerPage?: number;
 }
 
-const StyledTable: React.FC<StyledTableProps> = ({ data, headers, tdClass, onEditClick, onDeleteClick }) => {
+const StyledTable: React.FC<StyledTableProps> = ({
+  data,
+  headers,
+  tdClass,
+  onEditClick,
+  onDeleteClick,
+  itemsPerPage = 5,
+}) => {
+  const [currentPage, setCurrentPage] = useState(1);
   const handleEditClick = (row: Record<string, any>) => {
     if (onEditClick) {
       onEditClick(row);
@@ -23,9 +32,14 @@ const StyledTable: React.FC<StyledTableProps> = ({ data, headers, tdClass, onEdi
       onDeleteClick(row);
     }
   };
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = data.slice(startIndex, endIndex);
 
   return (
-    <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <table className="table-auto border-collapse w-full">
         <thead>
           <tr className="bg-green-700 text-white font-bold">
@@ -37,7 +51,8 @@ const StyledTable: React.FC<StyledTableProps> = ({ data, headers, tdClass, onEdi
           </tr>
         </thead>
         <tbody>
-          {data.map((row, rowIndex) => (
+
+        {currentData.map((row, rowIndex) => (
             <tr
               key={rowIndex}
               className={`${
@@ -46,6 +61,7 @@ const StyledTable: React.FC<StyledTableProps> = ({ data, headers, tdClass, onEdi
                 row.isActive ? 'active-row font-bold text-green-700' : ''
               }`}
             >
+              
               {headers.map((header, colIndex) => (
                 <td key={colIndex} className={`px-4 py-2 ${tdClass} text-center`}>
                   {colIndex === headers.length - 1 ? (
@@ -71,7 +87,28 @@ const StyledTable: React.FC<StyledTableProps> = ({ data, headers, tdClass, onEdi
             </tr>
           ))}
         </tbody>
+
       </table>
+      
+      <div className="flex justify-center mt-5 mb-5">
+        <button
+          className="bg-green-500 text-white rounded-md px-4 py-2 transition duration-300 ease-in-out hover:bg-green-600"
+          onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span className="mx-10">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          className="bg-green-500 text-white rounded-md px-4 py-2 transition duration-300 ease-in-out hover:bg-green-600"
+          onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
