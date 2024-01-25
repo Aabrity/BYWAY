@@ -8,7 +8,7 @@ interface Location {
 }
 
 interface PackageData {
-  title: string;
+  package_title: string;
   location_id: string;
   about: string;
   guidance_language: string;
@@ -21,10 +21,10 @@ interface PackageData {
   discount: number;
 }
 
-export const PackageForm = () => {
+export const PackageForm = ({ id }: { id?: string | number }) => {
   const [locations, setLocations] = useState<Location[]>([]);
   const [packageData, setPackageData] = useState<PackageData>({
-    title: "",
+    package_title: "",
     location_id: "",
     about: "",
     guidance_language: "",
@@ -38,6 +38,7 @@ export const PackageForm = () => {
   });
   const [imageFiles, setImageFiles] = useState<FileList | null>(null);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [isUpdateMode, setIsUpdateMode] = useState(false); // New state to track update mode
 
   useEffect(() => {
     axios
@@ -45,7 +46,22 @@ export const PackageForm = () => {
       .then((response) => {
         setLocations(response.data);
       });
-  }, []);
+
+    // Fetch package data if id prop is provided
+    if (id) {
+      axios
+        .get(`http://localhost:8081/packages/getselectedpackage/${id}`)
+        .then((response) => {
+          const fetchedPackageData = response.data.package;
+          setPackageData(fetchedPackageData);
+          setImagePreviews([]); // Clear existing previews
+          setIsUpdateMode(true); // Enable update mode
+        })
+        .catch((error) => {
+          console.error("Error fetching package data:", error);
+        });
+    }
+  }, [id]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -56,7 +72,6 @@ export const PackageForm = () => {
       [name]: value,
     });
   };
-
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
@@ -78,7 +93,6 @@ export const PackageForm = () => {
       setImageFiles(e.target.files);
     }
   };
-
   const handlePackageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -97,20 +111,38 @@ export const PackageForm = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:8081/packages/insertPackage",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      let response;
+
+      if (isUpdateMode) {
+        response = await axios.put(
+          `http://localhost:8081/packages/updatePackage/${id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      } else {
+        response = await axios.post(
+          "http://localhost:8081/packages/insertPackage",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }
 
       if (response.data.message) {
-        alert("Package added successfully");
+        alert(
+          isUpdateMode
+            ? "Package updated successfully"
+            : "Package added successfully"
+        );
         setPackageData({
-          title: "",
+          package_title: "",
           location_id: "",
           about: "",
           guidance_language: "",
@@ -123,32 +155,36 @@ export const PackageForm = () => {
           discount: 0,
         });
         setImageFiles(null);
+        setIsUpdateMode(false);
       } else {
-        alert("Error adding package");
+        alert("Error adding/updating package");
       }
     } catch (error) {
       console.error("Submission error:", error);
     }
   };
   return (
-    <div className="bg-green-500">
-      <div className="w-full p-5 text-4xl text-center text-green-700 ">
-        <strong>Create new Package</strong>
-      </div>
+    <div className="">
       <form
         onSubmit={handlePackageSubmit}
-        className="flex flex-col max-h-[65vh] overflow-y-auto"
+        className="flex flex-col max-h-[75vh] overflow-y-auto "
       >
-        <div className=" divcontainer ml-12">
+        <div className="w-auto pb-12 ml-3 text-4xl text-center text-green-700 ">
+          <strong>
+            {isUpdateMode ? "Update Package" : "Create new Package"}
+          </strong>
+        </div>
+
+        <div className=" divcontainer ml-24">
           <div className=" name flex m-2  mb-5 items-center ">
             <label className="mr-10 text-xl text-slate-700 ">
               Name of Package :
             </label>
             <input
               type="text"
-              className="p-1 text-xl rounded-sm w-[60%]"
-              name="title"
-              value={packageData.title}
+              className="p-1 text-xl rounded-sm w-[60%] border-2 border-slate-300"
+              name="package_title"
+              value={packageData.package_title}
               onChange={handleInputChange}
             />
           </div>
@@ -201,7 +237,7 @@ export const PackageForm = () => {
             </label>
             <div className="px-4"></div>
             <textarea
-              className="p-1 text-xl text-slate-700 rounded-sm w-[60%] h-[30vh]"
+              className="p-1 text-xl text-slate-700 rounded-sm w-[60%] h-[30vh] border-2 border-slate-300 "
               name="about"
               value={packageData.about}
               onChange={handleInputChange}
@@ -213,7 +249,7 @@ export const PackageForm = () => {
             </label>
             <div className="px-2"></div>
             <textarea
-              className="p-1 text-xl text-slate-700 rounded-sm w-[60%] h-[10vh]"
+              className="p-1 text-xl text-slate-700 rounded-sm w-[60%] h-[10vh]  border-2 border-slate-300 "
               name="guidance_language"
               value={packageData.guidance_language}
               onChange={handleInputChange}
@@ -226,7 +262,7 @@ export const PackageForm = () => {
             </label>
             <div className="px-4"></div>
             <textarea
-              className="p-1 text-xl text-slate-700 rounded-sm w-[60%] h-[30vh]"
+              className="p-1 text-xl text-slate-700 rounded-sm w-[60%] h-[30vh] border-2 border-slate-300 "
               name="whats_included"
               value={packageData.whats_included}
               onChange={handleInputChange}
@@ -240,7 +276,7 @@ export const PackageForm = () => {
             </label>
             <div className="px-4"></div>
             <textarea
-              className="p-1 text-xl text-slate-700 rounded-sm w-[60%] h-[30vh]"
+              className="p-1 text-xl text-slate-700 rounded-sm w-[60%] h-[30vh]  border-2 border-slate-300 "
               name="what_to_expect"
               value={packageData.what_to_expect}
               onChange={handleInputChange}
@@ -254,7 +290,7 @@ export const PackageForm = () => {
             </label>
             <div className="px-2"></div>
             <textarea
-              className="p-1 text-xl text-slate-700 rounded-sm w-[59%] h-[30vh]"
+              className="p-1 text-xl text-slate-700 rounded-sm w-[59%] h-[30vh]  border-2 border-slate-300 "
               name="departure_and_return"
               value={packageData.departure_and_return}
               onChange={handleInputChange}
@@ -268,7 +304,7 @@ export const PackageForm = () => {
             </label>
             <div className="px-4"></div>
             <textarea
-              className="p-1 text-xl text-slate-700 rounded-sm w-[60%] h-[30vh]"
+              className="p-1 text-xl text-slate-700 rounded-sm w-[60%] h-[30vh]  border-2 border-slate-300 "
               name="accessibility"
               value={packageData.accessibility}
               onChange={handleInputChange}
@@ -282,7 +318,7 @@ export const PackageForm = () => {
             </label>
             <div className="px-1"></div>
             <textarea
-              className="p-1 text-xl text-slate-700 rounded-sm w-[59%] h-[30vh]"
+              className="p-1 text-xl text-slate-700 rounded-sm w-[59%] h-[30vh]  border-2 border-slate-300 "
               name="additional_info"
               value={packageData.additional_info}
               onChange={handleInputChange}
@@ -294,7 +330,7 @@ export const PackageForm = () => {
             </label>
             <input
               type="number"
-              className="p-1 text-xl rounded-sm w-[60%]"
+              className="p-1 text-xl rounded-sm w-[60%]  border-2 border-slate-300 "
               name="price"
               value={packageData.price}
               onChange={handleInputChange}
@@ -306,24 +342,23 @@ export const PackageForm = () => {
             </label>
             <input
               type="number"
-              className="p-1 text-xl rounded-sm w-[60%]"
+              className="p-1 text-xl rounded-sm w-[60%]  border-2 border-slate-300 "
               name="discount"
               value={packageData.discount}
               onChange={handleInputChange}
             />
           </div>
-        </div>
-        <div className="self-center w-auto">
-          <button
-            type="submit"
-            className="w-full my-5 p-3 bg-green-700 text-white text-xl font-semibold rounded-sm"
-          >
-            Add Package
-          </button>
+
+          <div className="self-center w-48">
+            <button
+              type="submit"
+              className="w-full mb-5 p-3 bg-green-600 text-white text-xl rounded hover:bg-green-700 focus:outline-none focus:ring focus:border-green-700 transition"
+            >
+              {isUpdateMode ? "Update Package" : "Add Package"}
+            </button>
+          </div>
         </div>
       </form>
     </div>
   );
 };
-
- 

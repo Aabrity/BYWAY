@@ -52,7 +52,7 @@ export const ClientMap: React.FC<ClientMapProps> = ({ id }) => {
             }),
           ],
           view: new View({
-            center: fromLonLat([83.1258, 28.3974]),
+            center: fromLonLat([84.138244, 28.402031]),
             zoom: 3,
             maxZoom: 30,
             minZoom: 7.2,
@@ -66,7 +66,7 @@ export const ClientMap: React.FC<ClientMapProps> = ({ id }) => {
         source: new VectorSource(),
         style: new Style({
           image: new Icon({
-            src: "pointer.svg",
+            src: "/assets/pointer.svg",
             anchor: [0.5, 1],
             anchorXUnits: "fraction",
             anchorYUnits: "fraction",

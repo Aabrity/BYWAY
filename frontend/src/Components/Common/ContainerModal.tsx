@@ -1,4 +1,5 @@
 import React from "react";
+import { IoIosCloseCircle } from "react-icons/io";
 
 interface CustomModalProps {
   isOpen: boolean;
@@ -18,15 +19,14 @@ export const PopupModal: React.FC<CustomModalProps> = ({
   };
 
   return isOpen ? (
-    <div className="fixed top-0 left-0 w-[80%] h-full flex justify-center items-center bg-black bg-opacity-50">
-      <div className="bg-white p-12 rounded text-center">
+    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
+      <div className="bg-white rounded text-center w-[80%] h-[85vh] ">
+        <div className="flex justify-end m-1">
+          <button onClick={handleClose} className="p-2">
+            <IoIosCloseCircle size={50} color="green" />
+          </button>
+        </div>
         {children}
-        <button
-          onClick={handleClose}
-          className="mt-10 px-6 py-2 bg-lightgreen text-black rounded hover:bg-lightgreen-dark focus:outline-none focus:ring focus:border-lightgreen-dark transition bg-green-200"
-        >
-          Close
-        </button>
       </div>
     </div>
   ) : null;
