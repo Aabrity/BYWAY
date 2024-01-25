@@ -1,6 +1,15 @@
-import React from "react";
-
+"use client"
+import React,{useState} from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 const Page = () => {
+
+  const [blogContent, setBlogContent] = useState("");
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [category, setCategory] = useState("Normal");
+
 
   return (
     <div>
@@ -14,8 +23,8 @@ const Page = () => {
             type="text"
             className="p-1 text-xl rounded-sm w-[60%] border-2 border-slate-300"
             name="package_title"
-            // value={packageData.package_title}
-            // onChange={handleInputChange}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div className="image-files flex ml-2 mb-5 items-start">
@@ -26,7 +35,7 @@ const Page = () => {
             multiple
             // onChange={handleFileInputChange}
           />
-          {/* <div className="flex mt-2">
+          <div className="flex mt-2">
             {imagePreviews.map((preview, index) => (
               <img
               key={index}
@@ -36,7 +45,7 @@ const Page = () => {
               style={{ width: "100px", height: "100px" }}
               />
               ))}
-            </div> */}
+            </div>
         </div>
         <div className="category flex ml-2 mb-5 items-start">
           <label className="mr-10 text-xl text-slate-700">Category:</label>
@@ -55,7 +64,12 @@ const Page = () => {
             Content Editor:
           </label>
           <div>
-            {/* Other components or UI elements */}
+            <ReactQuill
+              theme="snow"
+              className="h-36 bg-"
+              // value={}
+              // onChange={fjsk}
+            />
           </div>
         </div>
       </div>
