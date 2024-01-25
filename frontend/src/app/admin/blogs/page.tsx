@@ -17,6 +17,8 @@ function AdminPage() {
 
   const [auth, setAuth] = useState(false);
   const [name, setName] = useState("");
+  
+
   axios.defaults.withCredentials = true;
 
   const router = useRouter();

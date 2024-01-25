@@ -20,7 +20,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.post("/postblog", upload.single("image"), (req, res) => {
-  const { title, date, content , category} = req.body;
+  const { title, date, content, category } = req.body;
   const image = req.file ? req.file.buffer : null;
 
   console.log("Received Title:", title);
@@ -30,19 +30,28 @@ router.post("/postblog", upload.single("image"), (req, res) => {
   console.log("Received Category:", category);
 
   const sql = 'INSERT INTO blogtable (title, description, image, published_date, category) VALUES (?, ?, ?, ?, ?)';
-  const values = [title, content, image, date ,category];
+  const values = [title, content, image, date, category];
 
- 
   db.query(sql, values, (err, result) => {
     if (err) {
       console.error('Error inserting data into the database:', err);
-      res.status(500).json({ error: 'Internal Server Error' });
-    } else {
-      console.log('Data inserted successfully');
-      res.status(200).json({ message: 'Data inserted successfully' });
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
+
+    // After inserting, automatically call the stored procedure to remove HTML tags
+    const removeHtmlTagsQuery = 'CALL RemoveHtmlTags()';
+    db.query(removeHtmlTagsQuery, (removeHtmlTagsError, removeHtmlTagsResult) => {
+      if (removeHtmlTagsError) {
+        console.error('Error calling RemoveHtmlTags stored procedure:', removeHtmlTagsError);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+      console.log('RemoveHtmlTags stored procedure called successfully');
+      return res.status(200).json({ message: 'Data inserted successfully' });
+    });
   });
 });
+
 
 router.get('/getblogs', (req, res) => {
   const sql = 'SELECT * FROM blogtable';
