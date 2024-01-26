@@ -105,7 +105,6 @@ const registerUser = async (user) => {
           reject({ Error: "Database error" });
         }
 
-        // Check if the user already exists by username
         db.query(
           checkUserQueryByUsername,
           [user.getUsername()],

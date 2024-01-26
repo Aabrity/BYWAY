@@ -38,7 +38,7 @@ const SignupForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = new Admin(values.email, values.password);
+    const user = new Admin(values.email, values.password, values.username);
 
     const email = user.getEmail();
     const password = user.getPassword();
@@ -61,13 +61,13 @@ const SignupForm: React.FC = () => {
 
     try {
       const response = await axios.post("http://localhost:8081/auth/register", {
-        email: values.email,
-        password: values.password,
-        username: values.username,
+        email: email,
+        password: password,
+        username: username,
       });
 
       if (response.data.Status === "Success") {
-        console.log(`Signup successful for ${values.username}`);
+        console.log(`Signup successful for ${username}`);
       } else {
         console.error(response.data.Error);
       }
