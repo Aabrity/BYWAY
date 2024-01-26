@@ -97,6 +97,7 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
     e.preventDefault();
 
     const formData = new FormData();
+    console.log("formData:", formData);
 
     if (imageFiles) {
       for (let i = 0; i < imageFiles.length; i++) {
@@ -106,7 +107,8 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
 
     for (const key in packageData) {
       if (Object.prototype.hasOwnProperty.call(packageData, key)) {
-        formData.append(key, (packageData as any)[key]);
+        formData.append(key === 'package_title' ? 'title' : key, (packageData as any)[key]);
+
       }
     }
 
@@ -116,7 +118,9 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
       if (isUpdateMode) {
         response = await axios.put(
           `http://localhost:8081/packages/updatePackage/${id}`,
+          
           formData,
+          
           {
             headers: {
               "Content-Type": "multipart/form-data",
@@ -134,7 +138,7 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
           }
         );
       }
-
+      console.log("Server Response:", response);
       if (response.data.message) {
         alert(
           isUpdateMode

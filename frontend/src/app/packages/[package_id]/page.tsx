@@ -8,10 +8,11 @@ import ExpandableSection from "@/Components/Packages/DropDown";
 import WalkingAnimation from "@/Components/Common/Loader";
 
 
-export default function Page({ params }: { params: { package_id: string } }) {
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+export default function Page({ params }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [locationName, setLocationName] = useState(null); // Added locationName state
 
   useEffect(() => {
     const fetchPackageData = async () => {
@@ -21,6 +22,21 @@ export default function Page({ params }: { params: { package_id: string } }) {
         );
         console.log("Retrieved data:", response.data.package);
         setData(response.data.package);
+
+        const locationId = response.data.package.location_id;
+        console.log(locationId);
+
+        const locationResponse = await axios.get(
+          `http://localhost:8081/packages/fetchLocationName/${locationId}`
+        );
+        console.log("Location Response:", locationResponse);
+
+        // Access 'locationName' directly from 'data'
+        const locationName = locationResponse.data.locationName;
+        console.log("Retrieved location name:", locationName);
+
+        // Set the locationName in state
+        setLocationName(locationName);
       } catch (error) {
         console.error("Error fetching package data:", error);
         setError("Error fetching data. Please try again.");
@@ -44,10 +60,12 @@ export default function Page({ params }: { params: { package_id: string } }) {
     return (
       <div>
         Error: {error}
-        <Animation />
+        <WalkingAnimation />
       </div>
     );
   }
+
+
 
   const numericPrice = parseInt(data.price);
   const discountPercentage = parseInt(data.discount);
@@ -59,20 +77,23 @@ export default function Page({ params }: { params: { package_id: string } }) {
 
   const discountedPrice =
     numericPrice - (numericPrice * discountPercentage) / 100;
+
+
+
   return (
     <>
       <HeaderTab />
 
       <div className="flex py-16 md:py-20 lg:py-28 justify-center bg-slate-50">
         <div className="max-w-7xl w-full">
-          <h1 className="text-2xl font-bold mt-20 mb-10">
+          <h1 className="text-2xl font-bold mt-5 mb-5">
             {data.package_title}
           </h1>
-          <span className="text-violet-600 font-semibold mt-2">
-            {data.location}
+          <span className="text-violet-600 font-semibold mt-2 mb-">
+          {locationName}
           </span>
 
-          <div className="flex flex-col justify-between lg:flex-row gap-16">
+          <div className="flex flex-col justify-between lg:flex-row gap-16 mt-2">
             <div className="flex flex-col gap-6 w-full ">
               <div className="flex items-stretch h-96 rounded-3xl">
                 {data.image1 && (
@@ -116,11 +137,11 @@ export default function Page({ params }: { params: { package_id: string } }) {
                 <p className="text-gray-700">{data.about}</p>
 
                 {/* Container for Price Box and Table */}
-                <div className="flex flex-auto justify-between mt-4">
+                <div className="flex flex-auto  mt-4">
                   {/* Table */}
                   <div className="flex lg:w-2/3 flex-col">
                     <TravelPackageTable
-                      accommodations={data.accomodations}
+                      depature_and_return={data.departure_and_return}
                       accessibility={data.accessibility}
                       guidance_language={data.guidance_language}
                     />
@@ -147,7 +168,7 @@ export default function Page({ params }: { params: { package_id: string } }) {
                   </div>
 
                   {/* Price Box */}
-                  <div className="p-4 rounded-lg shadow-lg lg:w-1/3 h-44">
+                  <div className="p-4 rounded-lg shadow-lg lg:w-1/4 h-44">
                     <h2 className="text-xl font-bold mb-2">Package Price:</h2>
                     {discountPercentage > 0 ? (
                       <div>
@@ -174,6 +195,7 @@ export default function Page({ params }: { params: { package_id: string } }) {
     </>
   );
 }
+
 
 function convertImageToBase64(
   imageBlob: Blob,

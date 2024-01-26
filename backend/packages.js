@@ -101,6 +101,21 @@ router.delete("/deletepackages/:id", (req, res) => {
 });
 
 
+router.get("/fetchLocationName/:location_id", (req, res) => {
+  const locationId = req.params.location_id;
+  const query = "SELECT location_name FROM locationtable WHERE location_id = ?";
+  db.query(query, [locationId], (err, result) => {
+    if (err) {
+      console.error("Error fetching location name:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      const locationName = result[0] ? result[0].location_name : null;
+      res.json({ locationName });
+    }
+  });
+});
+
+
 router.get("/fetchAvailableLocations", (req, res) => {
   const query = "SELECT location_id, location_name FROM locationtable";
   db.query(query, (err, locations) => {
@@ -113,7 +128,7 @@ router.get("/fetchAvailableLocations", (req, res) => {
   });
 });
 
-router.put("/updatepackage/:id", (req, res) => {
+router.put("/updatepackage/:id", upload.array("image", 4), async (req, res) => {
   const packageId = req.params.id;
   const {
     title,
@@ -129,8 +144,31 @@ router.put("/updatepackage/:id", (req, res) => {
     discount,
   } = req.body;
 
-  const updateQuery =
-    "UPDATE packagetable SET package_title=?, location_id=?, about=?, guidance_language=?, whats_included=?, what_to_expect=?, departure_and_return=?, accessibility=?, additional_info=?, price=?, discount=? WHERE package_id = ?";
+  const images = req.files.map((file) => ({
+    name: file.originalname,
+    data: file.buffer,
+  }));
+
+  const updateQuery = `
+    UPDATE packagetable 
+    SET 
+      package_title=?, 
+      location_id=?, 
+      about=?, 
+      guidance_language=?, 
+      whats_included=?, 
+      what_to_expect=?, 
+      departure_and_return=?, 
+      accessibility=?, 
+      additional_info=?, 
+      price=?, 
+      discount=?, 
+      image1=?, 
+      image2=?, 
+      image3=?, 
+      image4=? 
+    WHERE package_id = ?
+  `;
 
   const values = [
     title,
@@ -144,6 +182,10 @@ router.put("/updatepackage/:id", (req, res) => {
     additional_info,
     price,
     discount,
+    images[0] ? images[0].data : null,
+    images[1] ? images[1].data : null,
+    images[2] ? images[2].data : null,
+    images[3] ? images[3].data : null,
     packageId,
   ];
 
@@ -158,6 +200,7 @@ router.put("/updatepackage/:id", (req, res) => {
     return res.status(200).json({ status: "Success" });
   });
 });
+
 
 
 
