@@ -49,7 +49,6 @@ export default class Admin {
   }
 
   validateUsername(username) {
-    // Username must be less than 10 characters, contain at least one number, and no spaces or special characters
     const usernameRegex = /^(?=.*\d)[\w]{1,9}$/;
     return usernameRegex.test(username);
   }

@@ -215,7 +215,6 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
             </div>
           </div>
 
-          {/* Blog Content */}
           <div className="blog-content flex flex-col m-2 ml-44 mb-5 items-start">
             <label className="mr-10 text-xl text-slate-700">
               Blog Content:
