@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Admin from "@/../../backend/model/AdminModel";
 
 interface SignupFormData {
   email: string;
@@ -17,6 +18,7 @@ const SignupForm: React.FC = () => {
     password: "",
     username: "",
   });
+
 
   const [validationError, setValidationError] = useState<{
     [key in keyof SignupFormData]: string;
@@ -36,21 +38,26 @@ const SignupForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const user = new Admin(values.email, values.password);
 
-    // Validation for email, password, and username
+    const email = user.getEmail();
+    const password = user.getPassword();
+    const username= user.getUsername();
+   
     setValidationError({
-      email: validateEmail(values.email) ? "" : "Invalid email address.",
-      password: validatePassword(values.password)
+      email: validateEmail(email) ? "" : "Invalid email address.",
+      username: validateUsername(username)
+      ? ""
+      : "",
+      password: validatePassword(password)
         ? ""
         : "Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character.",
-      username: validateUsername(values.username)
-        ? ""
-        : "Username must be less than 10 characters, contain at least one number, and no spaces or special characters.",
     });
 
     if (Object.values(validationError).some((error) => error !== "")) {
       return;
     }
+
 
     try {
       const response = await axios.post("http://localhost:8081/auth/register", {
@@ -163,6 +170,25 @@ const SignupForm: React.FC = () => {
             SIGN UP
           </h2>
           <div className="flex flex-col text-gray-400 py-2">
+            <label>Username</label>
+            <input
+              type="text"
+              name="username"
+              value={values.username}
+              onBlur={() => handleBlur("username")}
+              onChange={handleChange}
+              onFocus={() => handleFocus("username")}
+              className={`rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none ${
+                touchedFields.username && validationError.username
+                  ? "border-red-500"
+                  : ""
+              }`}
+            />
+            {touchedFields.username && validationError.username && (
+              <p className="text-red-500">{validationError.username}</p>
+            )}
+          </div>
+          <div className="flex flex-col text-gray-400 py-2">
             <label>Email</label>
             <input
               type="email"
@@ -200,25 +226,7 @@ const SignupForm: React.FC = () => {
               <p className="text-red-500">{validationError.password}</p>
             )}
           </div>
-          <div className="flex flex-col text-gray-400 py-2">
-            <label>Username</label>
-            <input
-              type="text"
-              name="username"
-              value={values.username}
-              onBlur={() => handleBlur("username")}
-              onChange={handleChange}
-              onFocus={() => handleFocus("username")}
-              className={`rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none ${
-                touchedFields.username && validationError.username
-                  ? "border-red-500"
-                  : ""
-              }`}
-            />
-            {touchedFields.username && validationError.username && (
-              <p className="text-red-500">{validationError.username}</p>
-            )}
-          </div>
+  
           <button
             type="submit"
             className="w-full my-5 py-2 bg-green-600 shadow-lg shadow-green-600/50 hover:shadow-green-500/80 text-white font-semibold rounded-lg"

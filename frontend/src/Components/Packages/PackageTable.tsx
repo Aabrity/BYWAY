@@ -7,6 +7,7 @@ import StyledTable from "../Common/StyledTable";
 import { PackageForm } from "./PackageForm";
 import { PopupModal } from "../Common/ContainerModal";
 
+
 export const PackageTable = () => {
   interface PackageItem {
     package_id: string;
@@ -33,6 +34,7 @@ interface PackageData {
 
 
   const [tableData, setTableData] = useState([]);
+  const [packageIdToUpdate, setPackageIdToUpdate] = useState<string | null>(null);
   const [packageData, setPackageData] = useState<PackageData>({
     title: "",
     location_id: "",
@@ -75,7 +77,8 @@ interface PackageData {
   ];
   const [showModal, setShowModal] = useState(false);
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (packageId: string) => {
+    setPackageIdToUpdate(packageId); 
     setShowModal(true);
   };
 
@@ -104,7 +107,8 @@ interface PackageData {
           price: completeData.price || "",
           discount: completeData.discount || "",
         });
-        handleOpenModal();
+        handleOpenModal(rowData.packageid);
+
       })
       .catch((err) => console.log(err));
   };
@@ -167,7 +171,7 @@ interface PackageData {
       </div>
       <div>
         <PopupModal isOpen={showModal} onClose={handleCloseModal}>
-          <PackageForm />
+        <PackageForm id={packageIdToUpdate}/>
         </PopupModal>
       </div>
     </>
