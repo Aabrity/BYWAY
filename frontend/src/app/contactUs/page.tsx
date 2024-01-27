@@ -8,7 +8,7 @@ import { IoCall } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 
 
-import ReactQuill from "react-quill";
+
 import "react-quill/dist/quill.snow.css";
 import HeaderTab from "@/Components/Header";
 
@@ -16,7 +16,7 @@ import HeaderTab from "@/Components/Header";
 
 interface ContactFormData {
   email: string;
-  contactNumber: string;
+  phone: string;
   subject: string;
   address: string;
   message: string;
@@ -25,7 +25,7 @@ interface ContactFormData {
 const ContactUsForm: React.FC = () => {
   const [contactFormData, setContactFormData] = useState<ContactFormData>({
     email: "",
-    contactNumber: "",
+    phone: "",
     subject: "",
     address: "",
     message: "",
@@ -50,6 +50,7 @@ const ContactUsForm: React.FC = () => {
     });
   };
 
+
   const handleContactSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -60,8 +61,10 @@ const ContactUsForm: React.FC = () => {
 
       const response = await axios.post(
         "http://localhost:8081/contactus/addcontact",
-        Object.fromEntries(formData) // Convert FormData to plain object
+        Object.fromEntries(formData)
+        
       );
+      console.log(formData) 
 
       console.log(response.data);
       alert("Successfully inserted");
@@ -74,7 +77,9 @@ const ContactUsForm: React.FC = () => {
           "gc2y_H__-i5FW_ept"
         );
         console.log("Message sent:", emailjsResponse);
-      } else {
+      } 
+      
+      else {
         console.error("Form reference is null");
       }
     } catch (error) {
@@ -118,8 +123,8 @@ const ContactUsForm: React.FC = () => {
                 <input
                   type="tel"
                   className="p-1 text-xl text-slate-700 rounded-sm w-[60%] border-2 border-slate-300"
-                  name="contactNumber"
-                  value={contactFormData.contactNumber}
+                  name="phone"
+                  value={contactFormData.phone}
                   onChange={handleInputChange}
                   required
                 />
@@ -149,14 +154,18 @@ const ContactUsForm: React.FC = () => {
                 />
               </div>
 
-              <div className="blog-content flex flex-col m-4 ml-12 mb-3 items-start">
-                <label className="mr-10 text-xl text-slate-700">Message:</label>
-                <ReactQuill
+              <div className="location flex m-4 ml-12 mb-3 items-center">
+                <label className="mr-20 text-xl text-slate-700">Message:</label>
+                <input
+                  type="text"
+                  className="p-1 text-xl text-slate-700 rounded-sm w-[62%] border-2 border-slate-300"
+                  name="message"
                   value={contactFormData.message}
-                  onChange={handleQuillChange}
-                  className="w-[95%] h-36"
+                  onChange={handleInputChange}
+                  required
                 />
               </div>
+
               <div className="self-center w-48 mt-16 mx-auto">
                 <button
                   type="submit"
