@@ -132,7 +132,7 @@ const updatePackage = async (packageData) => {
       additional_info = ?,
       price = ?,
       discount = ?,
-      image1 = ?,
+      image1 = COALESCE(?, image1),
       image2 = ?,
       image3 = ?,
       image4 = ?
@@ -155,7 +155,7 @@ const updatePackage = async (packageData) => {
     packageData.getImage2(),
     packageData.getImage3(),
     packageData.getImage4(),
-    packageData.getPackage_id(), // Add package_id to the end
+    packageData.getPackage_id(),
   ];
 
   return new Promise((resolve, reject) => {
@@ -171,54 +171,58 @@ const updatePackage = async (packageData) => {
   });
 };
 
-router.put("/updatePackage/:id", upload.array("image", 4), async (req, res) => {
-  const package_id = req.params.package_id;
-  const {
-    title,
-    location_id,
-    about,
-    guidance_language,
-    whats_included,
-    what_to_expect,
-    departure_and_return,
-    accessibility,
-    additional_info,
-    price,
-    discount,
-  } = req.body;
+router.put(
+  "/updatePackage/:package_id",
+  upload.array("image", 4),
+  async (req, res) => {
+    const package_id = req.params.package_id;
+    const {
+      title,
+      location_id,
+      about,
+      guidance_language,
+      whats_included,
+      what_to_expect,
+      departure_and_return,
+      accessibility,
+      additional_info,
+      price,
+      discount,
+    } = req.body;
 
-  const images = req.files.map((file) => ({
-    originalname: file.originalname,
-    buffer: file.buffer,
-  }));
+    const images = req.files.map((file) => ({
+      originalname: file.originalname,
+      buffer: file.buffer,
+    }));
 
-  const packageData = new PackageModel(
-    package_id, // Pass package_id to the constructor
-    title,
-    location_id,
-    about,
-    guidance_language,
-    whats_included,
-    what_to_expect,
-    departure_and_return,
-    accessibility,
-    additional_info,
-    price,
-    discount,
-    images[0] ? images[0].buffer : null,
-    images[1] ? images[1].buffer : null,
-    images[2] ? images[2].buffer : null,
-    images[3] ? images[3].buffer : null
-  );
+    const packageData = new PackageModel(
+      package_id, // Pass package_id to the constructor
+      title,
+      location_id,
+      about,
+      guidance_language,
+      whats_included,
+      what_to_expect,
+      departure_and_return,
+      accessibility,
+      additional_info,
+      price,
+      discount,
+      images[0] ? images[0].buffer : null,
+      images[1] ? images[1].buffer : null,
+      images[2] ? images[2].buffer : null,
+      images[3] ? images[3].buffer : null
+    );
 
-  try {
-    const updateResponse = await updatePackage(packageData);
-    res.json(updateResponse);
-  } catch (error) {
-    console.error("An error occurred during update:", error);
-    res.json(error);
+    try {
+      const updateResponse = await updatePackage(packageData);
+      res.json(updateResponse);
+    } catch (error) {
+      console.error("An error occurred during update:", error);
+      res.json(error);
+    }
   }
-});
+);
 
 router.get("/getPackages", (req, res) => {
   const selectQuery = "SELECT * FROM packagetable";
