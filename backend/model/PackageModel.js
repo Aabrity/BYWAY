@@ -39,13 +39,13 @@ export default class PackageModel {
     this.#package_id = package_id;
     this.#package_title = package_title;
     this.#location_id = location_id;
-    this.about = about;
-    this.guidance_language = guidance_language;
-    this.whats_included = whats_included;
-    this.what_to_expect = what_to_expect;
-    this.departure_and_return = departure_and_return;
-    this.accessibility = accessibility;
-    this.additional_info = additional_info;
+    this.#about = about;
+    this.#guidance_language = guidance_language;
+    this.#whats_included = whats_included;
+    this.#what_to_expect = what_to_expect;
+    this.#departure_and_return = departure_and_return;
+    this.#accessibility = accessibility;
+    this.#additional_info = additional_info;
     this.#price = price;
     this.#discount = discount;
     this.#image1 = image1;
@@ -101,7 +101,6 @@ export default class PackageModel {
   setWhats_included(value) {
     this.#whats_included = this.validateWordCount(value, 150);
   }
-
   getWhat_to_expect() {
     return this.#what_to_expect;
   }
