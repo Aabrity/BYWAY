@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
+import emailjs from '@emailjs/browser';
 
 import { IoLocationSharp } from "react-icons/io5";
 import { IoCall } from "react-icons/io5";
@@ -30,6 +31,8 @@ const ContactUsForm: React.FC = () => {
     message: "",
   });
 
+  const formRef = useRef<HTMLFormElement>(null); // Create a ref for the form
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -47,29 +50,36 @@ const ContactUsForm: React.FC = () => {
     });
   };
 
-  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleContactSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
     try {
+      const formData = new FormData(formRef.current!); // Access form data using the form reference
+
       const response = await axios.post(
-        "http://localhost:8081/contact-us/add",
-        contactFormData
+        "http://localhost:8081/contactus/addcontact",
+        Object.fromEntries(formData) // Convert FormData to plain object
       );
 
-      if (response.data.message) {
-        alert("Contact form submitted successfully");
-        setContactFormData({
-          email: "",
-          contactNumber: "",
-          subject: "",
-          address: "",
-          message: "",
-        });
+      console.log(response.data);
+      alert("Successfully inserted");
+
+      if (formRef.current) {
+        const emailjsResponse = await emailjs.sendForm(
+          "service_0gn9pz7",
+          "template_ows0j7b",
+          formRef.current, // Pass the form reference
+          "gc2y_H__-i5FW_ept"
+        );
+        console.log("Message sent:", emailjsResponse);
       } else {
-        alert("Error submitting contact form");
+        console.error("Form reference is null");
       }
     } catch (error) {
-      console.error("Submission error:", error);
+      console.error("Error submitting form:", error);
+      alert("Error submitting form. Please try again later.");
     }
   };
 
@@ -82,6 +92,7 @@ const ContactUsForm: React.FC = () => {
         </div>
         <div className="flex ">
           <form
+          ref={formRef}
             onSubmit={handleContactSubmit}
             className="flex flex-col  overflow-y-auto"
           >
