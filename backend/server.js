@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./controller/AuthController.js";
 import contactusRoutes from "./contactus.js";
-import packagesRoutes from "./packages.js";
+import packagesRoutes from "./controller/PackageController.js";
 import blogRoutes from "./blog.js";
 import planTripRoutes from "./planTrip.js";
 import protectedRoutes from "./middleware.js";

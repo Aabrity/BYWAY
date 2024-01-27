@@ -1,25 +1,29 @@
 export default class Admin {
+  #email;
+  #password;
+  #username;
+
   constructor(email, password, username = null) {
-    this._email = email;
-    this._password = password;
-    this._username = username;
+    this.#email = email;
+    this.#password = password;
+    this.#username = username;
   }
 
   getUsername() {
-    return this._username;
+    return this.#username;
   }
 
   getEmail() {
-    return this._email;
+    return this.#email;
   }
 
   getPassword() {
-    return this._password;
+    return this.#password;
   }
 
   setUsername(username) {
     if (this.validateUsername(username)) {
-      this._username = username;
+      this.#username = username;
       console.log("ModelSuccess: Valid username set.");
     } else {
       console.error(
@@ -30,7 +34,7 @@ export default class Admin {
 
   setEmail(email) {
     if (this.validateEmail(email)) {
-      this._email = email;
+      this.#email = email;
       console.log("ModelSuccess: Valid email set.");
     } else {
       console.error("ModelError: Invalid email address.");
@@ -39,7 +43,7 @@ export default class Admin {
 
   setPassword(password) {
     if (this.validatePassword(password)) {
-      this._password = password;
+      this.#password = password;
       console.log("ModelSuccess: Valid password set.");
     } else {
       console.error(

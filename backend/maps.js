@@ -44,5 +44,15 @@ router.get("/getLocations", (req, res) => {
     }
   });
 });
-
+router.get("/fetchAvailableLocations", (req, res) => {
+  const query = "SELECT location_id, location_name FROM locationtable";
+  db.query(query, (err, locations) => {
+    if (err) {
+      console.error("Error fetching locations:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      res.json(locations);
+    }
+  });
+});
 export default router;

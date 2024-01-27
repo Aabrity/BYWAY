@@ -6,13 +6,7 @@ import emailjs from '@emailjs/browser';
 import { IoLocationSharp } from "react-icons/io5";
 import { IoCall } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
-
-
-
-import "react-quill/dist/quill.snow.css";
 import HeaderTab from "@/Components/Header";
-
-
 
 interface ContactFormData {
   email: string;
@@ -32,7 +26,6 @@ const ContactUsForm: React.FC = () => {
   });
 
   const formRef = useRef<HTMLFormElement>(null); // Create a ref for the form
-
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -90,7 +83,7 @@ const ContactUsForm: React.FC = () => {
 
   return (
     <>
-    <HeaderTab/>
+      <HeaderTab />
       <div className="w-auto h-screen mt-16 flex flex-col justify-center items-center">
         <div className="w-auto pb-8 ml-3 text-4xl text-center text-green-700 ">
           <strong>Contact Us</strong>

@@ -4,6 +4,7 @@ import Features from "@/Components/Features";
 import SectionTitle from "@/Components/Common/SectionTitle";
 import HeaderTab from "@/Components/Header";
 import FooterTab from "@/Components/Footer";
+import { ClientMap } from "@/Components/Maps/ClientMap";
 export default function Home() {
   return (
     <>
@@ -23,6 +24,13 @@ export default function Home() {
         mb="0"
       />
       <Features />
+      <SectionTitle
+        title="Our Packages"
+        paragraph="Byway has been providing travel packages on popular destinations across the nation "
+        center
+        mb="0"
+      />
+      <ClientMap id="clientMap" />
       <FooterTab />
     </>
   );

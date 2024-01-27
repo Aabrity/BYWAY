@@ -18,7 +18,7 @@ export default function Page({ params }) {
     const fetchPackageData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8081/packages/getselectedpackage/${params.package_id}`
+          `http://localhost:8081/packages/getSelectedPackage/${params.package_id}`
         );
         console.log("Retrieved data:", response.data.package);
         setData(response.data.package);
@@ -27,7 +27,7 @@ export default function Page({ params }) {
         console.log(locationId);
 
         const locationResponse = await axios.get(
-          `http://localhost:8081/packages/fetchLocationName/${locationId}`
+          `http://localhost:8081/maps/fetchLocationName/${locationId}`
         );
         console.log("Location Response:", locationResponse);
 
