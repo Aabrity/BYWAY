@@ -79,7 +79,7 @@ const ContactUsForm: React.FC = () => {
   return (
     <>
       <HeaderTab />
-      <div className="w-auto h-screen mt-16 flex flex-col justify-center items-center">
+      <div className="w-auto h-screen flex flex-col justify-center items-center">
         <div className="w-auto pb-8 ml-3 text-4xl text-center text-green-700 ">
           <strong>Contact Us</strong>
         </div>
@@ -89,7 +89,7 @@ const ContactUsForm: React.FC = () => {
             onSubmit={handleContactSubmit}
             className="flex flex-col  overflow-y-auto"
           >
-            <div className="divcontainer bg-white mx-auto h-[75vh] p-3 rounded">
+            <div className="divcontainer bg-white mx-auto h-[62vh] p-3 rounded">
               <div className="name flex m-5 ml-12 mb-3 items-center">
                 <label className="mr-8 text-xl text-slate-700">
                   Email Address:

@@ -186,7 +186,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
   name="category"
   value={selectedCategory}
   onChange={(e) => setSelectedCategory(e.target.value)}
-  className="rounded-lg bg-gray-700 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+  className="rounded-lg bg-slate-100 border p-2 focus:outline-none"
 >
   <option value="">Select a Category</option>
   <option value="Normal">Normal</option>
