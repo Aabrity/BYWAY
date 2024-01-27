@@ -1,17 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
+import emailjs from "@emailjs/browser";
 
 import { IoLocationSharp } from "react-icons/io5";
 import { IoCall } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 
-
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import HeaderTab from "@/Components/Header";
-
-
 
 interface ContactFormData {
   email: string;
@@ -30,6 +28,7 @@ const ContactUsForm: React.FC = () => {
     message: "",
   });
 
+  const formRef = useRef<HTMLFormElement>(null);
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -51,37 +50,42 @@ const ContactUsForm: React.FC = () => {
     e.preventDefault();
 
     try {
+      const formData = new FormData(formRef.current!); 
       const response = await axios.post(
-        "http://localhost:8081/contact-us/add",
-        contactFormData
+        "http://localhost:8081/contactus/addcontact",
+        Object.fromEntries(formData) 
       );
 
-      if (response.data.message) {
-        alert("Contact form submitted successfully");
-        setContactFormData({
-          email: "",
-          contactNumber: "",
-          subject: "",
-          address: "",
-          message: "",
-        });
+      console.log(response.data);
+      alert("Successfully inserted");
+
+      if (formRef.current) {
+        const emailjsResponse = await emailjs.sendForm(
+          "service_0gn9pz7",
+          "template_ows0j7b",
+          formRef.current,
+          "gc2y_H__-i5FW_ept"
+        );
+        console.log("Message sent:", emailjsResponse);
       } else {
-        alert("Error submitting contact form");
+        console.error("Form reference is null");
       }
     } catch (error) {
-      console.error("Submission error:", error);
+      console.error("Error submitting form:", error);
+      alert("Error submitting form. Please try again later.");
     }
   };
 
   return (
     <>
-    <HeaderTab/>
+      <HeaderTab />
       <div className="w-auto h-screen mt-16 flex flex-col justify-center items-center">
         <div className="w-auto pb-8 ml-3 text-4xl text-center text-green-700 ">
           <strong>Contact Us</strong>
         </div>
         <div className="flex ">
           <form
+            ref={formRef}
             onSubmit={handleContactSubmit}
             className="flex flex-col  overflow-y-auto"
           >

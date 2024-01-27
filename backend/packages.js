@@ -101,33 +101,6 @@ router.delete("/deletepackages/:id", (req, res) => {
 });
 
 
-router.get("/fetchLocationName/:location_id", (req, res) => {
-  const locationId = req.params.location_id;
-  const query = "SELECT location_name FROM locationtable WHERE location_id = ?";
-  db.query(query, [locationId], (err, result) => {
-    if (err) {
-      console.error("Error fetching location name:", err);
-      res.status(500).json({ error: "Internal Server Error" });
-    } else {
-      const locationName = result[0] ? result[0].location_name : null;
-      res.json({ locationName });
-    }
-  });
-});
-
-
-router.get("/fetchAvailableLocations", (req, res) => {
-  const query = "SELECT location_id, location_name FROM locationtable";
-  db.query(query, (err, locations) => {
-    if (err) {
-      console.error("Error fetching locations:", err);
-      res.status(500).json({ error: "Internal Server Error" });
-    } else {
-      res.json(locations);
-    }
-  });
-});
-
 router.put("/updatepackage/:id", upload.array("image", 4), async (req, res) => {
   const packageId = req.params.id;
   const {
@@ -204,7 +177,7 @@ router.put("/updatepackage/:id", upload.array("image", 4), async (req, res) => {
 
 
 
-router.get("/getpackages", (req, res) => {
+router.get("/getPackages", (req, res) => {
   const selectQuery = "SELECT * FROM packagetable";
 
   db.query(selectQuery, (err, result) => {

@@ -42,7 +42,7 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/packages/fetchAvailableLocations")
+      .get("http://localhost:8081/maps/fetchAvailableLocations")
       .then((response) => {
         setLocations(response.data);
       });
@@ -50,11 +50,26 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
     // Fetch package data if id prop is provided
     if (id) {
       axios
-        .get(`http://localhost:8081/packages/getselectedpackage/${id}`)
+        .get(`http://localhost:8081/packages/getSelectedPackage/${id}`)
         .then((response) => {
           const fetchedPackageData = response.data.package;
           setPackageData(fetchedPackageData);
-          setImagePreviews([]); // Clear existing previews
+          const imagePreviews = [];
+          for (let i = 1; i <= 4; i++) {
+            const imageData = fetchedPackageData[`image${i}`];
+            if (
+              imageData &&
+              imageData.type === "Buffer" &&
+              Array.isArray(imageData.data)
+            ) {
+              const blob = new Blob([Buffer.from(imageData.data)], {
+                type: "image/jpeg",
+              }); // Assuming JPEG format
+              const imageUrl = URL.createObjectURL(blob);
+              imagePreviews.push(imageUrl);
+            }
+          }
+          setImagePreviews(imagePreviews);
           setIsUpdateMode(true); // Enable update mode
         })
         .catch((error) => {
@@ -101,14 +116,16 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
 
     if (imageFiles) {
       for (let i = 0; i < imageFiles.length; i++) {
-        formData.append(`image`, imageFiles[i]); // Use the same field name "image"
+        formData.append(`image${i + 1}`, imageFiles[i]); // Adjust the field name to image1, image2, etc.
       }
     }
 
     for (const key in packageData) {
       if (Object.prototype.hasOwnProperty.call(packageData, key)) {
-        formData.append(key === 'package_title' ? 'title' : key, (packageData as any)[key]);
-
+        formData.append(
+          key === "package_title" ? "title" : key,
+          (packageData as any)[key]
+        );
       }
     }
 
@@ -116,11 +133,14 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
       let response;
 
       if (isUpdateMode) {
+        for (const pair of formData.entries()) {
+          console.log(pair[0] + ", " + pair[1]);
+        }
         response = await axios.put(
           `http://localhost:8081/packages/updatePackage/${id}`,
-          
+
           formData,
-          
+
           {
             headers: {
               "Content-Type": "multipart/form-data",

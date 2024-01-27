@@ -1,14 +1,16 @@
 import express from "express";
-import mysql from "mysql";
-
+import connectToDatabase from "./db.js";
 const router = express.Router();
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "A@brity0916",
-  database: "byway",
-});
+let db;
+(async function () {
+  try {
+    db = await connectToDatabase();
+  } catch (err) {
+    console.error("Failed to connect to database:", err);
+    process.exit(1);
+  }
+})();
 
 router.get("/getcontacts", (req, res) => {
   const sqlSelect = "SELECT * FROM contacttable";
