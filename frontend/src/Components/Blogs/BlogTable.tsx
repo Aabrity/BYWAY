@@ -4,16 +4,17 @@ import axios from "axios";
 import StyledTable from "../Common/StyledTable";
 import { PopupModal } from "../Common/ContainerModal";
 
+
 import BlogForm from "./BlogForm";
 export const BlogTable = () => {
   const [tableData, setTableData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [imageFile, setImageFile] = useState<File | null>(null);
-  // const [selectedBlog, setSelectedBlog] = useState<BlogItems | null>(null);
+  const [blogIdToUpdate, setblogIdToUpdate] = useState<string | null>(null);
   const [blogImage, setBlogImage] = useState<string | File | null>(null);
 
   const [selectedBlog, setSelectedBlog] = useState<BlogItems>({
-    blogid: "",
+    id: "",
     title: "",
     description: "",
     category: "",
@@ -87,13 +88,14 @@ export const BlogTable = () => {
 
    const [showModal, setShowModal] = useState(false);
 
-   const handleOpenModal = () => {
-     setShowModal(true);
-   };
+   const handleOpenModal = (blogId: string) => {
+    setblogIdToUpdate(blogId); 
+    setShowModal(true);
+  };
 
-   const handleCloseModal = () => {
-     setShowModal(false);
-   };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormState({
@@ -111,48 +113,7 @@ export const BlogTable = () => {
       image: formState.image,
     });
   };
-  const handleUpdate = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!formState.blogid) {
-      console.error("Blog ID is missing");
-      return;
-    }
-    const formData = new FormData();
-    formData.append("title", formState.title);
-    formData.append("description", formState.content);
-    formData.append("category", selectedCategory);
-    formData.append("image", imageFile || ""); // Provide an empty string as a default value for null
-
-    console.log(formData.get("image"));
-
-    axios
-      .put(
-        `http://localhost:8081/blogs/updateblog/${formState.blogid}`,
-        formData
-      )
-      .then((res) => {
-        if (res.data.status === "Success") {
-          alert(`${formState.title} updated successfully`);
-          axios
-            .get("http://localhost:8081/blogs/getblogs")
-            .then((response) => {
-              const blogsArray = response.data.blogs || [];
-              const modifiedData = blogsArray.map((item: BlogItems) => ({
-                blogid: item.id,
-                title: item.title,
-                content: item.description,
-                category: item.category,
-              }));
-              setTableData(modifiedData);
-            })
-            .catch((error) => console.error("Error fetching data:", error));
-        } else {
-          alert(res.data.message);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+ 
 
   const tableHeaders = ["Blogid", "Title", "Content", "Category", "Actions"];
 
@@ -168,26 +129,54 @@ export const BlogTable = () => {
           bufferData
         ).toString("base64")}`;
 
-        setSelectedBlog({
+        setSelectedBlog((prevSelectedBlog) => ({
+          ...prevSelectedBlog,
           blogid: completeData.id || 0,
           title: completeData.title || "",
           content: completeData.description || "",
           category: completeData.category || "",
           image: completeData.image || null,
-        });
-
-        setFormState({
-          blogid: completeData.id || 0,
-          title: completeData.title || "",
-          content: completeData.description || "",
-          category: completeData.category || "",
-          image: completeData.image || null,
-        });
+        }));
+        handleOpenModal(rowData.blogid);
 
         setBlogImage(dataUrl || null);
       })
+      
       .catch((err) => console.log(err));
   };
+
+  // const handleEditClick = (rowData: Record<string, any>) => {
+  //   console.log("Clicked Edit. Blog ID:", rowData.blogid);
+  //   handleOpenModal();
+  //   axios
+  //     .get(`http://localhost:8081/blogs/getSelectedBlog/${rowData.blogid}`)
+  //     .then((res) => {
+  //       const completeData = res.data.blog;
+  
+  //       if (!completeData) {
+  //         console.error("Complete data is undefined or null");
+  //         return;
+  //       }
+  
+  //       const bufferData = completeData.image?.data || [];
+  //       const dataUrl = `data:image/png;base64,${Buffer.from(
+  //         bufferData
+  //       ).toString("base64")}`;
+  
+  //       setFormState({
+  //         blogid: completeData.id ?? 0,
+  //         title: completeData.title ?? "",
+  //         content: completeData.description ?? "",
+  //         category: completeData.category ?? "",
+  //         image: completeData.image ?? null,
+  //       });
+  
+  //       setBlogImage(dataUrl ?? null);
+        
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+  
 
   const handleDeleteClick = async (rowData: Record<string, any>) => {
     if (
@@ -248,7 +237,7 @@ export const BlogTable = () => {
       </div>
       <div>
         <PopupModal isOpen={showModal} onClose={handleCloseModal}>
-          <BlogForm />
+        <BlogForm id={blogIdToUpdate}/>
         </PopupModal>
       </div>
     </>
