@@ -90,10 +90,10 @@ export const ClientMap: React.FC<ClientMapProps> = ({ id }) => {
   }, [locations, id]);
 
   return (
-    <div className="w-full h-full p-10 bg-green-200 rounded-md">
+    <div className="w-full h-full p-16">
       <div
         id={id}
-        className="mx-auto w-full h-[70vh] border border-gray-300 rounded-md"
+        className="mx-auto w-full h-[70vh] border border-gray-300 rounded"
       ></div>
     </div>
   );

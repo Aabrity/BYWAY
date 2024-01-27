@@ -21,7 +21,7 @@ type PackageItemProps = {
 
 export const fetchPackagesData = async (): Promise<Array<PackageItemProps>> => {
   try {
-    const response = await axios.get("http://localhost:8081/packages/getpackages");
+    const response = await axios.get("http://localhost:8081/packages/getPackages");
 
     console.log("Raw data from the server:", response.data);
 

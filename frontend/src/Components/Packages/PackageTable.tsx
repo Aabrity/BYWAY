@@ -52,7 +52,7 @@ interface PackageData {
   useEffect(() => {
     // Fetching packages data
     axios
-      .get("http://localhost:8081/packages/getpackages")
+      .get("http://localhost:8081/packages/getPackages")
       .then((response) => {
         const packagesArray = response.data.packages || [];
         const modifiedData = packagesArray.map((item: PackageItem) => ({
@@ -90,7 +90,7 @@ interface PackageData {
     // Fetch the complete data for the selected package from the database
     axios
       .get(
-        `http://localhost:8081/packages/getselectedpackage/${rowData.packageid}`
+        `http://localhost:8081/packages/getSelectedPackage/${rowData.packageid}`
       )
       .then((res) => {
         const completeData = res.data.package;
@@ -120,7 +120,7 @@ interface PackageData {
     ) {
       try {
         const deleteResponse = await axios.delete(
-          `http://localhost:8081/packages/deletepackages/${rowData.packageid}`
+          `http://localhost:8081/packages/deletePackages/${rowData.packageid}`
         );
         console.log("Delete Response:", deleteResponse);
 
@@ -128,7 +128,7 @@ interface PackageData {
           console.log("Delete successful. Fetching updated data...");
 
           const packagesResponse = await axios.get(
-            "http://localhost:8081/packages/getpackages"
+            "http://localhost:8081/packages/getPackages"
           );
           console.log("Packages Response:", packagesResponse);
 
