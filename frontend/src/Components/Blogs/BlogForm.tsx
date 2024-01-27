@@ -1,14 +1,14 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 interface BlogData {
-  blog_title: string;
+  title: string;
   images: FileList | null;
-  blog_category: string;
-  blog_content: string;
+  category: string;
+  content: string;
 }
 
 interface BlogFormProps {
@@ -17,12 +17,12 @@ interface BlogFormProps {
 
 const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
   const [blogData, setBlogData] = useState<BlogData>({
-    blog_title: "",
+    title: "",
     images: null,
-    blog_category: "",
-    blog_content: "",
+    category: "",
+    content: "",
   });
-
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
 
@@ -34,13 +34,15 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
           const fetchedBlogData = response.data.blog;
           setBlogData(fetchedBlogData);
           setImagePreviews([]); // Clear existing previews
-          setIsUpdateMode(true); 
+          setSelectedCategory(fetchedBlogData.category); // Update selected category
+          setIsUpdateMode(true);
         })
         .catch((error) => {
           console.error("Error fetching blog data:", error);
         });
     }
   }, [id]);
+  
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -80,30 +82,34 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
   const handleBlogContentChange = (content: string) => {
     setBlogData({
       ...blogData,
-      blog_content: content,
+      content: content,
     });
   };
 
   const handleBlogSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
     const formData = new FormData();
-
+  
     if (blogData.images) {
       for (let i = 0; i < blogData.images.length; i++) {
         formData.append(`image`, blogData.images[i]); // Use the same field name "image"
       }
     }
-
-    for (const key in blogData) {
-      if (Object.prototype.hasOwnProperty.call(blogData, key)) {
-        formData.append(key, (blogData as any)[key]);
-      }
+  
+    // Append other fields
+    formData.append("title", blogData.title);
+   
+    formData.append("content", blogData.content);
+    
+    if (selectedCategory !== null && selectedCategory !== undefined) {
+      console.log("Appending Category to FormData:", selectedCategory);
+      formData.append("category", selectedCategory);
     }
-
+    
     try {
       let response;
-
+  
       if (isUpdateMode) {
         response = await axios.put(
           `http://localhost:8081/blogs/updateBlog/${id}`,
@@ -116,7 +122,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
         );
       } else {
         response = await axios.post(
-          "http://localhost:8081/blogs/addBlog",
+          "http://localhost:8081/blogs/postBlog",
           formData,
           {
             headers: {
@@ -125,18 +131,18 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
           }
         );
       }
-
+      console.log("Received Content:", response.data);
       if (response.data.message) {
         alert(
           isUpdateMode ? "Blog updated successfully" : "Blog added successfully"
         );
         setBlogData({
-          blog_title: "",
+          title: "",
           images: null,
-          blog_category: "",
-          blog_content: "",
+          category: "",
+          content: "",
         });
-        setImagePreviews([]); // Clear existing previews
+        setImagePreviews([]); 
         setIsUpdateMode(false);
       } else {
         alert("Error adding/updating blog");
@@ -145,6 +151,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
       console.error("Submission error:", error);
     }
   };
+  
 
   return (
     <>
@@ -164,8 +171,8 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
             <input
               type="text"
               className="p-1 text-xl rounded-sm w-[60%] border-2 border-slate-300"
-              name="blog_title"
-              value={blogData.blog_title}
+              name="title"
+              value={blogData.title}
               onChange={handleInputChange}
             />
           </div>
@@ -176,21 +183,16 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
               Blog Category :
             </label>
             <select
-              value={blogData.blog_category}
-              onChange={(e) =>
-                setBlogData({
-                  ...blogData,
-                  blog_category: e.target.value,
-                })
-              }
-              className="p-1 text-xl text-slate-700 rounded-sm w-[60%]"
-              name="blog_category"
-            >
-              {/* Add your blog categories as options */}
-              <option value="category1">Trending</option>
-              <option value="category2">Normal</option>
-              {/* Add more options as needed */}
-            </select>
+  name="category"
+  value={selectedCategory}
+  onChange={(e) => setSelectedCategory(e.target.value)}
+  className="rounded-lg bg-gray-700 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+>
+  <option value="">Select a Category</option>
+  <option value="Normal">Normal</option>
+  <option value="Trending">Trending</option>
+</select>
+
           </div>
 
           {/* Image Files with Preview */}
@@ -220,7 +222,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
               Blog Content:
             </label>
             <ReactQuill
-              value={blogData.blog_content}
+              value={blogData.content}
               onChange={handleBlogContentChange}
               className="w-[80%] h-36 "
             />

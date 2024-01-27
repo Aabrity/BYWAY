@@ -207,12 +207,31 @@ function Blogs() {
   );
 }
 
+
+// Function to sanitize HTML by removing unwanted tags
+const sanitizeHtml = (html) => {
+  const allowedTags = ['p', 'strong', 'em', 'u', 'a', 'br']; // Add more tags if needed
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  
+  // Remove unwanted tags
+  doc.body.querySelectorAll('*').forEach((node) => {
+    if (!allowedTags.includes(node.tagName.toLowerCase())) {
+      node.parentNode.removeChild(node);
+    }
+  });
+
+  return doc.body.innerHTML;
+};
+
 const RecentBlogContainer: React.FC<BlogContainerProps> = ({
   title,
   description,
   publishedDate,
   imageSrc,
 }) => {
+  // Sanitize HTML content
+  const sanitizedDescription = sanitizeHtml(description);
+
   return (
     <div
       style={{
@@ -236,7 +255,10 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({
       {/* Right side for Content */}
       <div style={{ flex: "1" }}>
         <h2 style={{ fontSize: "24px", marginBottom: "10px" }}>{title}</h2>
-        <p style={{ fontSize: "16px", color: "#555" }}>{description}</p>
+        <div
+          style={{ fontSize: "16px", color: "#555" }}
+          dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+        />
         <div style={{ marginTop: "auto", textAlign: "right" }}>
           <p style={{ fontSize: "14px", fontWeight: "bold", color: "#888" }}>
             {publishedDate}
@@ -246,5 +268,47 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({
     </div>
   );
 };
+
+
+
+// const RecentBlogContainer: React.FC<BlogContainerProps> = ({
+//   title,
+//   description,
+//   publishedDate,
+//   imageSrc,
+// }) => {
+//   return (
+//     <div
+//       style={{
+//         display: "flex",
+//         width: "80%",
+//         margin: "auto",
+//         padding: "20px",
+//         border: "1px solid #ccc",
+//         borderRadius: "8px",
+//       }}
+//     >
+//       {/* Left side for Image */}
+//       <div style={{ flex: "0 0 30%", marginRight: "20px" }}>
+//         <img
+//           src={imageSrc}
+//           alt="Blog Cover"
+//           style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+//         />
+//       </div>
+
+//       {/* Right side for Content */}
+//       <div style={{ flex: "1" }}>
+//         <h2 style={{ fontSize: "24px", marginBottom: "10px" }}>{title}</h2>
+//         <p style={{ fontSize: "16px", color: "#555" }}>{description}</p>
+//         <div style={{ marginTop: "auto", textAlign: "right" }}>
+//           <p style={{ fontSize: "14px", fontWeight: "bold", color: "#888" }}>
+//             {publishedDate}
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 export default Blogs;
