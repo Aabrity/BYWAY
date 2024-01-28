@@ -6,6 +6,9 @@ import axios from "axios";
 import BlogContainer from "./BlogContainer";
 import HeaderTab from "@/Components/Header";
 import FooterTab from '@/Components/Footer';
+import LeftPanel from "@/Components/Blogs/TrendingBlogContainer";
+import TrendingBlogContainer from "@/Components/Blogs/TrendingBlogContainer";
+
 
 interface Blog {
   title: string;
@@ -56,69 +59,53 @@ function Blogs() {
 
   return (
     <>
-      <HeaderTab />
-      <div style={{ height: "60vh", position: "relative" }}>
-        <Image
-          src="/assets/coverimage.jpg"
-          alt="Cover Image "
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center center"
-        />
-
-        {/* Search bar */}
-        <div
-          style={{
-            position: "absolute",
-            top: "90%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "750px",
-            textAlign: "center",
-          }}
-        >
-          <form>
-            <input
-              type="text"
-              placeholder="Search..."
-              style={{
-                width: "70%",
-                padding: "10px",
-                marginRight: "5px",
-                borderRadius: "2px",
-                border: "0px solid #fff",
-              }}
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-            <button
-              type="submit"
-              style={{
-                padding: "7px",
-                borderRadius: "5px",
-                backgroundColor: "transparent",
-                color: "white",
-                border: "0px",
-                transition: "background-color 0.2s",
-              }}
-              onMouseOver={(e) =>
-                ((e.target as HTMLButtonElement).style.backgroundColor =
-                  "green")
-              }
-              onMouseOut={(e) =>
-                ((e.target as HTMLButtonElement).style.backgroundColor =
-                  "transparent")
-              }
-            >
-              Search
-            </button>
-          </form>
-        </div>
+    <HeaderTab />
+    <div style={{ height: "30vh", position: "relative" }}>
+    
+      {/* Search bar */}
+      <div
+        className="absolute  top-2/4 right-0  transform -translate-x-1/2 -translate-y-1/2 text-center"
+        style={{ width: "767px", right:"-23%"}}
+      >
+        <form className="flex">
+          <input
+            type="text"
+            placeholder="Search Blogs ..."
+            className="w-3/5 p-3 mr-2 rounded border-1 focus:outline-none focus:shadow-xl bg-white-200"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+          <button
+            type="submit"
+            className="p-2 rounded bg-transparent text-white border-0 transition duration-200 hover:bg-green-500"
+            onMouseOver={(e) => ((e.target as HTMLButtonElement).style.backgroundColor = "green")}
+            onMouseOut={(e) => ((e.target as HTMLButtonElement).style.backgroundColor = "transparent")}
+          >
+            <FaSearch />
+          </button>
+        </form>
       </div>
+    </div>
+
+    <div className="max-w-6xl mx-auto p-8 bg-gray-50 text-4xl font-bold my-6  absolute left-0 ml-7 rounded-md text-center">
+    Most Visited
+<LeftPanel imagePath="/assets/coverimage.jpg" title="Lumbini - Buddha Birthplace" date="2024-01-27" />
+<LeftPanel imagePath="/assets/coverimage.jpg" title="Lumbini - Buddha Birthplace" date="2024-01-27" />
+<LeftPanel imagePath="/assets/coverimage.jpg" title="Lumbini - Buddha Birthplace" date="2024-01-27" />
+
+</div>
+
       <div>
         <h1 style={{ fontSize: "40px", margin: "30px 0", padding: "10px" }}>
           <b>Top Trending Blogs</b>
         </h1>
+
+        <TrendingBlogContainer title="Anupurna Base camp " date="2024-01-12" location="Putalisadak,Kathmandu,Nepal" description="CodingBat (Java, Python) · Interview Prep. Explore more Interview Prep content · Data Structures. Explore more Data Structures content · +3. Algorithms." imageSrc={"/assets/coverimage.jpg"}/>
+      <TrendingBlogContainer title="Anupurna Base camp " date="2024-01-12" location="Putalisadak,Kathmandu,Nepal" description="CodingBat (Java, Python) · Interview Prep. Explore more Interview Prep content · Data Structures. Explore more Data Structures content · +3. Algorithms." imageSrc={"/assets/coverimage.jpg"}/>
+      <TrendingBlogContainer title="Anupurna Base camp " date="2024-01-12" location="Putalisadak,Kathmandu,Nepal" description="CodingBat (Java, Python) · Interview Prep. Explore more Interview Prep content · Data Structures. Explore more Data Structures content · +3. Algorithms." imageSrc={"/assets/coverimage.jpg"}/>
+      <TrendingBlogContainer title="Anupurna Base camp " date="2024-01-12" location="Putalisadak,Kathmandu,Nepal" description="CodingBat (Java, Python) · Interview Prep. Explore more Interview Prep content · Data Structures. Explore more Data Structures content · +3. Algorithms." imageSrc={"/assets/coverimage.jpg"}/>
+
+
       </div>
 
       <div

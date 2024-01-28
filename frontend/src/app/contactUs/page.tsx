@@ -1,19 +1,16 @@
 "use client";
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import emailjs from "@emailjs/browser";
+import emailjs from '@emailjs/browser';
 
 import { IoLocationSharp } from "react-icons/io5";
 import { IoCall } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
-
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import HeaderTab from "@/Components/Header";
 
 interface ContactFormData {
   email: string;
-  contactNumber: string;
+  phone: string;
   subject: string;
   address: string;
   message: string;
@@ -22,13 +19,13 @@ interface ContactFormData {
 const ContactUsForm: React.FC = () => {
   const [contactFormData, setContactFormData] = useState<ContactFormData>({
     email: "",
-    contactNumber: "",
+    phone: "",
     subject: "",
     address: "",
     message: "",
   });
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null); // Create a ref for the form
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -43,11 +40,14 @@ const ContactUsForm: React.FC = () => {
     e.preventDefault();
 
     try {
-      const formData = new FormData(formRef.current!); 
+      const formData = new FormData(formRef.current!); // Access form data using the form reference
+
       const response = await axios.post(
         "http://localhost:8081/contactus/addcontact",
-        Object.fromEntries(formData) 
+        Object.fromEntries(formData)
+        
       );
+      console.log(formData) 
 
       console.log(response.data);
       alert("Successfully inserted");
@@ -56,11 +56,13 @@ const ContactUsForm: React.FC = () => {
         const emailjsResponse = await emailjs.sendForm(
           "service_0gn9pz7",
           "template_ows0j7b",
-          formRef.current,
+          formRef.current, // Pass the form reference
           "gc2y_H__-i5FW_ept"
         );
         console.log("Message sent:", emailjsResponse);
-      } else {
+      } 
+      
+      else {
         console.error("Form reference is null");
       }
     } catch (error) {
@@ -78,7 +80,7 @@ const ContactUsForm: React.FC = () => {
         </div>
         <div className="flex ">
           <form
-            ref={formRef}
+          ref={formRef}
             onSubmit={handleContactSubmit}
             className="flex flex-col  overflow-y-auto"
           >
@@ -144,6 +146,7 @@ const ContactUsForm: React.FC = () => {
                   onChange={handleInputChange}
                 />
               </div>
+
               <div className="self-center w-48 mt-16 mx-auto">
                 <button
                   type="submit"
