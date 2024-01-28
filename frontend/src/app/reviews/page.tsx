@@ -1,10 +1,8 @@
-"use client";
-import Axios from "axios";
-import { useEffect, useState } from "react";
-import "./reviewForm.css";
-import App from './ReviewApp'
-import HeaderTab from "@/Components/Header";
-import FooterTab from "@/Components/Footer";
+"use client"
+import Axios from 'axios';
+import { useEffect, useState } from 'react';
+import App from './ReviewApp';
+import './reviewForm.css';
 
 interface ReviewData {
   title: string;
@@ -15,48 +13,96 @@ interface ReviewData {
 }
 
 function PlanTrip() {
-  const [fullName, setFullName] = useState("");
-
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
-
-  const [selectCountry, setSelectCountry] = useState("");
-  const [reviewDetails, setReviewDetails] = useState("");
+  const [fullName, setFullName] = useState('');
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState('');
+  const [selectCountry, setSelectCountry] = useState('');
+  const [reviewDetails, setReviewDetails] = useState('');
   const [reviewList, setReviewList] = useState<ReviewData[]>([]);
+  const [formErrors, setFormErrors] = useState({
+    fullName: '',
+    title: '',
+    date: '',
+    selectCountry: '',
+    reviewDetails: '',
+  });
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/get/review").then((response) => {
+    Axios.get('http://localhost:8081/planTrip/getreview').then((response) => {
       setReviewList(response.data);
-      // console.log(response.data);
+      console.log(response.data);
     });
   }, []); // Empty dependency array
 
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { ...formErrors };
+
+    if (!fullName) {
+      newErrors.fullName = 'Full Name is required.';
+      valid = false;
+    } else {
+      newErrors.fullName = '';
+    }
+
+    if (!title) {
+      newErrors.title = 'Title is required.';
+      valid = false;
+    } else {
+      newErrors.title = '';
+    }
+
+    if (!date) {
+      newErrors.date = 'Date is required.';
+      valid = false;
+    } else {
+      newErrors.date = '';
+    }
+
+   
+    if (!reviewDetails) {
+      newErrors.reviewDetails = 'Review Details are required.';
+      valid = false;
+    } else {
+      newErrors.reviewDetails = '';
+    }
+
+    setFormErrors(newErrors);
+    return valid;
+  };
+
   const submit = () => {
-    Axios.post("http://localhost:3001/api/insert/review", {
-      fullName: fullName,
-      selectCountry: selectCountry,
-      date: date,
-      title: title,
-      reviewDetails: reviewDetails,
-    });
-
-    1;
-
-    setReviewList([
-      ...reviewList,
-      {
+    if (validateForm()) {
+      Axios.post('http://localhost:8081/planTrip/insertreview', {
         fullName: fullName,
-        selectCountry: selectCountry,
+        selectCountry: selectCountry || null, 
         date: date,
         title: title,
         reviewDetails: reviewDetails,
-      },
-    ]);
+      });
+
+      setReviewList([
+        ...reviewList,
+        {
+          fullName: fullName,
+          selectCountry: selectCountry,
+          date: date,
+          title: title,
+          reviewDetails: reviewDetails,
+        },
+      ]);
+
+      // Clear form fields after submission
+      setFullName('');
+      setTitle('');
+      setDate('');
+      setSelectCountry('');
+      setReviewDetails('');
+    }
   };
 
   return (
     <>
-    <HeaderTab/>
       <div className="container-1">
         <div className="page-banner ">
           <div className="page-title">
@@ -72,31 +118,31 @@ function PlanTrip() {
               <div className="form-group">
                 <label className="required"> Title of your review</label>
                 <input
-                  className="form-control"
-                  name="phoneNumber"
-                  id="phoneNumber"
+                  className={`form-control ${formErrors.title && 'border-red-500'}`}
+                  name="title"
+                  id="title"
                   max="15"
                   required
-                  onChange={(e) => {
-                    setTitle(e.target.value);
-                  }}
-                ></input>
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                {formErrors.title && <p className="error-message ">{formErrors.title}</p>}
               </div>
 
               <div className="row">
-                <div className="col-md-6">
-                  <div className="form-group">
+                <div className="col-md-6 ml-3">
+                  <div className="form-group ">
                     <label className="required"> Full Name</label>
-                    <input
+                    <input 
                       type="text"
-                      className="form-control"
+                      className={`form-control ${formErrors.fullName && 'border-red-500'}`}
                       name="fullName"
                       id="fullName"
                       required
-                      onChange={(e) => {
-                        setFullName(e.target.value);
-                      }}
-                    ></input>
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                    />
+                    {formErrors.fullName && <p className="error-message">{formErrors.fullName}</p>}
                   </div>
                 </div>
 
@@ -104,56 +150,39 @@ function PlanTrip() {
                   <div className="form-group">
                     <label className="required"> Date</label>
                     <input
-                      className="form-control"
-                      name="phoneNumber"
-                      id="phoneNumber"
+                      className={`form-control ${formErrors.date && 'border-red-500'}`}
+                      type="date"
+                      
                       max="15"
                       required
-                      onChange={(e) => {
-                        setDate(e.target.value);
-                      }}
-                    ></input>
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                    />
+                    {formErrors.date && <p className="error-message">{formErrors.date}</p>}
                   </div>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="required"> Select Your Country</label>
-                <div className="custom_select">
-                  <select
-                    className="form-control"
-                    onChange={(e) => {
-                      setSelectCountry(e.target.value);
-                    }}
-                  >
-                    <option value={""}>Select Your Country</option>
-                    <option value="Afghanistan">Afghanistan</option>
-                    <option value="Albania">Albania</option>
-                    <option value="Algeria">Algeria</option>
-                    <option value="American Samoa">American Samoa</option>
-                    <option value="Andorra">Andorra</option>
-                    <option value="Angola">Angola</option>
-                    <option value="Anguilla">Anguilla</option>
-                    <option value="Antartica">Antartica</option>
-                  </select>
-                </div>
-              </div>
+
+
               <div className="form-group ">
                 <label className="required">Your review details </label>
                 <textarea
-                  className="form-control"
+                  className={`form-control ${formErrors.reviewDetails && 'border-red-500'}`}
                   name="comments"
                   id="comments"
                   required
-                  onChange={(e) => {
-                    setReviewDetails(e.target.value);
-                  }}
+                  value={reviewDetails}
+                  onChange={(e) => setReviewDetails(e.target.value)}
                   rows={8}
                   style={{
-                    height: "199px",
-                    fontSize: "16px",
-                    color: "black",
+                    height: '199px',
+                    fontSize: '16px',
+                    color: 'black',
                   }}
-                ></textarea>
+                />
+                {formErrors.reviewDetails && (
+                  <p className="error-message">{formErrors.reviewDetails}</p>
+                )}
               </div>
 
               <div className="button-submit">
@@ -166,9 +195,8 @@ function PlanTrip() {
         </div>
       </div>
       <div>
-        <App/>
+        <App />
       </div>
-      <FooterTab/>
     </>
   );
 }

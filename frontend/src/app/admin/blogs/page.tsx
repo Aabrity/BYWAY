@@ -1,11 +1,11 @@
 "use client"
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import { BlogTable } from "@/Components/Blogs/BlogTable";
 
-import { CiCirclePlus } from "react-icons/ci";
-import { PopupModal } from "@/Components/Common/ContainerModal";
 import BlogForm from "@/Components/Blogs/BlogForm";
+import { PopupModal } from "@/Components/Common/ContainerModal";
+import { CiCirclePlus } from "react-icons/ci";
 
 const AdminBlogPage = () => {
   const [showModal, setShowModal] = useState(false);

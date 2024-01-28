@@ -17,7 +17,7 @@ const dbConfigs = {
     host: "localhost",
     user: "root",
     password: "12345",
-    database: "Byway",
+    database: "byway",
   },
   aabrity: {
     host: "localhost",
@@ -69,3 +69,4 @@ export default async function connectToDatabase() {
   // If no connection could be established, throw an error
   throw new Error("Could not establish a database connection");
 }
+

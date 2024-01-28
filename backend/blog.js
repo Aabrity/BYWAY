@@ -1,7 +1,7 @@
+import dotenv from "dotenv";
 import express from "express";
 import multer from "multer";
 import connectToDatabase from "./db.js";
-import dotenv from "dotenv";
 
 const router = express.Router();
 
@@ -19,10 +19,10 @@ dotenv.config();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.post("/postBlog", upload.single("image"), (req, res) => {
+router.post("/postblog", upload.single("image"), (req, res) => {
   const { title, date, content, category } = req.body;
   const image = req.file ? req.file.buffer : null;
-
+ 
   console.log("Received Title:", title);
   console.log("Received Date:", date);
   console.log("Received Content:", content);
@@ -41,6 +41,18 @@ router.post("/postBlog", upload.single("image"), (req, res) => {
       console.log("Data inserted successfully");
       res.status(200).json({ message: "Data inserted successfully" });
     }
+ 
+    // After inserting, automatically call the stored procedure to remove HTML tags
+    const removeHtmlTagsQuery = 'CALL RemoveHtmlTags()';
+    db.query(removeHtmlTagsQuery, (removeHtmlTagsError, removeHtmlTagsResult) => {
+      if (removeHtmlTagsError) {
+        console.error('Error calling RemoveHtmlTags stored procedure:', removeHtmlTagsError);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+ 
+      console.log('RemoveHtmlTags stored procedure called successfully');
+      return res.status(200).json({ message: 'Data inserted successfully' });
+    });
   });
 });
 
@@ -68,6 +80,21 @@ router.delete("/deleteblogs/:id", (req, res) => {
     return res.json({ Status: "Success" });
   });
 });
+
+router.get('/getblogs/:id', (req, res) => {
+  const blogId = req.params.id;
+  const sql = 'SELECT id, image, description, title, category,published_date FROM blogtable WHERE id = ?';
+
+  db.query(sql, [blogId], (err, result) => {
+    if (err) {
+      console.error('Error fetching blog details:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(200).json(result[0]); // Assuming the result is an array with a single blog
+    }
+  });
+});
+
 
 router.put("/updateBlog/:id", upload.single("image"), (req, res) => {
   const id = req.params.id;

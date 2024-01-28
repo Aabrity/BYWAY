@@ -1,16 +1,18 @@
 "use client";
 
-import Image from "next/image";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import BlogContainer from "./BlogContainer";
-import HeaderTab from "@/Components/Header";
+import LeftPanel from "@/Components/Blogs/LeftPanel";
+import { default as TrendingBlogContainer } from "@/Components/Blogs/TrendingBlogContainer";
 import FooterTab from '@/Components/Footer';
-import LeftPanel from "@/Components/Blogs/TrendingBlogContainer";
-import TrendingBlogContainer from "@/Components/Blogs/TrendingBlogContainer";
+import HeaderTab from "@/Components/Header";
+import axios from "axios";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import BlogContainer from "./BlogContainer";
 
 
 interface Blog {
+  id: any;
   title: string;
   description: string;
   published_date: string;
@@ -118,6 +120,7 @@ function Blogs() {
         }}
       >
         {trendingBlogs.map((blog, index) => (
+           <Link key={index} href={`/blogs/[id]`} as={`/blogs/${blog.id}`}>
           <BlogContainer
             key={index}
             title={blog.title}
@@ -130,7 +133,7 @@ function Blogs() {
                   )}`
                 : ""
             }
-          />
+          /></Link>
         ))}
       </div>
 
@@ -149,6 +152,7 @@ function Blogs() {
         }}
       >
         {recentBlogs.map((blog, index) => (
+           <Link key={index} href={`/blogs/[id]`} as={`/blogs/${blog.id}`}>
           <RecentBlogContainer
             key={index}
             title={blog.title}
@@ -161,7 +165,7 @@ function Blogs() {
                   )}`
                 : ""
             }
-          />
+          /></Link>
         ))}
       </div>
 

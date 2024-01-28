@@ -1,19 +1,18 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "ol/ol.css";
-import Map from "ol/Map";
-import TileLayer from "ol/layer/Tile";
-import View from "ol/View";
-import OSM from "ol/source/OSM";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
-import Feature from "ol/Feature";
-import Point from "ol/geom/Point";
-import { fromLonLat, transform } from "ol/proj";
-import { useRef } from "react";
 import axios from "axios";
+import Feature from "ol/Feature";
+import Map from "ol/Map";
+import View from "ol/View";
+import Point from "ol/geom/Point";
+import TileLayer from "ol/layer/Tile";
+import VectorLayer from "ol/layer/Vector";
+import "ol/ol.css";
+import { fromLonLat, transform } from "ol/proj";
+import OSM from "ol/source/OSM";
+import VectorSource from "ol/source/Vector";
 import { Style } from "ol/style";
 import Icon from "ol/style/Icon";
+import React, { useEffect, useRef, useState } from "react";
 
 
 interface SelectedLocation {
