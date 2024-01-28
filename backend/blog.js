@@ -3,19 +3,6 @@ import express from "express";
 import multer from "multer";
 import connectToDatabase from "./db.js";
 
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "rohan",
-//   password: "357951",
-//   database: "byway",
-// });
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "nothing",
-//   database: "Byway",
-// });
-
 const router = express.Router();
 
 let db;
@@ -28,13 +15,6 @@ let db;
   }
 })();
 dotenv.config();
-
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "12345",
-//   database: "byway",
-// });
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
