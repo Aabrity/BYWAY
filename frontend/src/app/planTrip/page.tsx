@@ -3,9 +3,7 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import "./planTrip.css";
 
-import App from "../reviews/ReviewApp";
-import HeaderTab from "@/Components/Header";
-import FooterTab from "@/Components/Footer";
+
 
 interface TravelData {
   fullName: string;
@@ -21,15 +19,10 @@ interface TravelData {
   estimatedBudget: string;
   guideLanguage: string;
   moreInfo: string;
-  selectCountry: string;
+ 
   whereDidYouFindUs: string;
 }
 
-function FormValidation() {
-  const [values, setValues] = useState({
-    fullName: "",
-  });
-}
 function PlanTrip() {
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -44,42 +37,135 @@ function PlanTrip() {
   const [estimatedBudget, setEstimatedBudget] = useState("");
   const [guideLanguage, setGuideLanguage] = useState("");
   const [moreInfo, setMoreInfo] = useState("");
-  const [selectCountry, setSelectCountry] = useState("");
+
   const [whereDidYouFindUs, setWhereDidYouFindUs] = useState("");
   const [travelList, setTravelList] = useState<TravelData[]>([]);
 
+  const [formErrors, setFormErrors] = useState({
+    
+    fullName: '',
+    phoneNumber: '',
+    emailAddress: '',
+    selectTrip:'',
+    approxDate:'',
+    tripLength:'',
+    numberOfAdults:'',numberOfChildren:'',tourType:'',hotelType:'',estimatedBudget:'',guideLanguage:'',moreInfo:'',whereDidYouFindUs:'',
+    // ... initialize other fields here
+  });
+
   useEffect(() => {
-    Axios.get("http://localhost:8081/planTrip/api/get").then((response) => {
+    Axios.get("http://localhost:8081/planTrip/gettrip").then((response) => {
       setTravelList(response.data);
       // console.log(response.data);
     });
   }, []); // Empty dependency array
 
-  const submit = () => {
-    // Proceed with the submission
-    Axios.post("http://localhost:8081/planTrip/api/insert", {
-      fullName,
-      phoneNumber,
-      emailAddress,
-      selectTrip,
-      approxDate,
-      tripLength,
-      numberOfAdults,
-      numberOfChildren,
-      tourType,
-      hotelType,
-      estimatedBudget,
-      guideLanguage,
-      moreInfo,
-      selectCountry,
-      whereDidYouFindUs,
-    });
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { ...formErrors };
 
-    setTravelList([
-      ...travelList,
-      {
+    if (!fullName.trim()) {
+      newErrors.fullName = 'Full Name is required.';
+      valid = false;
+    } else {
+      newErrors.fullName = '';
+    }
+    if (!phoneNumber.trim()) {
+      // Phone number is empty
+      newErrors.phoneNumber = '';
+    } else if (!/^\d{10}$/.test(phoneNumber)) {
+      // Valid 10-digit phone number is required
+      newErrors.phoneNumber = 'Valid 10-digit phone number is required.';
+      valid = false;
+    } else {
+      newErrors.phoneNumber = '';
+    }
+ 
+    
+
+    // Validate email address (you might want to improve this validation)
+    if (!emailAddress.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAddress)) {
+      newErrors.emailAddress = 'Valid email address is required.';
+      valid = false;
+    } else {
+      newErrors.emailAddress = '';
+    }
+
+    if (!selectTrip) {
+      newErrors.selectTrip = 'Select Trip is required.';
+      valid = false;
+    } else {
+      newErrors.selectTrip = '';
+    }
+    if (!approxDate) {
+      newErrors.approxDate = 'Approximate Date is required.';
+      valid = false;
+    } else {
+      newErrors.approxDate = '';
+    }
+    if (!tripLength) {
+      newErrors.tripLength = 'Trip Length is required.';
+      valid = false;
+    } else {
+      newErrors.tripLength = '';
+    }
+    if (!numberOfAdults) {
+      newErrors.numberOfAdults = 'Number of Adults is required.';
+      valid = false;
+    } else {
+      newErrors.numberOfAdults = '';
+    }
+    if (!numberOfChildren) {
+      newErrors.numberOfChildren = 'Number of Children is required.';
+      valid = false;
+    } else {
+      newErrors.numberOfChildren = '';
+    }
+    if (!tourType) {
+      newErrors.tourType = 'Tour Type is required.';
+      valid = false;
+    } else {
+      newErrors.tourType = '';
+    }
+    if (!hotelType) {
+      newErrors.hotelType = 'Hotel Type is required.';
+      valid = false;
+    } else {
+      newErrors.hotelType = '';
+    }
+    if (!estimatedBudget) {
+      newErrors.estimatedBudget = 'Estimated Budget is required.';
+      valid = false;
+    } else {
+      newErrors.estimatedBudget = '';
+    }
+  
+    if (!guideLanguage) {
+      newErrors.guideLanguage = 'Guide Language is required.';
+      valid = false;
+    } else {
+      newErrors.guideLanguage = '';
+    }
+   
+   
+    
+    if (!whereDidYouFindUs) {
+      newErrors.whereDidYouFindUs = 'Where did you find us is required.';
+      valid = false;
+    } else {
+      newErrors.whereDidYouFindUs = '';
+    }
+    setFormErrors(newErrors);
+    return valid;
+  };
+
+
+  const submit = () => {
+    if (validateForm()) {
+      // Proceed with the submission
+      Axios.post("http://localhost:8081/planTrip/inserttrip", {
         fullName,
-        phoneNumber,
+        phoneNumber:null || phoneNumber,
         emailAddress,
         selectTrip,
         approxDate,
@@ -90,16 +176,52 @@ function PlanTrip() {
         hotelType,
         estimatedBudget,
         guideLanguage,
-        moreInfo,
-        selectCountry,
+        moreInfo:moreInfo || null,
         whereDidYouFindUs,
-      },
-    ]);
+      });
+  
+      setTravelList([
+        ...travelList,
+        {
+          fullName,
+          phoneNumber,
+          emailAddress,
+          selectTrip,
+          approxDate,
+          tripLength,
+          numberOfAdults,
+          numberOfChildren,
+          tourType,
+          hotelType,
+          estimatedBudget,
+          guideLanguage,
+          moreInfo,
+          whereDidYouFindUs,
+        },
+      ]);
+  
+      
+  
+      setFullName("");
+    setPhoneNumber("");
+    setEmailAddress("");
+    setTrip("");
+    setApproxDate("");
+    setTripLength("");
+    setNumberOfAdults("");
+    setNumberOfChildren("");
+    setTourType("");
+    setHotelType("");
+    setEstimatedBudget("");
+    setGuideLanguage("");
+    setMoreInfo("");
+    setWhereDidYouFindUs("");
+    }
   };
 
+  
   return (
     <>
-      <HeaderTab />
       <div className="container-1">
         <div className="page-banner ">
           <div className="page-title">
@@ -120,9 +242,8 @@ function PlanTrip() {
                       <label className="required">Select Trip</label>
                       <div className="custom_select">
                         <select
-                          className="form-control "
-                          name="package_name"
-                          id="package_name"
+                           className={`form-control ${formErrors.selectTrip && 'border-red-500'}`}
+                          value={selectTrip}
                           required
                           onChange={(e) => {
                             setTrip(e.target.value);
@@ -142,12 +263,10 @@ function PlanTrip() {
                             Annapurna Base Camp Trek with Helicopter Return
                           </option>
                           <option
-                            value="Everest Base Camp Helicopter Tour"
-                            selected
-                          >
-                            Everest Base Camp Helicopter Tour
-                          </option>
-                        </select>
+                            value="Everest Base Camp Helicopter Tour">
+                              Everest Base Camp Helicopter Tour
+                                </option>
+                        </select> {formErrors.selectTrip && (<p className="error-message">{formErrors.selectTrip}</p>)}
                       </div>
                     </div>
                   </div>
@@ -156,10 +275,9 @@ function PlanTrip() {
                       <label className="required">Approx. Date of Travel</label>
                       <div className="calendar">
                         <input
-                          type="text"
-                          className="form-control "
-                          id="approx_date"
-                          name="approx_date"
+                          type="date"
+                          className={`form-control ${formErrors.approxDate && 'border-red-500'}`}
+                         value={approxDate}
                           required
                           // data-type="date"
                           autoComplete=""
@@ -167,6 +285,7 @@ function PlanTrip() {
                             setApproxDate(e.target.value);
                           }}
                         />
+                        {formErrors.approxDate && (<p className="error-message ">{formErrors.approxDate}</p>)}
                       </div>
                     </div>
                   </div>
@@ -178,15 +297,14 @@ function PlanTrip() {
                       <label className="required">Length of Trip</label>
                       <input
                         type="number"
-                        className="form-control "
+                        className={`form-control ${formErrors.tripLength && 'border-red-500'}`}
                         min="1"
-                        name="trip_length"
-                        id="trip_length"
+                       value={tripLength}
                         required
                         onChange={(e) => {
                           setTripLength(e.target.value);
                         }}
-                      />
+                      />{formErrors.tripLength && (<p className="error-message ">{formErrors.tripLength}</p>)}
                     </div>
                   </div>
                   <div className="col-md-6">
@@ -194,15 +312,14 @@ function PlanTrip() {
                       <label className="required">Number of Adults </label>
                       <input
                         type="number"
-                        className="form-control "
+                        className={`form-control ${formErrors.numberOfAdults && 'border-red-500'}`}
                         min="1"
-                        name="adult"
-                        id="adult"
+                       value={numberOfAdults}
                         required
                         onChange={(e) => {
                           setNumberOfAdults(e.target.value);
                         }}
-                      />
+                      />{formErrors.numberOfAdults && (<p className="error-message ">{formErrors. numberOfAdults}</p>)}
                     </div>
                   </div>
                 </div>
@@ -212,15 +329,15 @@ function PlanTrip() {
                       <label className="required">Number of Children</label>
                       <input
                         type="number"
-                        className="form-control "
+                        className={`form-control ${formErrors.numberOfChildren && 'border-red-500'}`}
                         min="1"
-                        name="num_child"
-                        id="num_child"
+                        
+                      value={numberOfChildren}
                         required
                         onChange={(e) => {
                           setNumberOfChildren(e.target.value);
                         }}
-                      />
+                      />{formErrors.numberOfChildren && (<p className="error-message ">{formErrors.numberOfChildren}</p>)}
                     </div>
                   </div>
                   <div className="col-md-6">
@@ -228,12 +345,13 @@ function PlanTrip() {
                       <label className="required">Tour Type </label>
                       <div className="custom_select">
                         <select
-                          className="form-control "
+                          className={`form-control ${formErrors.tourType && 'border-red-500'}`}
                           required
                           onChange={(e) => {
                             setTourType(e.target.value);
                           }}
-                        >
+                          value={tourType}
+                          >
                           <option value="">---Select One Option---</option>
                           <option value="Trek and Hiking">
                             Trek and Hiking
@@ -242,7 +360,7 @@ function PlanTrip() {
                             Tour and Sightseeing
                           </option>
                           <option value="Day Tour">Day Tour</option>
-                        </select>
+                        </select>{formErrors.tourType && (<p className="error-message ">{formErrors.tourType}</p>)}
                       </div>
                     </div>
                   </div>
@@ -254,17 +372,18 @@ function PlanTrip() {
                       <label className="required">Hotel type</label>
                       <div className="custom_select">
                         <select
-                          className="form-control "
+                          className={`form-control ${formErrors.hotelType&& 'border-red-500'}`}
                           required
                           onChange={(e) => {
                             setHotelType(e.target.value);
                           }}
-                        >
+                          value={hotelType}
+                          >
                           <option value="">---Select One Option---</option>
                           <option value="5-star">5-star</option>
                           <option value="Normal Hotel">Normal Hotel</option>
                           <option value="Medium Hotel">Medium Hotel</option>
-                        </select>
+                        </select>{formErrors.hotelType && (<p className="error-message ">{formErrors.hotelType}</p>)}
                       </div>
                     </div>
                   </div>
@@ -273,11 +392,12 @@ function PlanTrip() {
                       <label className="required">Estimated Budget </label>
                       <div className="custom_select">
                         <select
-                          className="form-control "
+                          className={`form-control ${formErrors.estimatedBudget && 'border-red-500'}`}
                           required
                           onChange={(e) => {
                             setEstimatedBudget(e.target.value);
                           }}
+                          value={estimatedBudget}
                         >
                           <option value="">---Estimated Budget---</option>
                           <option value="$1-$500">$1 - $500</option>
@@ -287,7 +407,7 @@ function PlanTrip() {
                           <option value="$3000-$4000">$3000 - $4000</option>
                           <option value="$4000-$5000">$4000 - $5000</option>
                           <option value="Above $5000">Above $5000</option>
-                        </select>
+                        </select> {formErrors.estimatedBudget && (<p className="error-message ">{formErrors.estimatedBudget}</p>)}
                       </div>
                     </div>
                   </div>
@@ -295,39 +415,38 @@ function PlanTrip() {
 
                 <div className="form-group ">
                   <label className="required">Guide Language </label>
-                  <div className="custom_select">
+                  <div className="custom_select pr-3">
                     <select
-                      className="form-control "
+                       className={`form-control ${formErrors.guideLanguage && 'border-red-500'}`}
                       required
                       onChange={(e) => {
                         setGuideLanguage(e.target.value);
                       }}
+                      value={guideLanguage}
                     >
                       <option value="">English</option>
                       <option value="English">English</option>
                       <option value="Chinese">Chinese</option>
                       <option value="Japanese">Japanese</option>
                       <option value="French">French</option>
-                    </select>
+                    </select>{formErrors.guideLanguage && (<p className="error-message ">{formErrors.guideLanguage}</p>)}
                   </div>
                 </div>
                 <div className="form-group ">
-                  <label className="required">More information </label>
+                  <label >More information </label>
                   <textarea
-                    className="form-control"
-                    name="comments"
-                    id="comments"
-                    required
+                     className={'form-control'}
                     onChange={(e) => {
                       setMoreInfo(e.target.value);
                     }}
+                   value={moreInfo}
                     rows={8}
                     style={{
                       height: "199px",
                       fontSize: "16px",
                       color: "black",
                     }}
-                  ></textarea>
+                    />
                 </div>
 
                 <div className="Personal-info">
@@ -338,31 +457,29 @@ function PlanTrip() {
                   <div className="col-md-6">
                     <div className="form-group">
                       <label className="required"> Full Name</label>
-                      <input
+                     < input
                         type="text"
-                        className="form-control"
-                        name="fullName"
-                        id="fullName"
+                        className={`form-control ${formErrors.fullName && 'border-red-500'}`}
+                       value={fullName}
                         required
                         onChange={(e) => {
                           setFullName(e.target.value);
                         }}
-                      ></input>
+                      />{formErrors.fullName && (<p className="error-message ">{formErrors.fullName}</p>)}
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label className="required"> Phone Number</label>
+                      <label > Phone Number</label>
                       <input
-                        className="form-control"
-                        name="phoneNumber"
-                        id="phoneNumber"
-                        max="15"
-                        required
+                        className={`form-control ${formErrors.phoneNumber && 'border-red-500'}`}
+                        
+                       value={phoneNumber}
+                        
                         onChange={(e) => {
                           setPhoneNumber(e.target.value);
                         }}
-                      ></input>
+                     / > {formErrors.phoneNumber && (<p className="error-message ">{formErrors.phoneNumber}</p>)}
                     </div>
                   </div>
                 </div>
@@ -372,48 +489,22 @@ function PlanTrip() {
                       <label className="required"> Email Address</label>
                       <input
                         type="text"
-                        className="form-control"
-                        name="emailAddress"
-                        id="emailAddress"
+                        className={`form-control ${formErrors.emailAddress && 'border-red-500'}`}
+                       value={emailAddress}
                         required
                         onChange={(e) => {
                           setEmailAddress(e.target.value);
                         }}
-                      ></input>
+                      />{formErrors.emailAddress && (<p className="error-message ">{formErrors.emailAddress}</p>)}
                     </div>
                   </div>
                   <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="required"> Select Your Country</label>
-                      <div className="custom_select">
-                        <select
-                          className="form-control"
-                          onChange={(e) => {
-                            setSelectCountry(e.target.value);
-                          }}
-                        >
-                          <option value={""}>Select Your Country</option>
-                          <option value="Afghanistan">Afghanistan</option>
-                          <option value="Albania">Albania</option>
-                          <option value="Algeria">Algeria</option>
-                          <option value="American Samoa">American Samoa</option>
-                          <option value="Andorra">Andorra</option>
-                          <option value="Angola">Angola</option>
-                          <option value="Anguilla">Anguilla</option>
-                          <option value="Antartica">Antartica</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="form-group">
+                  <div className="form-group">
                   <label className="required"> Where did you find us</label>
-                  <div className="custom_select">
+                  <div className="custom_select pr-3 ">
                     <select
-                      className="form-control"
-                      name="wheredidyou"
-                      id="wheredidyou"
+                      className={`form-control ${formErrors.whereDidYouFindUs && 'border-red-500'}`}
+                      value={whereDidYouFindUs}
                       required
                       onChange={(e) => {
                         setWhereDidYouFindUs(e.target.value);
@@ -423,9 +514,13 @@ function PlanTrip() {
                       <option value="Facebook">Facebook</option>
                       <option value="Friends">Friends</option>
                       <option value="Google">Google</option>
-                    </select>
+                    </select>{formErrors.whereDidYouFindUs && (<p className="error-message ">{formErrors.whereDidYouFindUs}</p>)}
                   </div>
                 </div>
+                </div>
+                </div>
+
+                
                 <div className="button-submit">
                   <button className="btn" onClick={submit}>
                     SUBMIT
@@ -437,10 +532,7 @@ function PlanTrip() {
         </div>
       </div>
 
-      <div>
-        <App />
-      </div>
-      <FooterTab/>
+   
     </>
   );
 }

@@ -1,13 +1,14 @@
 "use client";
 
-import Image from "next/image";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import BlogContainer from "./BlogContainer";
 import HeaderTab from "@/Components/Header";
-import FooterTab from '@/Components/Footer';
+import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import BlogContainer from "./BlogContainer";
 
 interface Blog {
+  id:  number;
   title: string;
   description: string;
   published_date: string;
@@ -54,6 +55,19 @@ function Blogs() {
     (blog) => blog.category === "Normal"
   );
 
+  const truncateTitle = (title: string, maxWords: number): string[] => {
+    const words = title.split(' ');
+  
+    if (words.length > maxWords) {
+      const truncatedTitle = words.slice(0, maxWords).join(' ');
+      const remainingWords = words.slice(maxWords).join(' ');
+      return [truncatedTitle, remainingWords];
+    }
+  
+    return [title];
+  };
+  
+  
   return (
     <>
       <HeaderTab />
@@ -121,31 +135,44 @@ function Blogs() {
         </h1>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "1.3%",
-          overflowX: "auto",
-          paddingLeft: "1%",
-          paddingRight: "1%",
-        }}
-      >
-        {trendingBlogs.map((blog, index) => (
-          <BlogContainer
-            key={index}
-            title={blog.title}
-            description={blog.description}
-            publishedDate={blog.published_date}
-            imageSrc={
-              blog.image
-                ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString(
-                    "base64"
-                  )}`
-                : ""
-            }
-          />
-        ))}
-      </div>
+
+    
+      
+<div
+  style={{
+    
+    display: "flex",
+    flexDirection: "row",
+    gap: "30px",
+    wordWrap:"break-word",
+    flexWrap: "wrap",
+    justifyContent: "center", 
+    alignItems: "center", 
+    overflowX: "auto",
+    WebkitBoxOrient: "vertical",
+    WebkitLineClamp: 2,
+  }}
+>
+  {trendingBlogs.map((blog, index) => (
+    <Link key={index} href={`/blogs/[id]`} as={`/blogs/${blog.id}`}>
+     
+       
+        <BlogContainer
+           title={truncateTitle(blog.title, 5)}
+          publishedDate={blog.published_date}
+          imageSrc={
+            blog.image
+              ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString(
+                  "base64"
+                )}`
+              : ""
+          }
+        />
+   
+      
+    </Link>
+  ))}
+</div>
 
       <div>
         <h1 style={{ fontSize: "40px", margin: "30px 0", padding: "10px" }}>
@@ -159,10 +186,12 @@ function Blogs() {
           flexDirection: "column",
           gap: "20px",
           paddingLeft: "20px",
+          
         }}
       >
         {recentBlogs.map((blog, index) => (
-          <RecentBlogContainer
+          <Link  href={"/blogs/[id]"} as={`/blogs/${blog.id}`} >
+          <RecentBlogContainer 
             key={index}
             title={blog.title}
             description={blog.description.slice(0, 350) + "..."} // Limit description to 150 characters
@@ -175,34 +204,11 @@ function Blogs() {
                 : ""
             }
           />
+          </Link>
         ))}
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-          paddingLeft: "20px",
-        }}
-      >
-        {recentBlogs.map((blog, index) => (
-          <RecentBlogContainer
-            key={index}
-            title={blog.title}
-            description={blog.description.slice(0, 150) + "..."}
-            publishedDate={blog.published_date}
-            imageSrc={
-              blog.image
-                ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString(
-                    "base64"
-                  )}`
-                : ""
-            }
-          />
-        ))}
-      </div>
-      <FooterTab/>
+     
     </>
   );
 }
@@ -222,6 +228,7 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({
         padding: "20px",
         border: "1px solid #ccc",
         borderRadius: "8px",
+       
       }}
     >
       {/* Left side for Image */}
@@ -229,7 +236,7 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({
         <img
           src={imageSrc}
           alt="Blog Cover"
-          style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+          style={{  borderRadius: "8px", width: '450px', height: '250px' }}
         />
       </div>
 
@@ -248,3 +255,5 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({
 };
 
 export default Blogs;
+
+

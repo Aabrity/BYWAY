@@ -1,11 +1,11 @@
-import express from "express";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import express from "express";
+import jwt from "jsonwebtoken";
 
-import Admin from "../model/AdminModel.js";
 import connectToDatabase from "../db.js";
+import Admin from "../model/AdminModel.js";
 const router = express.Router();
 router.use(cookieParser());
 const salt = 10;

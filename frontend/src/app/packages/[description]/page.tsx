@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from "react";
-import { packagesData } from "../page"; 
-import TravelPackageTable from "@/Components/Packages/TravelPackageTable";
-import ExpandableSection from "@/Components/Packages/DropDown";
-import HeaderTab from "@/Components/Header";
 import FooterTab from "@/Components/Footer";
+import HeaderTab from "@/Components/Header";
+import ExpandableSection from "@/Components/Packages/DropDown";
+import TravelPackageTable from "@/Components/Packages/TravelPackageTable";
+import { useState } from "react";
+import { packagesData } from "../page";
 
 
 const ProductPage = () => {

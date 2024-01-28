@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import Popup from "@/Components/Popup";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useRouter } from "next/navigation";
-import Popup from "@/Components/Popup";
 
 function AdminPage() {
   const [blogContent, setBlogContent] = useState("");
@@ -40,6 +40,7 @@ function AdminPage() {
       formData.append("title", title);
       formData.append("date", date);
       formData.append("content", blogContent);
+      formData.append("category", category);
 
       if (imageFile) {
         formData.append("image", imageFile);
