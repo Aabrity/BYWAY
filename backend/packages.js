@@ -1,23 +1,23 @@
 import express from "express";
-import mysql from "mysql";
+import multer from "multer";
+import connectToDatabase from "./db.js";
 
 const router = express.Router();
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "anup",
-  password: "15akc#",
-  database: "byway",
-});
+let db;
+(async function () {
+  try {
+    db = await connectToDatabase();
+  } catch (err) {
+    console.error("Failed to connect to database:", err);
+    process.exit(1);
+  }
+})();
 
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "rohan",
-//   password: "357951",
-//   database: "byway",
-// });
 
-router.post("/addpackages", (req, res) => {
+router.post("/insertPackage", upload.array("image", 4), async (req, res) => {
   const {
     title,
     location_id,
@@ -29,31 +29,63 @@ router.post("/addpackages", (req, res) => {
     accessibility,
     additional_info,
     price,
-    discount
+    discount,
   } = req.body;
-  const insertQuery =
-  "INSERT INTO packagetable (package_title, location_id, about, guidance_language, whats_included, what_to_expect, departure_and_return, accessibility, additional_info,price, discount) VALUES (?)";
+
+  const images = req.files.map((file) => ({
+    name: file.originalname,
+    data: file.buffer,
+  }));
+
+  const insertQuery = `
+      INSERT INTO packagetable (
+        package_title,
+        location_id,
+        about,
+        guidance_language,
+        whats_included,
+        what_to_expect,
+        departure_and_return,
+        accessibility,
+        additional_info,
+        price,
+        discount,
+        image1,
+        image2,
+        image3,
+        image4
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
   const values = [
     title,
     location_id,
     about,
-    guidance_language, 
+    guidance_language,
     whats_included,
     what_to_expect,
     departure_and_return,
     accessibility,
     additional_info,
     price,
-    discount
+    discount,
+    images[0] ? images[0].data : null,
+    images[1] ? images[1].data : null,
+    images[2] ? images[2].data : null,
+    images[3] ? images[3].data : null,
   ];
-  db.query(insertQuery, [values], (err, result) => {
+
+  db.query(insertQuery, values, (err, result) => {
     if (err) {
-      console.log("Insertion error:", err);
-      return res.json("Insertion error");
+      console.error("Error inserting data:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      console.log("Data inserted successfully");
+      res.status(200).json({ message: "Data inserted successfully" });
     }
-    return res.json({ Status: "Success" });
   });
 });
+
 
 router.delete("/deletepackages/:id", (req, res) => {
   const id = req.params.id;
@@ -69,21 +101,7 @@ router.delete("/deletepackages/:id", (req, res) => {
 });
 
 
-router.post("/addlocations", (req, res) => {
-  const { location } = req.body;
-  const query = "INSERT INTO locationtable (location) VALUES (?)";
-
-  db.query(query, [location], (err, result) => {
-    if (err) {
-      console.error("Error executing query:", err);
-      res.status(500).json({ status: "Error" });
-    } else {
-      res.status(200).json({ status: "Success", location_id: result.insertId });
-    }
-  });
-});
-
-router.put("/updatepackage/:id", (req, res) => {
+router.put("/updatepackage/:id", upload.array("image", 4), async (req, res) => {
   const packageId = req.params.id;
   const {
     title,
@@ -99,8 +117,31 @@ router.put("/updatepackage/:id", (req, res) => {
     discount,
   } = req.body;
 
-  const updateQuery =
-    "UPDATE packagetable SET package_title=?, location_id=?, about=?, guidance_language=?, whats_included=?, what_to_expect=?, departure_and_return=?, accessibility=?, additional_info=?, price=?, discount=? WHERE package_id = ?";
+  const images = req.files.map((file) => ({
+    name: file.originalname,
+    data: file.buffer,
+  }));
+
+  const updateQuery = `
+    UPDATE packagetable 
+    SET 
+      package_title=?, 
+      location_id=?, 
+      about=?, 
+      guidance_language=?, 
+      whats_included=?, 
+      what_to_expect=?, 
+      departure_and_return=?, 
+      accessibility=?, 
+      additional_info=?, 
+      price=?, 
+      discount=?, 
+      image1=?, 
+      image2=?, 
+      image3=?, 
+      image4=? 
+    WHERE package_id = ?
+  `;
 
   const values = [
     title,
@@ -114,6 +155,10 @@ router.put("/updatepackage/:id", (req, res) => {
     additional_info,
     price,
     discount,
+    images[0] ? images[0].data : null,
+    images[1] ? images[1].data : null,
+    images[2] ? images[2].data : null,
+    images[3] ? images[3].data : null,
     packageId,
   ];
 
@@ -131,7 +176,8 @@ router.put("/updatepackage/:id", (req, res) => {
 
 
 
-router.get("/getpackages", (req, res) => {
+
+router.get("/getPackages", (req, res) => {
   const selectQuery = "SELECT * FROM packagetable";
 
   db.query(selectQuery, (err, result) => {

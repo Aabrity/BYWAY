@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useState } from "react";
 import { ChevronFirst, ChevronLast, MoreVertical } from "lucide-react";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface SidebarItemProps {
   icon: React.ReactNode;
@@ -12,18 +15,39 @@ interface SidebarContextProps {
   expanded: boolean;
 }
 
-const SidebarContext = createContext<SidebarContextProps | undefined>(undefined);
+const SidebarContext = createContext<SidebarContextProps>({
+  expanded: false,
+});
 
-export const Sidebar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const Sidebar: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [expanded, setExpanded] = useState(true);
-
+  const router = useRouter();
+  const HandleLogout = async () => {
+    try {
+      await axios.get("http://localhost:8081/auth/logout");
+      router.push("/auth");
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <>
       <aside className="h-screen">
-        <nav className="h-full flex flex-col bg-black border-r shadow-sm">
+        <nav className="h-full flex flex-col bg-slate-900 border-r shadow-sm">
           <div className="p-4 pb-2 flex justify-between items-center">
-            <img src={'/assets/logos/logo.png'} className={`overflow-hidden transition-all ${expanded ? "w-32" : "w-0"}`} alt="Logo" />
-            <button onClick={() => setExpanded((curr) => !curr)} className="p-2 rounded-lg bg-gray-50 hover:bg-gray-100">
+            <img
+              src={"/assets/logos/logo.png"}
+              className={`overflow-hidden transition-all ${
+                expanded ? "w-32" : "w-0"
+              }`}
+              alt="Logo"
+            />
+            <button
+              onClick={() => setExpanded((curr) => !curr)}
+              className="p-2 rounded-sm bg-gray-500 hover:bg-gray-100"
+            >
               {expanded ? <ChevronFirst /> : <ChevronLast />}
             </button>
           </div>
@@ -32,14 +56,34 @@ export const Sidebar: React.FC<{ children: React.ReactNode }> = ({ children }) =
             <ul className="flex-1 px-3">{children}</ul>
           </SidebarContext.Provider>
 
-          <div className="border-t flex p-3">
-            <img src={'/images/coverimage.jpg'} className="w-10 h-10 rounded-md" alt="Profile" />
-            <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"} `}>
-              <div className="leading-4">
-                <h4 className="font-semibold text-green-400">Haseena</h4>
-                <span className="text-xs text-gray-600">rkc697418@gmail.com</span>
+          <div className="border-t flex flex-col p-3 px-4">
+            <button
+              onClick={HandleLogout}
+              className="py-3 px-2 rounded-lg bg-gray-500 hover:bg-green-700 flex items-center"
+            >
+              <RiLogoutCircleRLine size={25} color="white" />
+              {expanded && <span className="ml-2 text-white">Logout</span>}
+            </button>
+
+            <div className="flex mt-3">
+              <img
+                src={"/images/coverimage.jpg"}
+                className="w-10 h-10 rounded-md"
+                alt="Profile"
+              />
+              <div
+                className={`flex justify-between items-center overflow-hidden transition-all ${
+                  expanded ? "w-52 ml-3" : "w-0"
+                } `}
+              >
+                <div className="leading-4">
+                  <h4 className="font-semibold text-green-400">Haseena</h4>
+                  <span className="text-xs text-gray-600">
+                    rkc697418@gmail.com
+                  </span>
+                </div>
+                <MoreVertical size={20} />
               </div>
-              <MoreVertical size={20} />
             </div>
           </div>
         </nav>
@@ -52,15 +96,33 @@ export function SidebarItem({ icon, text, active, alert }: SidebarItemProps) {
   const { expanded } = useContext(SidebarContext);
 
   return (
-    <li className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${active ? "bg-gradient-to-tr from-green-200 to-green-400 text-green-800" : "hover:bg-green-200 text-gray-600"}`}>
+    <li
+      className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
+        active
+          ? "bg-gradient-to-tr from-green-200 to-green-400 text-green-800"
+          : "hover:bg-green-700 hover:text-white  text-gray-400"
+      }`}
+    >
       {icon}
-      <span className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}>{text}</span>
+      <span
+        className={`overflow-hidden transition-all ${
+          expanded ? "w-52 ml-3" : "w-0"
+        }`}
+      >
+        {text}
+      </span>
       {alert && (
-        <div className={`absolute right-2 w-2 h-2 rounded bg-green-200 ${expanded ? "" : "top-2"}`} />
+        <div
+          className={`absolute right-2 w-2 h-2 rounded bg-green-200 ${
+            expanded ? "" : "top-2"
+          }`}
+        />
       )}
 
       {!expanded && (
-        <div className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-green-400 text-green-900 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}>
+        <div
+          className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-green-700 text-white text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
+        >
           {text}
         </div>
       )}

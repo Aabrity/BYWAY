@@ -1,4 +1,4 @@
-import mysql from "mysql";
+import mysql2 from "mysql";
 
 const dbConfigs = {
   rohan: {
@@ -19,18 +19,25 @@ const dbConfigs = {
     password: "12345",
     database: "byway",
   },
+  aabrity: {
+    host: "localhost",
+    user: "root",
+    password: "A@brity0916",
+    database: "byway",
+    authPlugins: {
+      mysql_native_password: 'deprecated',
+    },
+  },
+  
+  
   anup: {
     host: "localhost",
     user: "anup",
     password: "15akc#",
     database: "byway",
   },
-  aabrity: {
-    host: "localhost",
-    user: "root",
-    password: "A@brity0916",
-    database: "byway",
-  },
+  
+  
 };
 
 export default async function connectToDatabase() {
@@ -38,10 +45,12 @@ export default async function connectToDatabase() {
   for (let user in dbConfigs) {
     try {
       // Try to create a connection
-      let connection = mysql.createConnection(dbConfigs[user]);
+      let connection = mysql2.createConnection(dbConfigs[user]);
       await new Promise((resolve, reject) => {
         connection.connect((error) => {
+         
           if (error) {
+            console.error(`Error connecting as ${user}: ${error.message}`);
             connection.end();
             reject(error);
           } else {

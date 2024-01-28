@@ -1,149 +1,195 @@
 "use client";
-import Axios from "axios";
-import { useState } from "react";
-import React from "react";
-import "./contactus.css";
+import React, { useState, useRef } from "react";
+import axios from "axios";
+import emailjs from '@emailjs/browser';
 
-import { MdOutlineMail } from "react-icons/md";
-import { FaPhoneAlt } from "react-icons/fa";
-import { FaBook } from "react-icons/fa6";
-import { FaMapPin } from "react-icons/fa";
-import { FiMessageCircle } from "react-icons/fi";
+import { IoLocationSharp } from "react-icons/io5";
+import { IoCall } from "react-icons/io5";
+import { MdOutlineEmail } from "react-icons/md";
 import HeaderTab from "@/Components/Header";
-import FooterTab from "@/Components/Footer";
 
-function Contactus() {
-  const [Email, setEmail] = useState("");
-  const [contactnum, setContactnum] = useState("");
-  const [subject, setSubject] = useState("");
-  const [address, setAddress] = useState("");
-  const [message, setMessage] = useState("");
+interface ContactFormData {
+  email: string;
+  phone: string;
+  subject: string;
+  address: string;
+  message: string;
+}
 
-  const submit = () => {
-    Axios.post("http://localhost:3000/byway", {
-      email: Email,
-      phone: contactnum,
-      subject: subject,
-      address: address,
-      message: message,
-    }).then(() => {
-      alert("succesfully inserted");
+const ContactUsForm: React.FC = () => {
+  const [contactFormData, setContactFormData] = useState<ContactFormData>({
+    email: "",
+    phone: "",
+    subject: "",
+    address: "",
+    message: "",
+  });
+
+  const formRef = useRef<HTMLFormElement>(null); // Create a ref for the form
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setContactFormData({
+      ...contactFormData,
+      [name]: value,
     });
+  };
+
+  const handleQuillChange = (content: string) => {
+    setContactFormData({
+      ...contactFormData,
+      message: content,
+    });
+  };
+
+
+  const handleContactSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData(formRef.current!); // Access form data using the form reference
+
+      const response = await axios.post(
+        "http://localhost:8081/contactus/addcontact",
+        Object.fromEntries(formData)
+        
+      );
+      console.log(formData) 
+
+      console.log(response.data);
+      alert("Successfully inserted");
+
+      if (formRef.current) {
+        const emailjsResponse = await emailjs.sendForm(
+          "service_0gn9pz7",
+          "template_ows0j7b",
+          formRef.current, // Pass the form reference
+          "gc2y_H__-i5FW_ept"
+        );
+        console.log("Message sent:", emailjsResponse);
+      } 
+      
+      else {
+        console.error("Form reference is null");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Error submitting form. Please try again later.");
+    }
   };
 
   return (
     <>
-    <HeaderTab/>
-      <div className="container">
-        <div className="header">
-          <div className="text">Contact Us</div>
-          <div className="underline"></div>
+      <HeaderTab />
+      <div className="w-auto h-screen mt-16 flex flex-col justify-center items-center">
+        <div className="w-auto pb-8 ml-3 text-4xl text-center text-green-700 ">
+          <strong>Contact Us</strong>
         </div>
-
-        <div className="inputs">
-          <div className="input">
-            <MdOutlineMail />
-            <input
-              type="email"
-              id="Email"
-              name="Email"
-              placeholder="Email"
-              required
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-          </div>
-          <div className="input">
-            <FaPhoneAlt />
-            <input
-              type="text"
-              id="contactnum"
-              name="contactnum"
-              placeholder="Contact Number"
-              required
-              onChange={(e) => {
-                setContactnum(e.target.value);
-              }}
-            />
-          </div>
-          <div className="input">
-            <FaBook />
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              placeholder="Subject"
-              required
-              onChange={(e) => {
-                setSubject(e.target.value);
-              }}
-            />
-          </div>
-          <div className="input">
-            <FaMapPin />
-            <input
-              type="text"
-              id="address"
-              name="address"
-              placeholder="Address"
-              required
-              onChange={(e) => {
-                setAddress(e.target.value);
-              }}
-            />
-          </div>
-          <div className="input">
-            <FiMessageCircle />
-            <input
-              type="text"
-              id="message"
-              name="message"
-              placeholder="Message"
-              required
-              onChange={(e) => {
-                setMessage(e.target.value);
-              }}
-            />
-          </div>
-        </div>
-        <div className="submit-container">
-          <button
-            type="submit"
-            name="submit"
-            value="customize_trip"
-            className="submit"
-            onClick={submit}
+        <div className="flex ">
+          <form
+          ref={formRef}
+            onSubmit={handleContactSubmit}
+            className="flex flex-col  overflow-y-auto"
           >
-            SUBMIT
-          </button>
+            <div className="divcontainer bg-white mx-auto h-[75vh] p-3 rounded">
+              <div className="name flex m-5 ml-12 mb-3 items-center">
+                <label className="mr-8 text-xl text-slate-700">
+                  Email Address:
+                </label>
+                <input
+                  type="email"
+                  className="p-1 text-xl rounded-sm w-[60%] border-2 border-slate-300"
+                  name="email"
+                  value={contactFormData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="location flex m-4 ml-12 mb-3 items-center">
+                <label className="mr-2 text-xl text-slate-700">
+                  Contact Number:
+                </label>
+                <input
+                  type="tel"
+                  className="p-1 text-xl text-slate-700 rounded-sm w-[60%] border-2 border-slate-300"
+                  name="phone"
+                  value={contactFormData.phone}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="location flex m-4 ml-12 mb-3 items-center">
+                <label className="mr-24 text-xl text-slate-700">Subject:</label>
+                <input
+                  type="text"
+                  className="p-1 text-xl text-slate-700 rounded-sm w-[60%] border-2 border-slate-300"
+                  name="subject"
+                  value={contactFormData.subject}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="location flex m-4 ml-12 mb-3 items-center">
+                <label className="mr-20 text-xl text-slate-700">Address:</label>
+                <input
+                  type="text"
+                  className="p-1 text-xl text-slate-700 rounded-sm w-[62%] border-2 border-slate-300"
+                  name="address"
+                  value={contactFormData.address}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="location flex m-4 ml-12 mb-3 items-center">
+                <label className="mr-20 text-xl text-slate-700">Message:</label>
+                <input
+                  type="text"
+                  className="p-1 text-xl text-slate-700 rounded-sm w-[62%] border-2 border-slate-300"
+                  name="message"
+                  value={contactFormData.message}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="self-center w-48 mt-16 mx-auto">
+                <button
+                  type="submit"
+                  className="w-full p-3 bg-green-600 text-white text-xl rounded hover:bg-green-700 focus:outline-none focus:ring focus:border-green-700 transition"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+          <div className="bg-white ml-8 p-4 py-10 rounded">
+            <div className="flex flex-col bg-slate-100 mx-4 p-5 my-3 items-center rounded">
+              <IoLocationSharp size={30} color="green" className="mb-3" />
+              <span className="text-xl text-green-600 ">Address</span>
+              <span className="text-xl text-slate-600 ">Boudha, Kathmandu</span>
+            </div>
+            <div className="flex flex-col bg-slate-100 mx-4 p-5 my-3 items-center rounded">
+              <IoCall size={30} color="green" className="mb-3" />
+              <span className="text-xl text-green-600 ">Phone Number</span>
+              <span className="text-xl text-slate-600 ">984165****</span>
+            </div>
+            <div className="flex flex-col bg-slate-100 mx-4 p-5 my-3 items-center rounded">
+              <MdOutlineEmail size={30} color="green" className="mb-3" />
+              <span className="text-xl text-green-600 ">Email</span>
+              <span className="text-xl text-slate-600 ">byway@gmail.com</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="our-container">
-        <div className="header1">
-          <div className="text1">Our Contacts</div>
-          <div className="underline1"></div>
-        </div>
-        <div className="Sub-Head">
-          <FaMapPin />
-          <div className="texts">Address</div>
-          <div className="Info"> Boudhha, Kathmandu </div>
-        </div>
-
-        <div className="Sub-Head">
-          <FaPhoneAlt />
-          <div className="texts">Phone</div>
-          <div className="Info"> 9835689*** </div>
-        </div>
-
-        <div className="Sub-Head">
-          <MdOutlineMail />
-          <div className="texts">Email</div>
-          <div className="Info"> aa***@gmail.com </div>
-        </div>
-      </div>
-      <FooterTab/>
     </>
   );
-}
-export default Contactus;
+};
+
+export default ContactUsForm;

@@ -105,7 +105,6 @@ const registerUser = async (user) => {
           reject({ Error: "Database error" });
         }
 
-        // Check if the user already exists by username
         db.query(
           checkUserQueryByUsername,
           [user.getUsername()],
@@ -169,5 +168,10 @@ router.post("/register", async (req, res) => {
     res.json(error);
   }
 });
+
+router.get('/logout', (req, res) =>{
+  res.clearCookie('token');
+  return res.json({Status: "Success"})
+})
 
 export default router;

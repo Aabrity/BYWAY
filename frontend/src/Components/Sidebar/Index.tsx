@@ -1,7 +1,7 @@
 import React from "react";
-import {Sidebar, SidebarItem} from '@/Components/Sidebar/Sidebar';
-import {Home, Package, Book, Users } from 'lucide-react'
-import Link from 'next/link'
+import { Sidebar, SidebarItem } from "@/Components/Sidebar/Sidebar";
+import { Home, Package, Book, Users } from "lucide-react";
+import Link from "next/link";
 
 export const Index = () => {
   return (
@@ -22,5 +22,4 @@ export const Index = () => {
       </Sidebar>
     </div>
   );
-}
-
+};

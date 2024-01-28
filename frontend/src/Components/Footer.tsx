@@ -7,7 +7,6 @@ import {
   logoLinkedin,
   logoTwitter,
 } from "ionicons/icons";
-import React from "react";
 
 interface Link {
   name: string;
