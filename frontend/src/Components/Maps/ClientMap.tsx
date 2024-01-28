@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-// import "ol/ol.css";
+import "ol/ol.css";
 import Feature from "ol/Feature";
 import Map from "ol/Map";
 import View from "ol/View";
