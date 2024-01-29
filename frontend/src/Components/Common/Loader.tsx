@@ -15,7 +15,7 @@ const WalkingAnimation = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center relative">
+    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
       {/* Oval loader */}
       <Oval
         visible={true}

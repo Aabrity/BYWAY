@@ -6,7 +6,7 @@ import { PackageForm } from "@/Components/Packages/PackageForm";
 import { PackageTable } from "@/Components/Packages/PackageTable";
 import { CiCirclePlus } from "react-icons/ci";
 
-const YourPageComponent: React.FC = () => {
+const AdminPacakgePage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -47,4 +47,4 @@ const YourPageComponent: React.FC = () => {
   );
 };
 
-export default YourPageComponent;
+export default AdminPacakgePage;

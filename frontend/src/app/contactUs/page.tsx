@@ -43,7 +43,7 @@ const ContactUsForm: React.FC = () => {
       const formData = new FormData(formRef.current!); // Access form data using the form reference
 
       const response = await axios.post(
-        "http://localhost:8081/contactus/addcontact",
+        "http://localhost:8081/contactus/addContact",
         Object.fromEntries(formData)
         
       );
