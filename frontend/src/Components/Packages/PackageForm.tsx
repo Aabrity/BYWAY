@@ -38,8 +38,7 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
   });
   const [imageFiles, setImageFiles] = useState<FileList | null>(null);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [isUpdateMode, setIsUpdateMode] = useState(false); // New state to track update mode
-
+  const [isUpdateMode, setIsUpdateMode] = useState(false); 
   useEffect(() => {
     axios
       .get("http://localhost:8081/maps/fetchAvailableLocations")
@@ -154,7 +153,6 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
           }
         );
       }
-      console.log("Server Response:", response);
       if (response.data.Status==="Success") {
         alert(
           isUpdateMode

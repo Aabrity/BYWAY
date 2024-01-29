@@ -30,7 +30,7 @@ export const ClientMap: React.FC<ClientMapProps> = ({ id }) => {
     const fetchData = async () => {
       try {
         // Fetch locations from the server
-        const response = await fetch("http://localhost:8081/maps/getLocations");
+        const response = await fetch("http://localhost:8081/maps/getCoordinates");
         const data = await response.json();
         setLocations(data);
       } catch (error) {
@@ -55,7 +55,7 @@ export const ClientMap: React.FC<ClientMapProps> = ({ id }) => {
             center: fromLonLat([84.138244, 28.402031]),
             zoom: 3,
             maxZoom: 30,
-            minZoom: 7.2,
+            minZoom: 7.5,
           }),
         });
 
