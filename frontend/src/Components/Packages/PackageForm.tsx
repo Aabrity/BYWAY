@@ -154,7 +154,6 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
           }
         );
       }
-      console.log("Server Response:", response);
       if (response.data.Status==="Success") {
         alert(
           isUpdateMode

@@ -33,7 +33,7 @@ export const BlogTable = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/blogs/getblogs")
+      .get("http://localhost:8081/blogs/getBlogs")
       .then((response) => {
         const blogsArray = response.data || [];
         const modifiedData = blogsArray.map((item: BlogItems) => ({
@@ -97,23 +97,6 @@ export const BlogTable = () => {
     setShowModal(false);
   };
 
-  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setFormState({
-      ...formState,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormState({
-      ...formState,
-      [e.target.name]: e.target.value, // Update the value directly
-      image: formState.image,
-    });
-  };
- 
 
   const tableHeaders = ["Blogid", "Title", "Content", "Category", "Actions"];
 
@@ -144,38 +127,6 @@ export const BlogTable = () => {
       
       .catch((err) => console.log(err));
   };
-
-  // const handleEditClick = (rowData: Record<string, any>) => {
-  //   console.log("Clicked Edit. Blog ID:", rowData.blogid);
-  //   handleOpenModal();
-  //   axios
-  //     .get(`http://localhost:8081/blogs/getSelectedBlog/${rowData.blogid}`)
-  //     .then((res) => {
-  //       const completeData = res.data.blog;
-  
-  //       if (!completeData) {
-  //         console.error("Complete data is undefined or null");
-  //         return;
-  //       }
-  
-  //       const bufferData = completeData.image?.data || [];
-  //       const dataUrl = `data:image/png;base64,${Buffer.from(
-  //         bufferData
-  //       ).toString("base64")}`;
-  
-  //       setFormState({
-  //         blogid: completeData.id ?? 0,
-  //         title: completeData.title ?? "",
-  //         content: completeData.description ?? "",
-  //         category: completeData.category ?? "",
-  //         image: completeData.image ?? null,
-  //       });
-  
-  //       setBlogImage(dataUrl ?? null);
-        
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
   
 
   const handleDeleteClick = async (rowData: Record<string, any>) => {
@@ -184,7 +135,7 @@ export const BlogTable = () => {
     ) {
       try {
         const deleteResponse = await axios.delete(
-          `http://localhost:8081/blogs/deleteblogs/${rowData.blogid}`
+          `http://localhost:8081/blogs/deleteBlog/${rowData.blogid}`
         );
 
         console.log("Delete Response:", deleteResponse);
@@ -221,9 +172,6 @@ export const BlogTable = () => {
       }
     }
   };
-
-  //-------------------------------------------------------------------------
-
   return (
     <>
       <div className="mt-8">
