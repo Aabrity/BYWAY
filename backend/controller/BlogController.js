@@ -48,6 +48,11 @@ const insertBlog = async (blogData) => {
 };
 
 router.post("/postBlog", upload.single("image"), async (req, res) => {
+  console.log("File received:", req.file);
+
+  console.log("Received description:", req.body.description);
+  console.log("Received title:", req.body.title);
+  console.log("Received category:", req.body.category);
   const { description, title, category } = req.body;
 
   const blogData = new BlogModel(
