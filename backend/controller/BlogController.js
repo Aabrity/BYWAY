@@ -48,11 +48,6 @@ const insertBlog = async (blogData) => {
 };
 
 router.post("/postBlog", upload.single("image"), async (req, res) => {
-  console.log("File received:", req.file);
-
-  console.log("Received description:", req.body.description);
-  console.log("Received title:", req.body.title);
-  console.log("Received category:", req.body.category);
   const { description, title, category } = req.body;
 
   const blogData = new BlogModel(
@@ -62,8 +57,6 @@ router.post("/postBlog", upload.single("image"), async (req, res) => {
     title,
     category
   );
-
-  console.log("Description from model: " + blogData.getDescription());
 
   try {
     const insertResponse = await insertBlog(blogData);
@@ -107,12 +100,12 @@ const updateBlog = async (blogData, id) => {
 };
 
 router.put("/updateBlog/:id", upload.single("image"), async (req, res) => {
-  const { description, title, category } = req.body;
+  const { image, description, title, category } = req.body;
   const { id } = req.params;
 
   const blogData = new BlogModel(
     null,
-    req.file.buffer,
+    image,
     description,
     title,
     category
