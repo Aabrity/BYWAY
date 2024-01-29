@@ -1,7 +1,6 @@
 import express from "express";
 import LocationModel from "../model/LocationModel.js";
 import connectToDatabase from "../db.js";
-import axios from "axios";
 const router = express.Router();
 
 let db;
@@ -13,34 +12,6 @@ let db;
     process.exit(1);
   }
 })();
-
-// const insertLocation = async (locationData) => {
-//   const insertQuery = `
-//     INSERT INTO locationtable (
-//       location_name,
-//       longitude,
-//       latitude
-//     ) VALUES (?, ?, ?)
-//   `;
-
-//   const values = [
-//     locationData.getLocation_name(),
-//     locationData.getLongitude(),
-//     locationData.getLatitude(),
-//   ];
-
-//   return new Promise((resolve, reject) => {
-//     db.query(insertQuery, values, (err, result) => {
-//       if (err) {
-//         console.error("Error inserting data:", err);
-//         reject({ Error: "Insertion error" });
-//       } else {
-//         console.log("Data inserted successfully");
-//         resolve({ Status: "Success" });
-//       }
-//     });
-//   });
-// };
 
 const insertLocation = async (locationData) => {
   const checkQuery = `
