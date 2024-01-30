@@ -1,6 +1,4 @@
-// ReviewCard.jsx
-import React from 'react';
-import './reviewPage.css';
+import React, { useState } from 'react';
 
 interface Review {
   id: number;
@@ -21,34 +19,48 @@ interface CardProps {
 const ReviewCard: React.FC<CardProps> = (props) => {
   const { reviews, currentIndex, Decrement, Increment } = props;
   const review = reviews[currentIndex];
+  const [showMore, setShowMore] = useState(false);
 
   return (
-    <div className='card-container flex flex-col'>
+    <div className='card-container flex flex-col w-full sm:w-96 md:w-800 mx-auto bg-white shadow-md rounded-lg p-8 space-y-3'>
       <div className='flex justify-end'>
-      <a className=' flex justify-center items-center bg-green-600 text-white font-mono font-bold text-1xl rounded-md p-1' href="./reviews">Write a review</a>
+        <a
+          className='flex justify-center items-center bg-green-600 text-white font-mono font-bold text-lg rounded-md p-1'
+          href="./reviews"
+        >
+          Write a review
+        </a>
       </div>
-     
-      <div className='underline w-full border-b-2 mb-4'></div>
+
+      <div className='border-b-2 w-full'></div>
       {review && (
         <div key={review.id}>
           <div className='text-container'>
-            <div className='name-country '>
-              <p className='name  whitespace-nowrap'>{review.fullName}</p>
-              {/* <h1>|</h1> */}
-              {/* <p className='country whitespace-nowrap'>{review.selectCountry}</p> */}
+            <div className='name-country flex gap-2'>
+              <p className='name whitespace-nowrap font-bold font-mono text-lg'>{review.fullName}</p>
             </div>
             <div>
-                <p className='date'> {review.date}</p>
+              <p className='date font-mono'>{review.date}</p>
             </div>
           </div>
-          <div className='title-desc'>
-            <h5 className='title'>{review.title.toUpperCase()}</h5>
-            <p className='description'>{review.reviewDetails}</p>
+          <div className='title-desc font-mono'>
+            <h5 className='title mt-2 font-mono font-bold'>{review.title.toUpperCase()}</h5>
+            <p className={`description ${showMore ? 'h-auto' : 'h-20 overflow-hidden'}`}>
+              {review.reviewDetails}
+            </p>
+            {review.reviewDetails.length > 200 && (
+              <button
+                className='text-blue-500 cursor-pointer'
+                onClick={() => setShowMore(!showMore)}
+              >
+                {showMore ? 'See Less' : 'See More'}
+              </button>
+            )}
           </div>
         </div>
       )}
-      <div className='underline w-full border-b-2'></div>
-      <div className='button-container flex justify-center items-center'>
+      <div className='border-b-2 w-full'></div>
+      <div className='button-container flex justify-center items-center space-x-1'>
         <button
           className='font-bold text-7xl p-1 hover:text-blue-200 rounded-xl'
           onClick={Decrement}
@@ -65,5 +77,4 @@ const ReviewCard: React.FC<CardProps> = (props) => {
     </div>
   );
 };
-
-export default ReviewCard;
+export default ReviewCard

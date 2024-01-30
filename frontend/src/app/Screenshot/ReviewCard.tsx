@@ -1,7 +1,4 @@
-// ReviewCard.jsx
 import React from 'react';
-import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
-import './reviewCard.css';
 
 interface Review {
   id: number;
@@ -24,41 +21,46 @@ const ReviewCard: React.FC<CardProps> = (props) => {
   const review = reviews[currentIndex];
 
   return (
-    
-    <div className=' border-green-400 rounded-md border-2 w-full h-72 justify-center p-9 mb-72 flex flex-col  '>
-      
-      <div className='underline w-full border-b-2 mb-4'></div>
+    <div className='card-container flex flex-col  sm:w-96 md:w-800 bg-white shadow-md rounded-lg p-8 space-y-3'>
+      <div className='flex justify-end'>
+        <a
+          className='flex justify-center items-center bg-green-600 text-white font-mono text-lg rounded-md p-1'
+          href="./reviews"
+        >
+          Write a review
+        </a>
+      </div>
+
+      <div className='border-b-2 w-full'></div>
       {review && (
         <div key={review.id}>
           <div className='text-container'>
-            <div className='name-country '>
-              <p className='name  whitespace-nowrap overflow-hidden'>{review.fullName}</p>
-              {/* <h1>|</h1>
-              <p className='country whitespace-nowrap'>{review.selectCountry}</p> */}
+            <div className='name-country flex gap-2'>
+              <p className='name whitespace-nowrap font-bold font-mono text-lg'>{review.fullName}</p>
             </div>
-            <div >
-                <p className='date '> {review.date}</p>
+            <div>
+              <p className='date font-mono'>{review.date}</p>
             </div>
           </div>
-          <div className='title-desc'>
-            <h5 className='title'>{review.title.toUpperCase()}</h5>
+          <div className='title-desc font-mono'>
+            <h5 className='title font-bold'>{review.title.toUpperCase()}</h5>
             <p className='description'>{review.reviewDetails}</p>
           </div>
         </div>
       )}
-      <div className='underline w-full border-b-2'></div>
-      <div className='button-container flex justify-center items-center'>
+      <div className='border-b-2 w-full'></div>
+      <div className='button-container flex justify-center items-center space-x-1'>
         <button
-          className='font-bold text-7xl p-1 hover:text-blue-200  rounded-xl mt-6'
+          className='font-bold text-7xl p-1 hover:text-blue-200 rounded-xl'
           onClick={Decrement}
         >
-        <FaArrowAltCircleLeft className='text-3xl  '/>
+          &#x2190;
         </button>
         <button
-          className='font-bold text-7xl p-1 hover:text-blue-200 rounded-xl mt-6'
+          className='font-bold text-7xl p-1 hover:text-blue-200 rounded-xl'
           onClick={Increment}
         >
-         <FaArrowAltCircleRight className='text-3xl'/>
+          &#x2192;
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 // App.jsx
 import { useEffect, useState } from 'react';
 import ReviewCard from './ReviewCard';
+// import ReviewCard from '../Screenshot/ReviewCard';
 
 const App = () => {
   const [reviews, setReviews] = useState([]);
