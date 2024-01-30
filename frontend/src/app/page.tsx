@@ -4,10 +4,12 @@ import FooterTab from "@/Components/Footer";
 import HeaderTab from "@/Components/Header";
 import { ClientMap } from "@/Components/Maps/ClientMap";
 import Image from "next/image";
+import PhotoGallery from "./Screenshot/page";
 export default function Home() {
   return (
     <>
       <HeaderTab />
+    
       <div style={{ height: "80vh", position: "relative" }}>
         <Image
           src="/assets/coverimage.jpg"
@@ -29,6 +31,7 @@ export default function Home() {
         center
         mb="0"
       />
+        <PhotoGallery/>
       <ClientMap id="clientMap" />
       <FooterTab />
     </>

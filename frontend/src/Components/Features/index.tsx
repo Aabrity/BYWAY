@@ -1,5 +1,5 @@
-import { features } from "./featureData";
 import FeatureCard from "./featureCard";
+import { features } from "./featureData";
 
 const Features = () => {
   return (
@@ -18,6 +18,7 @@ const Features = () => {
             ))}
           </div>
         </div>
+       
       </section>
     </>
   );
