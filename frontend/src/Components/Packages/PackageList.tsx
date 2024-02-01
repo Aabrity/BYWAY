@@ -9,7 +9,8 @@ const PackageList = () => {
         {
           package_id: '1',
           package_title: 'Test Package 1',
-          image1: '/assets/pokhara.jpg',
+          image1: '/assets/packagesImg/istockphoto-935947682-612x612.jpg',
+
           price: '500',
           about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
           duration: '7',
@@ -18,7 +19,7 @@ const PackageList = () => {
         {
           package_id: '2',
           package_title: 'Test Package 2',
-          image1: '/assets/everest-base-camp-10.jpg',
+          image1: '/assets/packagesImg/istockphoto-935947682-612x612.jpg',
           price: '750',
           about: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
           duration: '5',

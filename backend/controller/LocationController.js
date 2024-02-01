@@ -102,5 +102,17 @@ router.get("/getCoordinates", (req, res) => {
     }
   });
 });
-
+router.get("/fetchLocationName/:location_id", (req, res) => {
+  const locationId = req.params.location_id;
+  const query = "SELECT location_name FROM locationtable WHERE location_id = ?";
+  db.query(query, [locationId], (err, result) => {
+    if (err) {
+      console.error("Error fetching location name:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      const locationName = result[0] ? result[0].location_name : null;
+      res.json({ locationName });
+    }
+  });
+});
 export default router;

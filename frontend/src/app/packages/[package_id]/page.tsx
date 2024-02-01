@@ -6,19 +6,20 @@ import HeaderTab from "@/Components/Header";
 import TravelPackageTable from "@/Components/Packages/TravelPackageTable";
 import ExpandableSection from "@/Components/Packages/DropDown";
 import WalkingAnimation from "@/Components/Common/Loader";
+import FooterTab from '@/Components/Footer';
 
-
-export default function Page({ params }) {
-  const [data, setData] = useState(null);
+export default function Page({ params }: { params: { package_id: string } }) {
+  const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [locationName, setLocationName] = useState(null); // Added locationName state
+  
 
   useEffect(() => {
     const fetchPackageData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8081/packages/getSelectedPackage/${params.package_id}`
+          `http://localhost:8081/packages/getselectedpackage/${params.package_id}`
         );
         console.log("Retrieved data:", response.data.package);
         setData(response.data.package);
@@ -86,7 +87,7 @@ export default function Page({ params }) {
 
       <div className="flex py-16 md:py-20 lg:py-28 justify-center bg-slate-50">
         <div className="max-w-7xl w-full">
-          <h1 className="text-2xl font-bold mt-5 mb-5">
+          <h1 className="text-2xl font-bold mt-2 mb-5">
             {data.package_title}
           </h1>
           <span className="text-violet-600 font-semibold mt-2 mb-">
@@ -156,10 +157,6 @@ export default function Page({ params }) {
                         expandedContent={<p>{data.whats_included}</p>}
                       />
                       <ExpandableSection
-                        buttonLabel="Highlights"
-                        expandedContent={<p>{data.itinerary}</p>}
-                      />
-                      <ExpandableSection
                         buttonLabel="Additional Information"
                         expandedContent={<p>{data.additional_info}</p>}
                       />
@@ -192,6 +189,7 @@ export default function Page({ params }) {
           </div>
         </div>
       </div>
+      <FooterTab />
     </>
   );
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import HeaderTab from "@/Components/Header";
 import axios from "axios";
 import { IoSearch } from "react-icons/io5";
+import FooterTab from '@/Components/Footer';
 
 type PackageItemProps = {
   package_title: string;
@@ -256,6 +257,7 @@ const Packages: React.FC = () => {
               </div>
             </div>
           </section>
+          <FooterTab />
         </>
       </div>
     </>

@@ -9,6 +9,7 @@ import FooterTab from '@/Components/Footer';
 import { FaSearch } from 'react-icons/fa';
 import LeftPanel from "@/Components/Blogs/LeftPanel";
 import TrendingBlogContainer from "@/Components/Blogs/TrendingBlogContainer";
+import Link from "next/link";
 
 
 interface Blog {
@@ -95,6 +96,7 @@ function Blogs() {
             Most Visited
 
             {recentBlogs.map((blog, index) => (
+              <Link key={index} href={`/blogs/[id]`} as={`/blogs/${blog.id}`}>
               <LeftPanel
                 key={index}
                 title={blog.title}
@@ -105,6 +107,7 @@ function Blogs() {
                     : ""
                 }
               />
+              </Link>
             ))}
         
     </div>
@@ -120,6 +123,7 @@ function Blogs() {
       </h1>
 
       {trendingBlogs.map((blog, index) => (
+        <Link key={index} href={`/blogs/[id]`} as={`/blogs/${blog.id}`}>
         <TrendingBlogContainer
           key={index}
           title={blog.title}
@@ -131,7 +135,7 @@ function Blogs() {
               ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString("base64")}`
               : ""
           }
-        />
+        /></Link>
       ))}
     </div>
 
