@@ -3,6 +3,7 @@ import Features from "@/Components/Features";
 import FooterTab from "@/Components/Footer";
 import HeaderTab from "@/Components/Header";
 import { ClientMap } from "@/Components/Maps/ClientMap";
+import PackageList from "@/Components/Packages/PackageList";
 import Image from "next/image";
 export default function Home() {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
         center
         mb="0"
       />
+      <PackageList/>
       <ClientMap id="clientMap" />
       <FooterTab />
     </>
