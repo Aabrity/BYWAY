@@ -3,21 +3,23 @@ export default class BlogModel {
   #image;
   #description;
   #title;
+  #location;
   #category;
 
-  constructor(id, image, description, title, category) {
+  constructor(id, image, description, title,location, category) {
     this.#id = id;
     this.#image = image;
     this.setDescription(description);
     this.#title = title;
+    this.#location = location;
     this.#category = category;
   }
 
   validateInput(input) {
-    let strippedInput = input.replace(/(<([^>]+)>)/gi, ""); 
+    let strippedInput = input.replace(/(<([^>]+)>)/gi, "");
     let wordCount = strippedInput.split(" ").filter(function (n) {
       return n != "";
-    }).length; 
+    }).length;
     return wordCount;
   }
 
@@ -35,6 +37,10 @@ export default class BlogModel {
 
   getTitle() {
     return this.#title;
+  }
+
+  getLocation() {
+    return this.#location;
   }
 
   getCategory() {
@@ -61,6 +67,9 @@ export default class BlogModel {
     this.#title = title;
   }
 
+  setLocation(location) {
+    this.#location = location;
+  }
   setCategory(category) {
     this.#category = category;
   }
