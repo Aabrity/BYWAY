@@ -1,17 +1,17 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "ol/ol.css";
-import Map from "ol/Map";
-import TileLayer from "ol/layer/Tile";
-import View from "ol/View";
-import OSM from "ol/source/OSM";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
 import Feature from "ol/Feature";
+import Map from "ol/Map";
+import View from "ol/View";
 import Point from "ol/geom/Point";
+import TileLayer from "ol/layer/Tile";
+import VectorLayer from "ol/layer/Vector";
+import { fromLonLat } from "ol/proj";
+import OSM from "ol/source/OSM";
+import VectorSource from "ol/source/Vector";
 import { Style } from "ol/style";
 import Icon from "ol/style/Icon";
-import { fromLonLat } from "ol/proj";
 
 interface ClientMapProps {
   id: string;
@@ -30,7 +30,7 @@ export const ClientMap: React.FC<ClientMapProps> = ({ id }) => {
     const fetchData = async () => {
       try {
         // Fetch locations from the server
-        const response = await fetch("http://localhost:8081/maps/getLocations");
+        const response = await fetch("http://localhost:8081/maps/getCoordinates");
         const data = await response.json();
         setLocations(data);
       } catch (error) {
@@ -55,7 +55,7 @@ export const ClientMap: React.FC<ClientMapProps> = ({ id }) => {
             center: fromLonLat([84.138244, 28.402031]),
             zoom: 3,
             maxZoom: 30,
-            minZoom: 7.2,
+            minZoom: 7.5,
           }),
         });
 

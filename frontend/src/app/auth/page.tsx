@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import Admin from "@/../../backend/model/AdminModel";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Admin from "@/../../backend/model/AdminModel";
+import React, { useState } from "react";
 
 interface FormData {
   email: string;

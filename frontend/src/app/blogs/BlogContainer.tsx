@@ -51,8 +51,8 @@
 // };
 
 // export default BlogContainer;
-import React from 'react';
 import Image from 'next/image';
+import React from 'react';
 
 interface BlogContainerProps {
   title: string;

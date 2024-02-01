@@ -1,20 +1,18 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "ol/ol.css";
-import Map from "ol/Map";
-import TileLayer from "ol/layer/Tile";
-import View from "ol/View";
-import OSM from "ol/source/OSM";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
-import Feature from "ol/Feature";
-import Point from "ol/geom/Point";
-import { fromLonLat, transform } from "ol/proj";
-import { useRef } from "react";
 import axios from "axios";
+import Feature from "ol/Feature";
+import Map from "ol/Map";
+import View from "ol/View";
+import Point from "ol/geom/Point";
+import TileLayer from "ol/layer/Tile";
+import VectorLayer from "ol/layer/Vector";
+import "ol/ol.css";
+import { fromLonLat, transform } from "ol/proj";
+import OSM from "ol/source/OSM";
+import VectorSource from "ol/source/Vector";
 import { Style } from "ol/style";
 import Icon from "ol/style/Icon";
-
+import React, { useEffect, useRef, useState } from "react";
 
 interface SelectedLocation {
   name: string;
@@ -25,7 +23,7 @@ interface AdminMapProps {
   id: string;
 }
 
-export const AdminMap: React.FC<AdminMapProps> = ({id}) => {
+export const AdminMap: React.FC<AdminMapProps> = ({ id }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [map, setMap] = useState<Map | null>(null);
   const [selectedLocation, setSelectedLocation] =
@@ -46,7 +44,7 @@ export const AdminMap: React.FC<AdminMapProps> = ({id}) => {
         center: fromLonLat([84.138244, 28.402031]),
         zoom: 3,
         maxZoom: 30,
-        minZoom: 7.2,
+        minZoom: 7.1,
       }),
     });
 
@@ -55,7 +53,7 @@ export const AdminMap: React.FC<AdminMapProps> = ({id}) => {
       source: new VectorSource(),
       style: new Style({
         image: new Icon({
-          src: "pointer.svg",
+          src: "/assets/pointer.svg",
           scale: 0.5, // Adjust this value to change the size of the SVG icon
         }),
       }),
@@ -79,7 +77,8 @@ export const AdminMap: React.FC<AdminMapProps> = ({id}) => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${searchTerm}&countrycodes=NPL&bounded=1`
+        `https://nominatim.openstreetmap.org/search?format=json&q=${searchTerm}&countrycodes=NPL&bounded=1`,
+        { withCredentials: false }
       );
 
       if (response.data.length > 0) {
@@ -157,7 +156,7 @@ export const AdminMap: React.FC<AdminMapProps> = ({id}) => {
           }
         );
 
-        alert(response.data.message);
+        alert(response.data.Status);
       } else {
         alert("No location selected.");
       }
@@ -168,31 +167,35 @@ export const AdminMap: React.FC<AdminMapProps> = ({id}) => {
   };
 
   return (
-    <div className="w-full h-full p-10 bg-green-200 rounded-md">
+    <div className="w-full h-full p-10 bg-slate-100 rounded ">
       {/* Adjust the div styles based on your layout requirements */}
-      <div style={{ marginBottom: "10px" }}>
-        <input
-          type="text"
-          placeholder="Search location..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="text-black p-2 border border-gray-300 rounded-md"
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-blue-500 text-white p-2 rounded-md ml-2"
-        >
-          Search
-        </button>
+      <div className="flex justify-center items-start">
+        <div className="w-[40%] mr-5">
+          <input
+            type="text"
+            placeholder="Search location..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="text-black p-2 border w-full border-gray-300 rounded-md mb-5"
+          />
+        </div>
+        <div>
+          <button
+            onClick={handleSearch}
+            className="p-2 px-3 bg-green-600 text-white text-center text-xl rounded hover:bg-green-700 focus:outline-none focus:ring focus:border-green-700 transition"
+          >
+            Search
+          </button>
+        </div>
       </div>
       {selectedLocation && (
-        <div style={{ marginBottom: "10px" }}>
+        <div className="mb-4">
           <p>Name: {selectedLocation.name}</p>
           <p>Longitude: {selectedLocation.longitude}</p>
           <p>Latitude: {selectedLocation.latitude}</p>
           <button
             onClick={handleSetLocation}
-            className="bg-green-500 text-white p-2 rounded-md"
+            className=" mt-2 p-2 px-3 bg-green-600 text-white text-center text-xl rounded hover:bg-green-700 focus:outline-none focus:ring focus:border-green-700 transition"
           >
             Set in Map
           </button>
@@ -200,10 +203,8 @@ export const AdminMap: React.FC<AdminMapProps> = ({id}) => {
       )}
       <div
         id={id}
-        className="mx-auto w-full h-[70vh] border border-gray-300 rounded-md"
+        className="mx-auto  w-full h-[50vh] border border-gray-300 rounded-md"
       ></div>
     </div>
   );
 };
-
-

@@ -38,8 +38,7 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
   });
   const [imageFiles, setImageFiles] = useState<FileList | null>(null);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [isUpdateMode, setIsUpdateMode] = useState(false); // New state to track update mode
-
+  const [isUpdateMode, setIsUpdateMode] = useState(false); 
   useEffect(() => {
     axios
       .get("http://localhost:8081/maps/fetchAvailableLocations")
@@ -54,7 +53,23 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
         .then((response) => {
           const fetchedPackageData = response.data.package;
           setPackageData(fetchedPackageData);
-          setImagePreviews([]); // Clear existing previews
+          setImagePreviews([]);
+           const imagePreviews = [];
+           for (let i = 1; i <= 4; i++) {
+             const imageData = fetchedPackageData[`image${i}`];
+             if (
+               imageData &&
+               imageData.type === "Buffer" &&
+               Array.isArray(imageData.data)
+             ) {
+               const blob = new Blob([Buffer.from(imageData.data)], {
+                 type: "image/jpeg",
+               }); // Assuming JPEG format
+               const imageUrl = URL.createObjectURL(blob);
+               imagePreviews.push(imageUrl);
+             }
+           }
+           setImagePreviews(imagePreviews); // Clear existing previews
           setIsUpdateMode(true); // Enable update mode
         })
         .catch((error) => {
@@ -97,7 +112,6 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
     e.preventDefault();
 
     const formData = new FormData();
-    console.log("formData:", formData);
 
     if (imageFiles) {
       for (let i = 0; i < imageFiles.length; i++) {
@@ -128,6 +142,7 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
           }
         );
       } else {
+        console.log(formData);
         response = await axios.post(
           "http://localhost:8081/packages/insertPackage",
           formData,
@@ -138,8 +153,7 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
           }
         );
       }
-      console.log("Server Response:", response);
-      if (response.data.message) {
+      if (response.data.Status==="Success") {
         alert(
           isUpdateMode
             ? "Package updated successfully"

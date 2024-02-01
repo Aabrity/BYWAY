@@ -3,10 +3,10 @@ import React from "react";
 import { IonIcon } from "@ionic/react";
 import {
   logoFacebook,
-  logoTwitter,
   logoGithub,
-  logoLinkedin,
   logoInstagram,
+  logoLinkedin,
+  logoTwitter,
 } from "ionicons/icons";
 
 interface Link {

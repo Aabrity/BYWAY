@@ -1,5 +1,5 @@
 .card-container {
-    width: 60%;
+    width: 65%;
     /* height: 400px; */
     min-width: 250px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -8,30 +8,40 @@
     display: flex;
     flex-direction: column;
     /* align-items: center; */
-    justify-content: center;
+    /* justify-content: center; */
     gap: 0.75rem; /* equivalent to Tailwind's space-y-3 */
     background-color: white; /* equivalent to Tailwind's bg-white */
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
   .date{
-    margin-top: -4px;
+    flex-direction: row;
+    display: flex;
+    
+  
+    font-weight: 600; 
+    letter-spacing: 0.05em;
+   
+    font-family: 'Courier New', Courier, monospace;
+    /* margin-top: 20px; */
+    font-size: 16px;
   }
-  .name-date{
+  .name-country{
     flex-direction: row;
     display: flex;
     gap: 10px;
   
-    font-weight: 600; 
+    font-weight: 400; 
     letter-spacing: 0.05em;
-    margin-right: 550px;
-    font-family: 'Courier New', Courier, monospace;
+   
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 18px;
   }
  
   .title-desc{
     display: flex;
     flex-direction: column;
+   
     /* margin-right: 200px; */
     
 
@@ -43,27 +53,33 @@
   }
   
   .name {
-    font-weight: 600; 
+    /* font-weight: 600;  */
     letter-spacing: 0.05em; 
   }
 
   .review{
-    margin-left: 710px;
+    /* margin-left: 500px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
     background-color:rgb(143, 177, 143);
     border-radius: 8px;
-    height: 39px;
-    width: 163px;
-    text-align: center;
-    font-size: 19px;
+    height: 30px;
+    width: 160px;
+    padding-left: 10px;
+    /* text-align: center; */
+
+    font-size: 18px;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
   
 
     
   }
   
-  .job {
-    color: #04195e; 
-   
+  .title {
+    color: #080b15; 
+   margin-top: 10px;
     font-size: 15px;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
