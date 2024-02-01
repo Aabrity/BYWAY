@@ -4,8 +4,14 @@ import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
+interface Location {
+  location_id: number;
+  location_name: string;
+}
+
 interface BlogData {
   title: string;
+  location_id:string;
   image: File | null;
   category: string;
   description: string;
@@ -16,15 +22,28 @@ interface BlogFormProps {
 }
 
 const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
+  const [locations, setLocations] = useState<Location[]>([]);
   const [blogData, setBlogData] = useState<BlogData>({
     title: "",
     image: null,
+    location_id:"",
     category: "",
     description: "",
   });
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/maps/fetchAvailableLocations")
+      .then((response) => {
+        setLocations(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching locations:", error);
+      });
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -105,6 +124,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
 
     // Append other fields
     formData.append("title", blogData.title);
+    formData.append("location", blogData.location_id);
     formData.append("description", blogData.description);
 
     if (selectedCategory !== null && selectedCategory !== undefined) {
@@ -141,6 +161,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
         );
         setBlogData({
           title: "",
+          location_id:"",
           image: null,
           category: "",
           description: "",
@@ -177,6 +198,26 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
               value={blogData.title}
               onChange={handleInputChange}
             />
+          </div>
+          <div className="location flex m-2 ml-44 mb-5 items-center">
+            <label className="mr-2 text-xl text-slate-700">
+              Blog Location :
+            </label>
+            <select
+              name="location"
+              value={blogData.location_id}
+              onChange={(e) =>
+                setBlogData({ ...blogData, location_id: e.target.value })
+              }
+              className="rounded-lg bg-slate-100 border p-2 focus:outline-none"
+            >
+              <option value="">Select a Location</option>
+              {locations.map((location) => (
+                <option key={location.location_id} value={location.location_id}>
+                  {location.location_name}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Blog Category */}

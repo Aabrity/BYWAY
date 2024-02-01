@@ -159,7 +159,7 @@ export const BlogTable = () => {
           setTableData(modifiedData);
 
           // Display alert after updating state
-          alert(`Package ${rowData.blog_id} deleted successfully`);
+          alert(`Package ${rowData.blogid} deleted successfully`);
         } else {
           console.error("Delete request failed:", deleteResponse);
           alert(deleteResponse.data.message || "Delete request failed");

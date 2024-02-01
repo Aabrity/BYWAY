@@ -23,14 +23,16 @@ const insertBlog = async (blogData) => {
       image,
       description,
       title,
+      location_id,
       category
-    ) VALUES (?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?)
   `;
 
   const values = [
     blogData.getImage(),
     blogData.getDescription(),
     blogData.getTitle(),
+    blogData.getLocation(),
     blogData.getCategory(),
   ];
 
@@ -48,13 +50,14 @@ const insertBlog = async (blogData) => {
 };
 
 router.post("/postBlog", upload.single("image"), async (req, res) => {
-  const { description, title, category } = req.body;
+  const { description, title, category, location } = req.body;
 
   const blogData = new BlogModel(
     null,
     req.file.buffer,
     description,
     title,
+    location,
     category
   );
 
@@ -74,6 +77,7 @@ const updateBlog = async (blogData, id) => {
       image = COALESCE(?, image),
       description = ?,
       title = ?,
+      location_id= ?,
       category = ?
     WHERE id = ?
   `;
@@ -82,6 +86,7 @@ const updateBlog = async (blogData, id) => {
     blogData.getImage(),
     blogData.getDescription(),
     blogData.getTitle(),
+    blogData.getLocation(),
     blogData.getCategory(),
     id,
   ];
@@ -100,7 +105,7 @@ const updateBlog = async (blogData, id) => {
 };
 
 router.put("/updateBlog/:id", upload.single("image"), async (req, res) => {
-  const { image, description, title, category } = req.body;
+  const { image, description, title, category, location } = req.body;
   const { id } = req.params;
 
   const blogData = new BlogModel(
@@ -108,6 +113,7 @@ router.put("/updateBlog/:id", upload.single("image"), async (req, res) => {
     image,
     description,
     title,
+    location,
     category
   );
   try {
@@ -119,7 +125,6 @@ router.put("/updateBlog/:id", upload.single("image"), async (req, res) => {
     res.json(error);
   }
 });
-
 
 router.get("/getBlogs", (req, res) => {
   const sql = "SELECT * FROM blogtable";
