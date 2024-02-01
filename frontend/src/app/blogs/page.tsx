@@ -142,6 +142,21 @@ function Blogs() {
 );
 }
 
+// Function to sanitize HTML by removing unwanted tags
+const sanitizeHtml = (html) => {
+  const allowedTags = ['p', 'strong', 'em', 'u', 'a', 'br', 'h1', 'h2', 'h3'];
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  
+  // Remove unwanted tags
+  doc.body.querySelectorAll('*').forEach((node) => {
+    if (!allowedTags.includes(node.tagName.toLowerCase())) {
+      node.parentNode.removeChild(node);
+    }
+  });
+
+  return doc.body.innerHTML;
+};
+
 const RecentBlogContainer: React.FC<BlogContainerProps> = ({
   title,
   description,
