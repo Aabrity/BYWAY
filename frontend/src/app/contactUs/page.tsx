@@ -10,7 +10,7 @@ import HeaderTab from "@/Components/Header";
 
 interface ContactFormData {
   email: string;
-  phone: string;
+  contactNumber: string;
   subject: string;
   address: string;
   message: string;
@@ -19,7 +19,7 @@ interface ContactFormData {
 const ContactUsForm: React.FC = () => {
   const [contactFormData, setContactFormData] = useState<ContactFormData>({
     email: "",
-    phone: "",
+    contactNumber: "",
     subject: "",
     address: "",
     message: "",
