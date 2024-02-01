@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Admin from "@/../../backend/model/AdminModel";
+import {toast, Toaster} from 'sonner';
 
 interface SignupFormData {
   email: string;
@@ -67,9 +68,32 @@ const SignupForm: React.FC = () => {
       });
 
       if (response.data.Status === "Success") {
-        console.log(`Signup successful for ${username}`);
+        toast.success(`Signup successful for ${username}`, {
+          position: "top-right",
+          
+          style: {
+            minWidth: "300px",
+            maxWidth: "400px",
+            minHeight: "80px",
+            fontSize: "18px",
+            transform: "translateX(0%)", 
+          },
+        });
+        
       } else {
         console.error(response.data.Error);
+        toast.error("An error occurred during signup"
+        , {
+          position: "top-right",
+          
+          style: {
+            minWidth: "300px",
+            maxWidth: "400px",
+            minHeight: "80px",
+            fontSize: "18px",
+            transform: "translateX(0%)", 
+          },
+        });
       }
     } catch (error) {
       console.error("An error occurred during signup:", error);
@@ -232,6 +256,7 @@ const SignupForm: React.FC = () => {
             className="w-full my-5 py-2 bg-green-600 shadow-lg shadow-green-600/50 hover:shadow-green-500/80 text-white font-semibold rounded-lg"
           >
             Sign Up
+            <Toaster className="absolute right-0 transform translate-x-16transition-transform duration-300 ease-in-out" richColors />
           </button>
         </form>
       </div>

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import StyledTable2 from '@/Components/Common/StyledTable2';
 import axios from 'axios';
+import {toast} from 'sonner';
 
 interface TableData {
   contact_id: string;
@@ -45,20 +46,52 @@ const Table: React.FC = () => {
         );
 
         if (deleteResponse.status === 200) {
-          console.log("Delete successful. Fetching updated data...");
+          console.log("Delete successful. Fetching updated data...", {
+            position: "top-right",
+            
+            style: {
+              minWidth: "300px",
+              maxWidth: "400px",
+              minHeight: "80px",
+              fontSize: "18px",
+              transform: "translateX(0%)", 
+            },
+          });
 
           // Fetch the updated data and set it in the state
           fetchUpdatedData();
 
           // Display alert after updating state
-          alert(`${rowData.email}'s enquiry deleted successfully`);
+          toast.success(`${rowData.email}'s enquiry deleted successfully`, {
+            position: "top-right",
+            
+            style: {
+              minWidth: "300px",
+              maxWidth: "400px",
+              minHeight: "80px",
+              fontSize: "18px",
+              transform: "translateX(0%)", 
+            },
+          });
+
         } else {
           console.error("Delete request failed:", deleteResponse);
-          alert(deleteResponse.data.message || "Delete request failed");
+          toast.error(deleteResponse.data.message || "Delete request failed", {
+            position: "top-right",
+            
+            style: {
+              minWidth: "300px",
+              maxWidth: "400px",
+              minHeight: "80px",
+              fontSize: "18px",
+              transform: "translateX(0%)", 
+            },
+          });
+
         }
       } catch (error) {
         console.error("Error deleting or fetching data:", error);
-        alert(
+        toast.error(
           "Error deleting or fetching data. Please check the console for more details."
         );
       }

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {toast, Toaster } from "sonner";
 
 interface Location {
   location_id: number;
@@ -154,11 +155,27 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
         );
       }
       if (response.data.Status==="Success") {
-        alert(
+        // alert(
+        //   isUpdateMode
+        //     ? "Package updated successfully"
+        //     : "Package added successfully"
+        // );
+        toast.success(
           isUpdateMode
             ? "Package updated successfully"
             : "Package added successfully"
-        );
+            , {
+              position: "top-right",
+              
+              style: {
+                minWidth: "300px",
+                maxWidth: "400px",
+                minHeight: "80px",
+                fontSize: "18px",
+                transform: "translateX(0%)", 
+              },
+            });
+        
         setPackageData({
           package_title: "",
           location_id: "",
@@ -175,7 +192,21 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
         setImageFiles(null);
         setIsUpdateMode(false);
       } else {
-        alert("Error adding/updating package");
+        toast.error(
+          isUpdateMode
+            ? "Error updating package"
+            : "Error adding package"
+            , {
+              position: "top-right",
+              
+              style: {
+                minWidth: "300px",
+                maxWidth: "400px",
+                minHeight: "80px",
+                fontSize: "18px",
+                transform: "translateX(0%)", 
+              },
+            });
       }
     } catch (error) {
       console.error("Submission error:", error);
@@ -372,8 +403,10 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
             <button
               type="submit"
               className="w-full mb-5 p-3 bg-green-600 text-white text-xl rounded hover:bg-green-700 focus:outline-none focus:ring focus:border-green-700 transition"
+
             >
               {isUpdateMode ? "Update Package" : "Add Package"}
+              <Toaster className="absolute right-0 transform translate-x-16transition-transform duration-300 ease-in-out" richColors />
             </button>
           </div>
         </div>

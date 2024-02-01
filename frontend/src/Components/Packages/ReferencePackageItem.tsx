@@ -7,7 +7,7 @@ const ReferencePackageItem = ({ package_title, imgSrc, price, about, discount, d
       <div className="poster relative overflow-hidden">
         <img src={imgSrc} alt={package_title} className="w-full h-full object-cover transition-transform duration-300 transform scale-100 group-hover:scale-110" />
       </div>
-      <div className="details bg-green-900 bg-opacity-80 p-6 text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="details bg-green-900 bg-opacity-50 p-6 text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <h1 className="text-2xl font-bold mb-2">{package_title}</h1>
         <h2 className="text-sm font-light mb-4">{duration} Days</h2>
         <div className="rating flex gap-1">

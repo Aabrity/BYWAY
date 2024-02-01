@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {toast} from "sonner";
 
 import StyledTable from "../Common/StyledTable";
 import { PackageForm } from "./PackageForm";
@@ -144,16 +145,47 @@ interface PackageData {
           setTableData(modifiedData);
 
           // Display alert after updating state
-          alert(`Package ${rowData.packageid} deleted successfully`);
+          
+          toast.success(`Package ${rowData.packageid} deleted successfully`, {
+            position: "top-right",
+            
+            style: {
+              minWidth: "300px",
+              maxWidth: "400px",
+              minHeight: "80px",
+              fontSize: "18px",
+              transform: "translateX(0%)", 
+            },
+          });
         } else {
           console.error("Delete request failed:", deleteResponse);
-          alert(deleteResponse.data.message || "Delete request failed");
+          // alert(deleteResponse.data.message || "Delete request failed");
+          toast.error(deleteResponse.data.message || "Delete request failed", {
+            position: "top-right",
+            
+            style: {
+              minWidth: "300px",
+              maxWidth: "400px",
+              minHeight: "80px",
+              fontSize: "18px",
+              transform: "translateX(0%)", 
+            },
+          });
         }
       } catch (error) {
         console.error("Error deleting or fetching data:", error);
-        alert(
-          "Error deleting or fetching data. Please check the console for more details."
-        );
+
+        toast.error("Error deleting or fetching data. Please check the console for more details.", {
+          position: "top-right",
+          
+          style: {
+            minWidth: "300px",
+            maxWidth: "400px",
+            minHeight: "80px",
+            fontSize: "18px",
+            transform: "translateX(0%)", 
+          },
+        });
       }
     }
   };

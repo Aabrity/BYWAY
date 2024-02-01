@@ -3,6 +3,7 @@ import axios from "axios";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import {toast, Toaster} from "sonner";
 
 interface BlogData {
   title: string;
@@ -136,9 +137,20 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
         );
       }
       if (response.data.Status === "Success") {
-        alert(
+        toast.success(
           isUpdateMode ? "Blog updated successfully" : "Blog added successfully"
-        );
+        , {
+              position: "top-right",
+              
+              style: {
+                minWidth: "300px",
+                maxWidth: "400px",
+                minHeight: "80px",
+                fontSize: "18px",
+                transform: "translateX(0%)", 
+              },
+            });
+
         setBlogData({
           title: "",
           image: null,
@@ -147,8 +159,27 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
         });
         setImagePreviews([]);
         setIsUpdateMode(false);
+        
       } else {
-        alert("Error adding/updating blog");
+        toast.error(
+          isUpdateMode ? "Failed to update blog" : "Error adding blog"
+          , {
+            position: "top-right",
+            
+            style: {
+              minWidth: "300px",
+              maxWidth: "400px",
+              minHeight: "80px",
+              fontSize: "18px",
+              transform: "translateX(0%)", 
+            },
+          });
+        setBlogData({
+          title: "",
+          image: null,
+          category: "",
+          description: "",
+        });
       }
     } catch (error) {
       console.error("Submission error:", error);
@@ -234,6 +265,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
             className="w-full mb-5 p-3 bg-green-600 text-white text-xl rounded hover:bg-green-700 focus:outline-none focus:ring focus:border-green-700 transition"
           >
             {isUpdateMode ? "Update Blog" : "Add Blog"}
+            <Toaster className="absolute right-0 transform translate-x-16transition-transform duration-300 ease-in-out" richColors />
           </button>
         </div>
       </form>
