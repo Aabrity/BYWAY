@@ -4,6 +4,7 @@ import Admin from "@/../../backend/model/AdminModel";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import {toast, Toaster} from 'sonner';
 
 interface FormData {
   email: string;
@@ -43,13 +44,38 @@ const LoginForm: React.FC = () => {
       });
 
       if (response.data.Status === "Success") {
-        console.log("Login successful");
+        toast.success("Login successful", {
+          position: "top-right",
+          
+          style: {
+            minWidth: "300px",
+            maxWidth: "400px",
+            minHeight: "80px",
+            fontSize: "18px",
+            transform: "translateX(0%)", 
+          },
+        });
+        
         router.push("/admin/dash");
+        
       } else {
-        console.error(response.data.Error);
+        toast.error("Invalid username or password", {
+          position: "top-right",
+          
+          style: {
+            minWidth: "300px",
+            maxWidth: "400px",
+            minHeight: "80px",
+            fontSize: "18px",
+            transform: "translateX(0%)", 
+          },
+        });
+        
+        
       }
     } catch (error) {
-      console.error("An error occurred during login:", error);
+      
+ 
     }
   };
 
@@ -123,7 +149,9 @@ const LoginForm: React.FC = () => {
   axios.defaults.withCredentials = true;
 
   return (
+    
     <div className="grid grid-cols-1 sm:grid-cols-2 h-auto w-full">
+      
       <div className="hidden sm:block rounded-lg">
         <img
           className="w-screen h-screen object-fit"
@@ -135,6 +163,7 @@ const LoginForm: React.FC = () => {
         <form
           className="max-w-[400px] w-full mx-auto bg-slate-200 p-8 px-8 rounded-lg"
           onSubmit={handleSubmit}
+          
         >
           <div style={{ display: "flex", justifyContent: "center" }}>
             <img
@@ -189,6 +218,8 @@ const LoginForm: React.FC = () => {
             className="w-full my-5 py-2 bg-green-600 shadow-lg shadow-green-600/50 hover:shadow-green-500/80 text-white font-semibold rounded-lg"
           >
             Sign In
+            <Toaster className="absolute right-0 transform translate-x-16transition-transform duration-300 ease-in-out" richColors />
+
           </button>
         </form>
       </div>
