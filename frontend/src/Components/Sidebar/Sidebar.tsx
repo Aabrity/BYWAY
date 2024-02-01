@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { ChevronFirst, ChevronLast, MoreVertical } from "lucide-react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
@@ -23,8 +23,29 @@ export const Sidebar: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [expanded, setExpanded] = useState(true);
+  const [userInfo, setUserInfo] = useState<{ username: string; email: string }>(
+    { username: "", email: "" }
+  );
   const router = useRouter();
-  const HandleLogout = async () => {
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await axios.get("http://localhost:8081/admin/dash", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setUserInfo(response.data.UserData);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
+  const handleLogout = async () => {
     try {
       await axios.get("http://localhost:8081/auth/logout");
       router.push("/auth");
@@ -32,6 +53,7 @@ export const Sidebar: React.FC<{ children: React.ReactNode }> = ({
       console.error(err);
     }
   };
+
   return (
     <>
       <aside className="h-screen">
@@ -58,7 +80,7 @@ export const Sidebar: React.FC<{ children: React.ReactNode }> = ({
 
           <div className="border-t flex flex-col p-3 px-4">
             <button
-              onClick={HandleLogout}
+              onClick={handleLogout}
               className="py-3 px-2 rounded-lg bg-gray-500 hover:bg-green-700 flex items-center"
             >
               <RiLogoutCircleRLine size={25} color="white" />
@@ -66,20 +88,26 @@ export const Sidebar: React.FC<{ children: React.ReactNode }> = ({
             </button>
 
             <div className="flex mt-3">
-              <img
-                src={"/images/coverimage.jpg"}
-                className="w-10 h-10 rounded-md"
-                alt="Profile"
-              />
+              <div
+                className={`w-10 h-10 rounded-md flex items-center justify-center bg-green-600 text-white`}
+              >
+                {userInfo.username && (
+                  <span className="text-lg">
+                    {userInfo.username.substring(0, 2).toUpperCase()}
+                  </span>
+                )}
+              </div>
               <div
                 className={`flex justify-between items-center overflow-hidden transition-all ${
                   expanded ? "w-52 ml-3" : "w-0"
                 } `}
               >
                 <div className="leading-4">
-                  <h4 className="font-semibold text-green-400">Haseena</h4>
+                  <h4 className="font-semibold text-green-400">
+                    {userInfo.username}
+                  </h4>
                   <span className="text-xs text-gray-600">
-                    rkc697418@gmail.com
+                    {userInfo.email}
                   </span>
                 </div>
                 <MoreVertical size={20} />
@@ -104,11 +132,7 @@ export function SidebarItem({ icon, text, active, alert }: SidebarItemProps) {
       }`}
     >
       {icon}
-      <span
-        className={`overflow-hidden transition-all ${
-          expanded ? "w-52 ml-3" : "w-0"
-        }`}
-      >
+      <span className={`overflow-hidden ${expanded ? "ml-3" : "w-0"}`}>
         {text}
       </span>
       {alert && (

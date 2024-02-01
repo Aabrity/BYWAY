@@ -23,6 +23,7 @@ const insertPackage = async (packageData) => {
       package_title,
       location_id,
       about,
+      duration,
       guidance_language,
       whats_included,
       what_to_expect,
@@ -35,13 +36,14 @@ const insertPackage = async (packageData) => {
       image2,
       image3,
       image4
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   const values = [
     packageData.getPackage_title(),
     packageData.getLocation_id(),
     packageData.getAbout(),
+    packageData.getDuration(),
     packageData.getGuidance_language(),
     packageData.getWhats_included(),
     packageData.getWhat_to_expect(),
@@ -74,6 +76,7 @@ router.post("/insertPackage", upload.array("image", 4), async (req, res) => {
     title,
     location_id,
     about,
+    duration,
     guidance_language,
     whats_included,
     what_to_expect,
@@ -94,6 +97,7 @@ router.post("/insertPackage", upload.array("image", 4), async (req, res) => {
     title,
     location_id,
     about,
+    duration,
     guidance_language,
     whats_included,
     what_to_expect,
@@ -124,6 +128,7 @@ const updatePackage = async (packageData) => {
       package_title = ?,
       location_id = ?,
       about = ?,
+      duration=?,
       guidance_language = ?,
       whats_included = ?,
       what_to_expect = ?,
@@ -143,6 +148,7 @@ const updatePackage = async (packageData) => {
     packageData.getPackage_title(),
     packageData.getLocation_id(),
     packageData.getAbout(),
+    packageData.getDuration(),
     packageData.getGuidance_language(),
     packageData.getWhats_included(),
     packageData.getWhat_to_expect(),
@@ -180,6 +186,7 @@ router.put(
       title,
       location_id,
       about,
+      duration,
       guidance_language,
       whats_included,
       what_to_expect,
@@ -200,6 +207,7 @@ router.put(
       title,
       location_id,
       about,
+      duration,
       guidance_language,
       whats_included,
       what_to_expect,

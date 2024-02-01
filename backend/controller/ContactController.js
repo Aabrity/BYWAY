@@ -78,6 +78,7 @@ router.get("/getcontacts", (req, res) => {
     return res.json(result);
   });
 });
+
 router.delete("/deletecontact/:contact_id", (req, res) => {
   const id = req.params.contact_id; // Corrected variable name
   const deleteQuery = "DELETE FROM contacttable WHERE contact_id = ?"; // Corrected table name
@@ -90,4 +91,5 @@ router.delete("/deletecontact/:contact_id", (req, res) => {
     return res.json({ Status: "Success" });
   });
 });
+
 export default router;

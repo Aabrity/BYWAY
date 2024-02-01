@@ -109,7 +109,6 @@ interface PackageData {
           discount: completeData.discount || "",
         });
         handleOpenModal(rowData.packageid);
-
       })
       .catch((err) => console.log(err));
   };

@@ -5,6 +5,7 @@ export default class PackageModel {
   #package_title;
   #location_id;
   #about;
+  #duration;
   #guidance_language;
   #whats_included;
   #what_to_expect;
@@ -23,6 +24,7 @@ export default class PackageModel {
     package_title,
     location_id,
     about,
+    duration,
     guidance_language,
     whats_included,
     what_to_expect,
@@ -40,6 +42,7 @@ export default class PackageModel {
     this.#package_title = package_title;
     this.#location_id = location_id;
     this.#about = this.validateWordCount(about, 150);
+    this.#duration =this.validateDuration(duration, 200); 
     this.#guidance_language = this.validateCharacterCount(
       guidance_language,
       60
@@ -90,6 +93,13 @@ export default class PackageModel {
 
   setAbout(value) {
     this.#about = this.validateWordCount(value, 200);
+  }
+
+  getDuration() {
+    return this.#duration;
+  }
+  setDuration(value) {
+    this.#duration = this.validateDuration(value,100);
   }
 
   getGuidance_language() {
@@ -202,6 +212,11 @@ export default class PackageModel {
       throw new Error(`Text exceeds the limit of ${limit} words.`);
     }
     return text;
+  }
+
+  validateDuration(value, limit) {
+    if (value > limit) throw new Error(`Duration of ${value} days too long.`);
+    return value;
   }
 
   stripHTMLTags(html) {
