@@ -23,7 +23,7 @@ export const Index = () => {
           <SidebarItem icon={<CalendarClock size={20} />} text="Plan Trip" />
         </Link>
         <Link href="/auth/signup">
-          <SidebarItem icon={<Users size={20} />} text="Clients" />
+          <SidebarItem icon={<Users size={20} />} text="Create admin" />
         </Link>
       </Sidebar>
     </div>

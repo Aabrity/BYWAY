@@ -2,11 +2,39 @@
 import React, { useEffect, useState } from 'react';
 import {toast, Toaster} from 'sonner';
 import { MdOutlineDelete } from "react-icons/md";
+import axios from 'axios';
+import { useRouter } from "next/navigation";
+import Popup from "@/Components/Common/Popup";
+import Loader from "@/Components/Common/Loader";
+
 const AdminDashboard: React.FC = () => {
-  const [submissions, setSubmissions] = useState<any[]>([]); 
+  const [auth, setAuth] = useState<boolean | undefined>();
+  const [loading, setLoading] = useState(true);
+  const [submissions, setSubmissions] = useState<any[]>([]);
+  const router = useRouter();
+
 
   useEffect(() => {
-    
+    axios.defaults.withCredentials = true;
+    axios
+      .get("http://localhost:8081/admin/dash")
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          setAuth(true);
+        } else {
+          setAuth(false);
+        }
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, [router]);
+
+  useEffect(() => {
     getSubmissions();
   }, []);
 
@@ -16,7 +44,7 @@ const AdminDashboard: React.FC = () => {
       .then(response => response.json())
       .then(submissions => {
         console.log('Submissions received:', submissions);
-        setSubmissions(submissions); // Update state with fetched submissions
+        setSubmissions(submissions); 
       })
       .catch(error => {
         console.error('Error fetching submissions:', error);
@@ -30,7 +58,6 @@ const AdminDashboard: React.FC = () => {
       .then(response => response.json())
       .then(result => {
         console.log('Submission deleted successfully:', result);
-
         getSubmissions(); // Refresh submissions after deletion
         toast.success('Submission deleted successfully', {
           position: "top-right",
@@ -59,9 +86,14 @@ const AdminDashboard: React.FC = () => {
         });
       });
   }
+    if (loading) {
+      return <Loader />;
+    }
 
   return (
-    <div className='font-san'>
+    <>
+      {auth ? (
+       <div className='font-san'>
       
   <table className="w-full border-collapse  text-white  ">
       <thead >
@@ -115,6 +147,17 @@ const AdminDashboard: React.FC = () => {
         </tbody>
       </table>
     </div>
+      ) : (
+        <Popup
+          closable={false}
+          message="You are not authenticated"
+          buttonText="Login now"
+          onClick={() => {
+            router.push("/auth");
+          }}
+        />
+      )}
+    </>
   );
 };
 

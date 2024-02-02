@@ -18,14 +18,7 @@ db.on('error', (err) => {
   // You might want to handle the error here, such as attempting to reconnect
 });
 
-router.get("/gettrip", (re, res) => {
-  const sqlSelect = "SELECT * FROM travel";
 
-  db.query(sqlSelect, (err, result) => {
-    res.send(result);
-    console.log(result);
-  });
-});
 router.get("/getreview", (re, res) => {
   const sqlSelect = "SELECT * FROM review";
 
