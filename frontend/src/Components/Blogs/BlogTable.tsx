@@ -159,16 +159,50 @@ export const BlogTable = () => {
           setTableData(modifiedData);
 
           // Display alert after updating state
-          toast.success(`Package ${rowData.blogid} deleted successfully`);
+          toast.success(`Package ${rowData.blogid} deleted successfully`, {
+            position: "top-right",
+            duration: 3000,
+
+            style: {
+              minWidth: "300px",
+              maxWidth: "400px",
+              minHeight: "80px",
+              fontSize: "18px",
+              transform: "translateX(0%)",
+            },
+          });
         } else {
           console.error("Delete request failed:", deleteResponse);
-          toast.error("Failed to delete")
+          toast.error("Failed to delete", {
+            position: "top-right",
+            duration: 3000,
+
+            style: {
+              minWidth: "300px",
+              maxWidth: "400px",
+              minHeight: "80px",
+              fontSize: "18px",
+              transform: "translateX(0%)",
+            },
+          });
          
         }
       } catch (error) {
         console.error("Error deleting or fetching data:", error);
         toast.error(
-          "Error deleting or fetching data. Please check the console for more details."
+          "Error deleting or fetching data. Please check the console for more details.",
+          {
+            position: "top-right",
+            duration: 3000,
+
+            style: {
+              minWidth: "300px",
+              maxWidth: "400px",
+              minHeight: "80px",
+              fontSize: "18px",
+              transform: "translateX(0%)",
+            },
+          }
         );
       }
     }
@@ -192,3 +226,4 @@ export const BlogTable = () => {
     </>
   );
 };
+``

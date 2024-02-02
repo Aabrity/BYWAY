@@ -74,6 +74,7 @@ const Table: React.FC = () => {
         if (deleteResponse.status === 200) {
           console.log("Delete successful. Fetching updated data...", {
             position: "top-right",
+          duration: 3000,
 
             style: {
               minWidth: "300px",
@@ -90,6 +91,9 @@ const Table: React.FC = () => {
           // Display alert after updating state
           toast.success(`${rowData.email}'s enquiry deleted successfully`, {
             position: "top-right",
+          duration: 3000,
+
+
 
             style: {
               minWidth: "300px",
@@ -103,6 +107,7 @@ const Table: React.FC = () => {
           console.error("Delete request failed:", deleteResponse);
           toast.error(deleteResponse.data.message || "Delete request failed", {
             position: "top-right",
+          duration: 3000,
 
             style: {
               minWidth: "300px",

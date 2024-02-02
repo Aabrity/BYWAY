@@ -67,6 +67,7 @@ const SignupForm: React.FC = () => {
         toast.success(`Signup successful for ${username}`, {
           position: "top-right",
           duration: 3000,
+          
           style: {
             minWidth: "300px",
             maxWidth: "400px",
@@ -83,6 +84,7 @@ const SignupForm: React.FC = () => {
         , {
           position: "top-right",
           duration: 3000,
+          duration: 3000,
           style: {
             minWidth: "300px",
             maxWidth: "400px",
@@ -95,6 +97,7 @@ const SignupForm: React.FC = () => {
     } catch (error) {
       toast.error("An error occurred during signup", {
         position: "top-right",
+          duration: 3000,
         duration: 3000,
         style: {
           minWidth: "300px",
