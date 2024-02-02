@@ -10,7 +10,7 @@ import HeaderTab from "@/Components/Header";
 
 interface ContactFormData {
   email: string;
-  phone: string;
+  contactNumber: string;
   subject: string;
   address: string;
   message: string;
@@ -19,7 +19,7 @@ interface ContactFormData {
 const ContactUsForm: React.FC = () => {
   const [contactFormData, setContactFormData] = useState<ContactFormData>({
     email: "",
-    phone: "",
+    contactNumber: "",
     subject: "",
     address: "",
     message: "",
@@ -36,24 +36,14 @@ const ContactUsForm: React.FC = () => {
     });
   };
 
-  const handleQuillChange = (content: string) => {
-    setContactFormData({
-      ...contactFormData,
-      message: content,
-    });
-  };
-
-
-  const handleContactSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const formData = new FormData(formRef.current!); // Access form data using the form reference
 
       const response = await axios.post(
-        "http://localhost:8081/contactus/addcontact",
+        "http://localhost:8081/contactus/addContact",
         Object.fromEntries(formData)
         
       );
@@ -84,7 +74,7 @@ const ContactUsForm: React.FC = () => {
   return (
     <>
       <HeaderTab />
-      <div className="w-auto h-screen mt-16 flex flex-col justify-center items-center">
+      <div className="w-auto h-screen flex flex-col justify-center items-center">
         <div className="w-auto pb-8 ml-3 text-4xl text-center text-green-700 ">
           <strong>Contact Us</strong>
         </div>
@@ -94,14 +84,14 @@ const ContactUsForm: React.FC = () => {
             onSubmit={handleContactSubmit}
             className="flex flex-col  overflow-y-auto"
           >
-            <div className="divcontainer bg-white mx-auto h-[75vh] p-3 rounded">
+            <div className="divcontainer bg-white mx-auto h-[62vh] p-3 rounded">
               <div className="name flex m-5 ml-12 mb-3 items-center">
                 <label className="mr-8 text-xl text-slate-700">
                   Email Address:
                 </label>
                 <input
                   type="email"
-                  className="p-1 text-xl rounded-sm w-[60%] border-2 border-slate-300"
+                  className="p-1 text-xl rounded-sm w-[60%] border-2 border-slate-300 focus:border-green-500 focus:outline-none"
                   name="email"
                   value={contactFormData.email}
                   onChange={handleInputChange}
@@ -115,9 +105,9 @@ const ContactUsForm: React.FC = () => {
                 </label>
                 <input
                   type="tel"
-                  className="p-1 text-xl text-slate-700 rounded-sm w-[60%] border-2 border-slate-300"
-                  name="phone"
-                  value={contactFormData.phone}
+                  className="p-1 text-xl text-slate-700 rounded-sm w-[60%] border-2 border-slate-300 focus:border-green-500 focus:outline-none"
+                  name="contactNumber"
+                  value={contactFormData.contactNumber}
                   onChange={handleInputChange}
                   required
                 />
@@ -127,7 +117,7 @@ const ContactUsForm: React.FC = () => {
                 <label className="mr-24 text-xl text-slate-700">Subject:</label>
                 <input
                   type="text"
-                  className="p-1 text-xl text-slate-700 rounded-sm w-[60%] border-2 border-slate-300"
+                  className="p-1 text-xl text-slate-700 rounded-sm w-[60%] border-2 border-slate-300 focus:border-green-500 focus:outline-none"
                   name="subject"
                   value={contactFormData.subject}
                   onChange={handleInputChange}
@@ -139,7 +129,7 @@ const ContactUsForm: React.FC = () => {
                 <label className="mr-20 text-xl text-slate-700">Address:</label>
                 <input
                   type="text"
-                  className="p-1 text-xl text-slate-700 rounded-sm w-[62%] border-2 border-slate-300"
+                  className="p-1 text-xl text-slate-700 rounded-sm w-[62%] border-2 border-slate-300 focus:border-green-500 focus:outline-none"
                   name="address"
                   value={contactFormData.address}
                   onChange={handleInputChange}
@@ -147,22 +137,20 @@ const ContactUsForm: React.FC = () => {
                 />
               </div>
 
-              <div className="location flex m-4 ml-12 mb-3 items-center">
-                <label className="mr-20 text-xl text-slate-700">Message:</label>
-                <input
-                  type="text"
-                  className="p-1 text-xl text-slate-700 rounded-sm w-[62%] border-2 border-slate-300"
+              <div className="blog-content flex flex-col m-4 ml-12 mb-3 items-start">
+                <label className="mr-10 text-xl text-slate-700">Message:</label>
+                <textarea
+                  className="p-1 text-xl text-slate-700 rounded-sm w-[95%] h-[18vh] border-2 border-slate-300 focus:border-green-500 focus:outline-none"
                   name="message"
                   value={contactFormData.message}
                   onChange={handleInputChange}
-                  required
                 />
               </div>
 
               <div className="self-center w-48 mt-16 mx-auto">
                 <button
                   type="submit"
-                  className="w-full p-3 bg-green-600 text-white text-xl rounded hover:bg-green-700 focus:outline-none focus:ring focus:border-green-700 transition"
+                  className="w-full p-3 bg-green-600 text-white font-semibold text-xl rounded hover:bg-green-700 focus:outline-none focus:ring focus:border-green-700 transition"
                 >
                   Submit
                 </button>

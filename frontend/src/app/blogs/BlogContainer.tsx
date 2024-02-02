@@ -69,7 +69,7 @@ const BlogContainer: React.FC<BlogContainerProps> = ({
 }) => {
   // Function to sanitize HTML by removing unwanted tags
   const sanitizeHtml = (html: string) => {
-    const allowedTags = ['p', 'strong', 'em', 'u', 'a', 'br']; // Add more tags if needed
+    const allowedTags = ['p', 'strong', 'em', 'u', 'a', 'br', 'h1', 'h2', 'h3']; // Add more tags if needed
     const doc = new DOMParser().parseFromString(html, 'text/html');
 
     // Remove unwanted tags

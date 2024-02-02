@@ -4,6 +4,8 @@ import Card from "@/Components/Packages/Cards";
 import Link from "next/link";
 import HeaderTab from "@/Components/Header";
 import axios from "axios";
+import { IoSearch } from "react-icons/io5";
+import FooterTab from '@/Components/Footer';
 
 type PackageItemProps = {
   package_title: string;
@@ -16,29 +18,50 @@ type PackageItemProps = {
   image2: string | null;
   image3: string | null;
   image4: string | null;
-  imgSrc?: string;
+  imgSrc?: string | null | undefined; 
 };
 
 export const fetchPackagesData = async (): Promise<Array<PackageItemProps>> => {
   try {
-    const response = await axios.get("http://localhost:8081/packages/getPackages");
+    const response = await axios.get(
+      "http://localhost:8081/packages/getpackages"
+    );
 
     console.log("Raw data from the server:", response.data);
 
     // Check if "packages" property exists and is an array
     const packagesArray = response.data.packages;
     if (!Array.isArray(packagesArray)) {
-      console.error("Invalid data format: 'packages' property is not an array", response.data);
+      console.error(
+        "Invalid data format: 'packages' property is not an array",
+        response.data
+      );
       throw new Error("Invalid data format");
     }
 
     // Convert image data to base64 strings
     const dataWithBase64Images = packagesArray.map((item: PackageItemProps) => {
       try {
-        const base64Image1 = item.image1 ? `data:image/jpeg;base64,${Buffer.from(item.image1 as string).toString("base64")}` : null;
-        const base64Image2 = item.image2 ? `data:image/jpeg;base64,${Buffer.from(item.image2 as string).toString("base64")}` : null;
-        const base64Image3 = item.image3 ? `data:image/jpeg;base64,${Buffer.from(item.image3 as string).toString("base64")}` : null;
-        const base64Image4 = item.image4 ? `data:image/jpeg;base64,${Buffer.from(item.image4 as string).toString("base64")}` : null;
+        const base64Image1 = item.image1
+          ? `data:image/jpeg;base64,${Buffer.from(
+              item.image1 as string
+            ).toString("base64")}`
+          : null;
+        const base64Image2 = item.image2
+          ? `data:image/jpeg;base64,${Buffer.from(
+              item.image2 as string
+            ).toString("base64")}`
+          : null;
+        const base64Image3 = item.image3
+          ? `data:image/jpeg;base64,${Buffer.from(
+              item.image3 as string
+            ).toString("base64")}`
+          : null;
+        const base64Image4 = item.image4
+          ? `data:image/jpeg;base64,${Buffer.from(
+              item.image4 as string
+            ).toString("base64")}`
+          : null;
 
         return {
           ...item,
@@ -61,7 +84,6 @@ export const fetchPackagesData = async (): Promise<Array<PackageItemProps>> => {
     throw error;
   }
 };
-
 const PackageItem: React.FC<PackageItemProps> = ({
   package_title,
   price,
@@ -70,13 +92,12 @@ const PackageItem: React.FC<PackageItemProps> = ({
   package_id,
   discount,
   image1,
-
   imgSrc = "frontend/public/images/Mountains 1.jpg",
 }) => {
   // Convert Buffer to base64 string
   const base64Image = image1
-    ? `data:image/jpeg;base64,${Buffer.from(image1).toString("base64")}`
-    : "/path/to/your/default/image";
+    ? `data:image/jpeg;base64,${Buffer.from(image1 as string).toString("base64")}`
+    : (imgSrc ? `/${imgSrc}` : "/path/to/your/default/image");
 
   const src = imgSrc || base64Image;
 
@@ -88,11 +109,10 @@ const PackageItem: React.FC<PackageItemProps> = ({
     return null;
   }
 
-  const discountedPrice =
-    numericPrice - (numericPrice * discountPercentage) / 100;
+  const discountedPrice = numericPrice - (numericPrice * discountPercentage) / 100;
 
   return (
-    <div className=" overflow-hidden border border-slate-200 w-80 h-80 group flex justify-center mx-auto">
+    <div className="overflow-hidden border border-slate-200 w-80 h-80 group flex justify-center mx-auto">
       <div className="overflow-hidden relative">
         <Card title={package_title} price={price} imgSrc={imgSrc}>
           <div className="text-bold flex justify-between">
@@ -138,11 +158,12 @@ const PackageItem: React.FC<PackageItemProps> = ({
 
 const Packages: React.FC = () => {
   const [packageData, setPackageData] = useState<Array<PackageItemProps>>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const rawData = await fetchPackagesData();
-        // Ensure rawData is an array and handle the imgSrc conversion
         if (Array.isArray(rawData)) {
           setPackageData(rawData);
         } else {
@@ -155,6 +176,15 @@ const Packages: React.FC = () => {
 
     fetchData();
   }, []);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+  
+
+  const filteredPackages = packageData.filter((packages) =>
+    packages.package_title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <>
@@ -171,40 +201,33 @@ const Packages: React.FC = () => {
               textAlign: "center",
             }}
           >
-            <form>
-              <input
-                type="text"
-                placeholder="Search..."
-                style={{
-                  width: "70%",
-                  padding: "10px",
-                  marginRight: "5px",
-                  borderRadius: "2px",
-                  border: "0px solid #fff",
-                }}
-              />
-              <button
-                type="submit"
-                style={{
-                  padding: "7px",
-                  borderRadius: "5px",
-                  backgroundColor: "transparent",
-                  color: "white",
-                  border: "0px",
-                  transition: "background-color 0.2s",
-                }}
-                onMouseOver={(e) =>
-                  ((e.target as HTMLButtonElement).style.backgroundColor =
-                    "green")
-                }
-                onMouseOut={(e) =>
-                  ((e.target as HTMLButtonElement).style.backgroundColor =
-                    "transparent")
-                }
-              >
-                Search
-              </button>
-            </form>
+            <div
+              style={{
+                position: "absolute",
+                top: "70%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "80%",
+                textAlign: "center",
+              }}
+            >
+              <form className="flex items-center bg-white rounded-md">
+                <IoSearch className="text-slate-600 mx-4 mr-2" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  style={{
+                    width: "70%",
+                    padding: "10px",
+                    borderRadius: "2px",
+                    border: "0px solid #fff",
+                    outline: "none",
+                  }}
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+              </form>
+            </div>
           </div>
           <img
             src="/assets/packagesImg/coverimage.jpg"
@@ -219,21 +242,22 @@ const Packages: React.FC = () => {
           <section className="flex py-16 md:py-20 lg:py-28 justify-center ">
             <div className="container ">
               <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center">
-                {packageData.map((card) => (
+                {filteredPackages.map((card) => (
                   <PackageItem
                     key={card.package_id}
                     package_title={card.package_title}
                     imgSrc={card.image1}
                     price={card.price.toString()}
                     about={card.about}
-                    package_id={card.package_id.toString()} 
-                    duration={card.package_id} 
-                    discount={card.discount.toString()}
-                  />
+                    package_id={card.package_id.toString()}
+                    duration={card.duration}
+                    discount={card.discount.toString()} 
+                    image1={null} image2={null} image3={null} image4={null}                  />
                 ))}
               </div>
             </div>
           </section>
+          <FooterTab />
         </>
       </div>
     </>

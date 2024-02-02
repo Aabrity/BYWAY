@@ -1,18 +1,18 @@
 "use client";
 
-import LeftPanel from "@/Components/Blogs/LeftPanel";
-import { default as TrendingBlogContainer } from "@/Components/Blogs/TrendingBlogContainer";
-import FooterTab from '@/Components/Footer';
-import HeaderTab from "@/Components/Header";
+import Image from "next/image";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
 import BlogContainer from "./BlogContainer";
+import HeaderTab from "@/Components/Header";
+import FooterTab from '@/Components/Footer';
+import { FaSearch } from 'react-icons/fa';
+import LeftPanel from "@/Components/Blogs/LeftPanel";
+import TrendingBlogContainer from "@/Components/Blogs/TrendingBlogContainer";
+import Link from "next/link";
 
 
 interface Blog {
-  id: any;
   title: string;
   description: string;
   published_date: string;
@@ -40,6 +40,7 @@ function Blogs() {
       .catch((error) => {
         console.error("Error fetching blog data:", error);
       });
+      
   }, []);
 
   //Searched box filtered
@@ -88,120 +89,66 @@ function Blogs() {
         </form>
       </div>
     </div>
+    
+    
 
     <div className="max-w-6xl mx-auto p-8 bg-gray-50 text-4xl font-bold my-6  absolute left-0 ml-7 rounded-md text-center">
-    Most Visited
-<LeftPanel imagePath="/assets/coverimage.jpg" title="Lumbini - Buddha Birthplace" date="2024-01-27" />
-<LeftPanel imagePath="/assets/coverimage.jpg" title="Lumbini - Buddha Birthplace" date="2024-01-27" />
-<LeftPanel imagePath="/assets/coverimage.jpg" title="Lumbini - Buddha Birthplace" date="2024-01-27" />
+            Most Visited
 
-</div>
+            {recentBlogs.map((blog, index) => (
+              <Link key={index} href={`/blogs/[id]`} as={`/blogs/${blog.id}`}>
+              <LeftPanel
+                key={index}
+                title={blog.title}
+                date={blog.published_date}
+                imagePath={
+                  blog.image
+                    ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString("base64")}`
+                    : ""
+                }
+              />
+              </Link>
+            ))}
+        
+    </div>
 
-      <div>
-        <h1 style={{ fontSize: "40px", margin: "30px 0", padding: "10px" }}>
-          <b>Top Trending Blogs</b>
-        </h1>
+    
+    
+    <div className="max-w-6xl mx-auto p-5 bg-white rounded-xl shadow-lg-10 mb-8 height">
 
-        <TrendingBlogContainer title="Anupurna Base camp " date="2024-01-12" location="Putalisadak,Kathmandu,Nepal" description="CodingBat (Java, Python) · Interview Prep. Explore more Interview Prep content · Data Structures. Explore more Data Structures content · +3. Algorithms." imageSrc={"/assets/coverimage.jpg"}/>
-      <TrendingBlogContainer title="Anupurna Base camp " date="2024-01-12" location="Putalisadak,Kathmandu,Nepal" description="CodingBat (Java, Python) · Interview Prep. Explore more Interview Prep content · Data Structures. Explore more Data Structures content · +3. Algorithms." imageSrc={"/assets/coverimage.jpg"}/>
-      <TrendingBlogContainer title="Anupurna Base camp " date="2024-01-12" location="Putalisadak,Kathmandu,Nepal" description="CodingBat (Java, Python) · Interview Prep. Explore more Interview Prep content · Data Structures. Explore more Data Structures content · +3. Algorithms." imageSrc={"/assets/coverimage.jpg"}/>
-      <TrendingBlogContainer title="Anupurna Base camp " date="2024-01-12" location="Putalisadak,Kathmandu,Nepal" description="CodingBat (Java, Python) · Interview Prep. Explore more Interview Prep content · Data Structures. Explore more Data Structures content · +3. Algorithms." imageSrc={"/assets/coverimage.jpg"}/>
+    {/* Top Trending Blogs */}
+    <div>
+      <h1 className="text-4xl font-bold my-6 px-4">
+        <b>Top Trending Blogs</b>
+      </h1>
+
+      {trendingBlogs.map((blog, index) => (
+        <Link key={index} href={`/blogs/[id]`} as={`/blogs/${blog.id}`}>
+        <TrendingBlogContainer
+          key={index}
+          title={blog.title}
+          location={blog.location}
+          date={blog.published_date}
+          description={blog.description}
+          imageSrc={
+            blog.image
+              ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString("base64")}`
+              : ""
+          }
+        /></Link>
+      ))}
+    </div>
 
 
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          gap: "1.3%",
-          overflowX: "auto",
-          paddingLeft: "1%",
-          paddingRight: "1%",
-        }}
-      >
-        {trendingBlogs.map((blog, index) => (
-           <Link key={index} href={`/blogs/[id]`} as={`/blogs/${blog.id}`}>
-          <BlogContainer
-            key={index}
-            title={blog.title}
-            description={blog.description}
-            publishedDate={blog.published_date}
-            imageSrc={
-              blog.image
-                ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString(
-                    "base64"
-                  )}`
-                : ""
-            }
-          /></Link>
-        ))}
-      </div>
-
-      <div>
-        <h1 style={{ fontSize: "40px", margin: "30px 0", padding: "10px" }}>
-          <b>Recent Blogs</b>
-        </h1>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-          paddingLeft: "20px",
-        }}
-      >
-        {recentBlogs.map((blog, index) => (
-           <Link key={index} href={`/blogs/[id]`} as={`/blogs/${blog.id}`}>
-          <RecentBlogContainer
-            key={index}
-            title={blog.title}
-            description={blog.description.slice(0, 350) + "..."} // Limit description to 150 characters
-            publishedDate={blog.published_date}
-            imageSrc={
-              blog.image
-                ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString(
-                    "base64"
-                  )}`
-                : ""
-            }
-          /></Link>
-        ))}
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-          paddingLeft: "20px",
-        }}
-      >
-        {recentBlogs.map((blog, index) => (
-          <RecentBlogContainer
-            key={index}
-            title={blog.title}
-            description={blog.description.slice(0, 150) + "..."}
-            publishedDate={blog.published_date}
-            imageSrc={
-              blog.image
-                ? `data:image/jpeg;base64,${Buffer.from(blog.image).toString(
-                    "base64"
-                  )}`
-                : ""
-            }
-          />
-        ))}
-      </div>
-      <FooterTab/>
-    </>
-  );
+  </div>
+  <FooterTab />
+</>
+);
 }
-
 
 // Function to sanitize HTML by removing unwanted tags
 const sanitizeHtml = (html) => {
-  const allowedTags = ['p', 'strong', 'em', 'u', 'a', 'br']; // Add more tags if needed
+  const allowedTags = ['p', 'strong', 'em', 'u', 'a', 'br', 'h1', 'h2', 'h3'];
   const doc = new DOMParser().parseFromString(html, 'text/html');
   
   // Remove unwanted tags
@@ -220,9 +167,6 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({
   publishedDate,
   imageSrc,
 }) => {
-  // Sanitize HTML content
-  const sanitizedDescription = sanitizeHtml(description);
-
   return (
     <div
       style={{
@@ -246,10 +190,7 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({
       {/* Right side for Content */}
       <div style={{ flex: "1" }}>
         <h2 style={{ fontSize: "24px", marginBottom: "10px" }}>{title}</h2>
-        <div
-          style={{ fontSize: "16px", color: "#555" }}
-          dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
-        />
+        <p style={{ fontSize: "16px", color: "#555" }}>{description}</p>
         <div style={{ marginTop: "auto", textAlign: "right" }}>
           <p style={{ fontSize: "14px", fontWeight: "bold", color: "#888" }}>
             {publishedDate}
@@ -259,47 +200,5 @@ const RecentBlogContainer: React.FC<BlogContainerProps> = ({
     </div>
   );
 };
-
-
-
-// const RecentBlogContainer: React.FC<BlogContainerProps> = ({
-//   title,
-//   description,
-//   publishedDate,
-//   imageSrc,
-// }) => {
-//   return (
-//     <div
-//       style={{
-//         display: "flex",
-//         width: "80%",
-//         margin: "auto",
-//         padding: "20px",
-//         border: "1px solid #ccc",
-//         borderRadius: "8px",
-//       }}
-//     >
-//       {/* Left side for Image */}
-//       <div style={{ flex: "0 0 30%", marginRight: "20px" }}>
-//         <img
-//           src={imageSrc}
-//           alt="Blog Cover"
-//           style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-//         />
-//       </div>
-
-//       {/* Right side for Content */}
-//       <div style={{ flex: "1" }}>
-//         <h2 style={{ fontSize: "24px", marginBottom: "10px" }}>{title}</h2>
-//         <p style={{ fontSize: "16px", color: "#555" }}>{description}</p>
-//         <div style={{ marginTop: "auto", textAlign: "right" }}>
-//           <p style={{ fontSize: "14px", fontWeight: "bold", color: "#888" }}>
-//             {publishedDate}
-//           </p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
 
 export default Blogs;

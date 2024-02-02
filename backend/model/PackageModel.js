@@ -5,6 +5,7 @@ export default class PackageModel {
   #package_title;
   #location_id;
   #about;
+  #duration;
   #guidance_language;
   #whats_included;
   #what_to_expect;
@@ -23,6 +24,7 @@ export default class PackageModel {
     package_title,
     location_id,
     about,
+    duration,
     guidance_language,
     whats_included,
     what_to_expect,
@@ -39,13 +41,20 @@ export default class PackageModel {
     this.#package_id = package_id;
     this.#package_title = package_title;
     this.#location_id = location_id;
-    this.#about = about;
-    this.#guidance_language = guidance_language;
-    this.#whats_included = whats_included;
-    this.#what_to_expect = what_to_expect;
-    this.#departure_and_return = departure_and_return;
-    this.#accessibility = accessibility;
-    this.#additional_info = additional_info;
+    this.#about = this.validateWordCount(about, 150);
+    this.#duration =this.validateDuration(duration, 200); 
+    this.#guidance_language = this.validateCharacterCount(
+      guidance_language,
+      60
+    );
+    this.#whats_included = this.validateWordCount(whats_included, 150);
+    this.#what_to_expect = this.validateWordCount(what_to_expect, 150);
+    this.#departure_and_return = this.validateWordCount(
+      departure_and_return,
+      150
+    );
+    this.#accessibility = this.validateWordCount(accessibility, 150);
+    this.#additional_info = this.validateWordCount(additional_info, 150);
     this.#price = price;
     this.#discount = discount;
     this.#image1 = image1;
@@ -83,7 +92,14 @@ export default class PackageModel {
   }
 
   setAbout(value) {
-    this.#about = this.validateWordCount(value, 150);
+    this.#about = this.validateWordCount(value, 200);
+  }
+
+  getDuration() {
+    return this.#duration;
+  }
+  setDuration(value) {
+    this.#duration = this.validateDuration(value,100);
   }
 
   getGuidance_language() {
@@ -99,14 +115,14 @@ export default class PackageModel {
   }
 
   setWhats_included(value) {
-    this.#whats_included = this.validateWordCount(value, 150);
+    this.#whats_included = this.validateWordCount(value, 200);
   }
   getWhat_to_expect() {
     return this.#what_to_expect;
   }
 
   setWhat_to_expect(value) {
-    this.#what_to_expect = this.validateWordCount(value, 150);
+    this.#what_to_expect = this.validateWordCount(value, 200);
   }
 
   getDeparture_and_return() {
@@ -114,7 +130,7 @@ export default class PackageModel {
   }
 
   setDeparture_and_return(value) {
-    this.#departure_and_return = this.validateWordCount(value, 150);
+    this.#departure_and_return = this.validateWordCount(value, 200);
   }
 
   getAccessibility() {
@@ -122,7 +138,7 @@ export default class PackageModel {
   }
 
   setAccessibility(value) {
-    this.#accessibility = this.validateWordCount(value, 150);
+    this.#accessibility = this.validateWordCount(value, 200);
   }
 
   getAdditional_info() {
@@ -130,7 +146,7 @@ export default class PackageModel {
   }
 
   setAdditional_info(value) {
-    this.#additional_info = this.validateWordCount(value, 150);
+    this.#additional_info = this.validateWordCount(value, 200);
   }
 
   getPrice() {
@@ -198,10 +214,14 @@ export default class PackageModel {
     return text;
   }
 
+  validateDuration(value, limit) {
+    if (value > limit) throw new Error(`Duration of ${value} days too long.`);
+    return value;
+  }
+
   stripHTMLTags(html) {
     const dom = new JSDOM(html);
     const doc = dom.window.document;
     return doc.body.textContent || "";
   }
 }
-

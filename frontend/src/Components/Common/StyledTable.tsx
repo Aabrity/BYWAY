@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
+import {Toaster} from 'sonner';
 
 interface StyledTableProps {
   data: Array<Record<string, any>>;
@@ -70,11 +71,13 @@ const StyledTable: React.FC<StyledTableProps> = ({
                       <td className="px-4 py-2 text-center">
                         <button className="bg-green-700 text-white px-4 py-2 rounded" onClick={() => handleEditClick(row)}>
                           <FaRegEdit/>
+                          
                         </button>
                       </td>
                       <td className="px-4 py-2 text-center">
                         <button className="bg-green-700 text-white px-4 py-2 rounded" onClick={() => handleDeleteClick(row)}>
                           <MdOutlineDelete /> 
+                          <Toaster className="absolute right-0 transform translate-x-16transition-transform duration-300 ease-in-out" richColors />
                         </button>
                       </td>
                     </>
@@ -92,7 +95,7 @@ const StyledTable: React.FC<StyledTableProps> = ({
       
       <div className="flex justify-center mt-5 mb-5">
         <button
-          className="bg-green-500 text-white rounded-md px-4 py-2 transition duration-300 ease-in-out hover:bg-green-600"
+          className="bg-green-700 text-white rounded-md px-4 py-2 transition duration-300 ease-in-out hover:bg-green-800"
           onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
           disabled={currentPage === 1}
         >
@@ -102,7 +105,7 @@ const StyledTable: React.FC<StyledTableProps> = ({
           Page {currentPage} of {totalPages}
         </span>
         <button
-          className="bg-green-500 text-white rounded-md px-4 py-2 transition duration-300 ease-in-out hover:bg-green-600"
+          className="bg-green-700 text-white rounded-md px-4 py-2 transition duration-300 ease-in-out hover:bg-green-800"
           onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))}
           disabled={currentPage === totalPages}
         >

@@ -4,19 +4,18 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./controller/AuthController.js";
-import contactusRoutes from "./contactus.js";
+import contactusRoutes from "./controller/ContactController.js";
 import packagesRoutes from "./controller/PackageController.js";
-import blogRoutes from "./blog.js";
+import blogRoutes from "./controller/BlogController.js";
 import planTripRoutes from "./planTrip.js";
 import protectedRoutes from "./middleware.js";
-import mapRoutes from "./maps.js";
+import mapRoutes from "./controller/LocationController.js";
 dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// Middleware for handling CORS
 app.use(
   cors({
     origin: ["http://localhost:3000"],
