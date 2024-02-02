@@ -1,71 +1,79 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import ReferencePackageItem from '@/Components/Packages/ReferencePackageItem';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import ReferencePackageItem from "@/Components/Packages/ReferencePackageItem";
+import Link from "next/link";
 
-const PackageList = () => {
-    const [packageData, setPackageData] = useState([
-        {
-          package_id: '1',
-          package_title: 'Test Package 1',
-          image1: '/assets/packagesImg/istockphoto-935947682-612x612.jpg',
+interface PackageItem {
+  package_id: number;
+  package_title: string;
+  image1: string | null;
+  price: number;
+  about: string;
+  duration: number;
+  discount: number;
+}
+const PackageList: React.FC = () => {
+  const [packageData, setPackageData] = useState<PackageItem[]>([]);
 
-          price: '500',
-          about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          duration: '7',
-          discount: '10',
-        },
-        {
-          package_id: '2',
-          package_title: 'Test Package 2',
-          image1: '/assets/packagesImg/istockphoto-935947682-612x612.jpg',
-          price: '750',
-          about: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          duration: '5',
-          discount: '5',
-        },
-        //dummy data 
-      ]);
+  useEffect(() => {
+    const fetchPackagesData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8081/packages/getPackages"
+        );
+        const packagesArray: PackageItem[] = response.data.packages;
 
-//   useEffect(() => {
-//     const fetchPackagesData = async () => {
-//       try {
-//         const response = await axios.get('http://localhost:8081/packages/getPackages');
-//         const packagesArray = response.data.packages;
+        if (Array.isArray(packagesArray)) {
+          setPackageData(packagesArray);
+        } else {
+          console.error(
+            "Invalid data format: 'packages' property is not an array",
+            response.data
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching package data:", error);
+      }
+    };
 
-//         if (Array.isArray(packagesArray)) {
-//           setPackageData(packagesArray);
-//         } else {
-//           console.error("Invalid data format: 'packages' property is not an array", response.data);
-//         }
-//       } catch (error) {
-//         console.error('Error fetching package data:', error);
-//       }
-//     };
-
-//     fetchPackagesData();
-//   }, []);
+    fetchPackagesData();
+  }, []);
 
   return (
-    <section className="flex py-16 md:py-20 lg:py-28 justify-center">
-      <div className="container">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center">
-          {packageData.map((packageItem) => (
-            <ReferencePackageItem
-              key={packageItem.package_id}
-              package_title={packageItem.package_title}
-              imgSrc={packageItem.image1}
-              price={packageItem.price.toString()}
-              about={packageItem.about}
-              package_id={packageItem.package_id.toString()}
-              duration={packageItem.package_id}
-              discount={packageItem.discount.toString()}
-            />
-          ))}
+    <div>
+      <section className="flex py-16 md:py-20 lg:py-28 justify-center">
+        <div className="container">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center">
+            {packageData.map((packageItem) => (
+                            <Link
+                            href="/packages/[package_id]"
+                            as={`/packages/${packageItem.package_id}`}
+                          >
+                            
+                          
+              <ReferencePackageItem
+                key={packageItem.package_id}
+                package_title={packageItem.package_title}
+                imgSrc={
+                  packageItem.image1
+                    ? `data:image/jpeg;base64,${Buffer.from(
+                        packageItem.image1
+                      ).toString("base64")}`
+                    : null
+                }
+                price={packageItem.price.toString()}
+                about={packageItem.about}
+                duration={packageItem.duration.toString()}
+                discount={packageItem.discount.toString()}
+              />
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 

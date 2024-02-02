@@ -50,7 +50,7 @@ function PlanTrip() {
     approxDate:'',
     tripLength:'',
     numberOfAdults:'',numberOfChildren:'',tourType:'',hotelType:'',estimatedBudget:'',guideLanguage:'',moreInfo:'',whereDidYouFindUs:'',
-    // ... initialize other fields here
+    
   });
 
   useEffect(() => {
@@ -424,7 +424,7 @@ function PlanTrip() {
                       }}
                       value={guideLanguage}
                     >
-                      <option value="">English</option>
+                      <option value="">Select your guide language</option>
                       <option value="English">English</option>
                       <option value="Chinese">Chinese</option>
                       <option value="Japanese">Japanese</option>

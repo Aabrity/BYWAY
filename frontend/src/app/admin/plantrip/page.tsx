@@ -1,11 +1,12 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-
+import {toast, Toaster} from 'sonner';
+import { MdOutlineDelete } from "react-icons/md";
 const AdminDashboard: React.FC = () => {
-  const [submissions, setSubmissions] = useState<any[]>([]); // Change 'any' to the type of your data if possible
+  const [submissions, setSubmissions] = useState<any[]>([]); 
 
   useEffect(() => {
-    // Fetch data on component mount
+    
     getSubmissions();
   }, []);
 
@@ -29,10 +30,33 @@ const AdminDashboard: React.FC = () => {
       .then(response => response.json())
       .then(result => {
         console.log('Submission deleted successfully:', result);
+
         getSubmissions(); // Refresh submissions after deletion
+        toast.success('Submission deleted successfully', {
+          position: "top-right",
+          duration: 3000,
+          style: {
+            minWidth: "300px",
+            maxWidth: "400px",
+            minHeight: "80px",
+            fontSize: "18px",
+            transform: "translateX(0%)", 
+          },
+        });
       })
       .catch(error => {
         console.error('Error deleting submission:', error);
+        toast.error('Error deleting submission', {
+          position: "top-right",
+          duration: 3000,
+          style: {
+            minWidth: "300px",
+            maxWidth: "400px",
+            minHeight: "80px",
+            fontSize: "18px",
+            transform: "translateX(0%)", 
+          },
+        });
       });
   }
 
@@ -82,7 +106,8 @@ const AdminDashboard: React.FC = () => {
                   className="button-delete bg-green-500 text-white px-4 py-2 rounded hover:bg-red-500"
                   onClick={() => handleDelete(submission.id)}
                 >
-                  Delete
+                  <MdOutlineDelete/>
+                  <Toaster className="absolute right-0 transform translate-x-16transition-transform duration-300 ease-in-out" richColors />
                 </button>
               </td>
             </tr>

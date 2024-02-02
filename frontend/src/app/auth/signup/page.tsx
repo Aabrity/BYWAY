@@ -70,7 +70,7 @@ const SignupForm: React.FC = () => {
       if (response.data.Status === "Success") {
         toast.success(`Signup successful for ${username}`, {
           position: "top-right",
-          
+          duration: 3000,
           style: {
             minWidth: "300px",
             maxWidth: "400px",

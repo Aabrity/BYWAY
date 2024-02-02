@@ -6,14 +6,13 @@ import HeaderTab from "@/Components/Header";
 import TravelPackageTable from "@/Components/Packages/TravelPackageTable";
 import ExpandableSection from "@/Components/Packages/DropDown";
 import WalkingAnimation from "@/Components/Common/Loader";
-import FooterTab from '@/Components/Footer';
+import FooterTab from "@/Components/Footer";
 
 export default function Page({ params }: { params: { package_id: string } }) {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [locationName, setLocationName] = useState(null); // Added locationName state
-  
+  const [locationName, setLocationName] = useState(null);
 
   useEffect(() => {
     const fetchPackageData = async () => {
@@ -66,8 +65,6 @@ export default function Page({ params }: { params: { package_id: string } }) {
     );
   }
 
-
-
   const numericPrice = parseInt(data.price);
   const discountPercentage = parseInt(data.discount);
 
@@ -79,7 +76,25 @@ export default function Page({ params }: { params: { package_id: string } }) {
   const discountedPrice =
     numericPrice - (numericPrice * discountPercentage) / 100;
 
+  const sanitizeHtml = (html: string) => {
+    const allowedTags = ["p", "strong", "em", "u", "a", "br", "h1", "h2", "h3"];
+    const doc = new DOMParser().parseFromString(html, "text/html");
 
+    doc.body.querySelectorAll("*").forEach((node) => {
+      if (!allowedTags.includes(node.tagName.toLowerCase())) {
+        const fragment = doc.createDocumentFragment();
+        while (node.firstChild) {
+          fragment.appendChild(node.firstChild);
+        }
+        node.parentNode.replaceChild(fragment, node);
+      }
+    });
+
+    return doc.body.innerHTML;
+  };
+
+  const sanitizedDepature_return = sanitizeHtml(data.departure_and_return);
+  const sanitizedwhatincluded = sanitizeHtml(data.whats_included);
 
   return (
     <>
@@ -87,11 +102,9 @@ export default function Page({ params }: { params: { package_id: string } }) {
 
       <div className="flex py-16 md:py-20 lg:py-28 justify-center bg-slate-50">
         <div className="max-w-7xl w-full">
-          <h1 className="text-2xl font-bold mt-2 mb-5">
-            {data.package_title}
-          </h1>
+          <h1 className="text-2xl font-bold mt-2 mb-5">{data.package_title}</h1>
           <span className="text-violet-600 font-semibold mt-2 mb-">
-          {locationName}
+            {locationName}
           </span>
 
           <div className="flex flex-col justify-between lg:flex-row gap-16 mt-2">
@@ -104,31 +117,28 @@ export default function Page({ params }: { params: { package_id: string } }) {
                     ).toString("base64")}`}
                     alt={data.package_title}
                     className="w-2/3 h-auto object-cover "
-                    
                   />
                 )}
 
                 <div className="flex flex-col ml-4 w-1/2">
-                {data.image2 && (
-                  <img
-                    src={`data:image/jpeg;base64,${Buffer.from(
-                      data.image2
-                    ).toString("base64")}`}
-                    alt={data.package_title}
-                    
-                    className="h-1/2 w-3/4 mb-2 "
-                  />
-                )}
-                {data.image3 && (
-                  <img
-                    src={`data:image/jpeg;base64,${Buffer.from(
-                      data.image3
-                    ).toString("base64")}`}
-                    alt={data.package_title}
-                    
-                    className="h-1/2 w-3/4 "
-                  />
-                )}
+                  {data.image2 && (
+                    <img
+                      src={`data:image/jpeg;base64,${Buffer.from(
+                        data.image2
+                      ).toString("base64")}`}
+                      alt={data.package_title}
+                      className="h-1/2 w-3/4 mb-2 "
+                    />
+                  )}
+                  {data.image3 && (
+                    <img
+                      src={`data:image/jpeg;base64,${Buffer.from(
+                        data.image3
+                      ).toString("base64")}`}
+                      alt={data.package_title}
+                      className="h-1/2 w-3/4 "
+                    />
+                  )}
                 </div>
               </div>
 
@@ -142,7 +152,11 @@ export default function Page({ params }: { params: { package_id: string } }) {
                   {/* Table */}
                   <div className="flex lg:w-2/3 flex-col">
                     <TravelPackageTable
-                      depature_and_return={data.departure_and_return}
+                      depature_and_return={{
+                        dangerouslySetInnerHTML: {
+                          __html: sanitizedDepature_return,
+                        },
+                      }}
                       accessibility={data.accessibility}
                       guidance_language={data.guidance_language}
                     />
@@ -154,7 +168,7 @@ export default function Page({ params }: { params: { package_id: string } }) {
                       />
                       <ExpandableSection
                         buttonLabel="What is included"
-                        expandedContent={<p>{data.whats_included}</p>}
+                        expandedContent={<p>{sanitizedwhatincluded}</p>}
                       />
                       <ExpandableSection
                         buttonLabel="Additional Information"
@@ -194,7 +208,6 @@ export default function Page({ params }: { params: { package_id: string } }) {
   );
 }
 
-
 function convertImageToBase64(
   imageBlob: Blob,
   callback: (base64Data: string | null) => void
@@ -205,5 +218,3 @@ function convertImageToBase64(
   };
   reader.readAsDataURL(imageBlob);
 }
-
-
