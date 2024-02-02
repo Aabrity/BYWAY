@@ -1,8 +1,12 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import StyledTable2 from '@/Components/Common/StyledTable2';
-import axios from 'axios';
-import {toast} from 'sonner';
+"use client";
+import React, { useState, useEffect } from "react";
+import StyledTable2 from "@/Components/Common/StyledTable2";
+import axios from "axios";
+import { toast } from "sonner";
+import SectionTitle from "@/Components/Common/SectionTitle";
+import Loader from "@/Components/Common/Loader";
+import Popup from "@/Components/Common/Popup";
+import { useRouter } from "next/navigation";
 
 interface TableData {
   contact_id: string;
@@ -14,9 +18,34 @@ interface TableData {
 }
 
 const Table: React.FC = () => {
+  const [auth, setAuth] = useState<boolean | undefined>();
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState<TableData[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
+    axios.defaults.withCredentials = true;
+    axios
+      .get("http://localhost:8081/admin/dash")
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          setAuth(true);
+        } else {
+          setAuth(false);
+        }
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, [router]);
+
+  useEffect(() => {
+    axios.defaults.withCredentials = true;
+
     axios
       .get("http://localhost:8081/contactus/getcontacts")
       .then((response) => {
@@ -33,13 +62,10 @@ const Table: React.FC = () => {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        // Handle the error, e.g., show an error message to the user
       });
   }, []);
   const handleDeleteClick = async (rowData: Record<string, any>) => {
-    if (
-      window.confirm(`Are you sure you want to delete blog ${rowData.id}?`)
-    ) {
+    if (window.confirm(`Are you sure you want to delete blog ${rowData.id}?`)) {
       try {
         const deleteResponse = await axios.delete(
           `http://localhost:8081/contactus/deletecontact/${rowData.id}`
@@ -48,13 +74,13 @@ const Table: React.FC = () => {
         if (deleteResponse.status === 200) {
           console.log("Delete successful. Fetching updated data...", {
             position: "top-right",
-            
+
             style: {
               minWidth: "300px",
               maxWidth: "400px",
               minHeight: "80px",
               fontSize: "18px",
-              transform: "translateX(0%)", 
+              transform: "translateX(0%)",
             },
           });
 
@@ -64,30 +90,28 @@ const Table: React.FC = () => {
           // Display alert after updating state
           toast.success(`${rowData.email}'s enquiry deleted successfully`, {
             position: "top-right",
-            
+
             style: {
               minWidth: "300px",
               maxWidth: "400px",
               minHeight: "80px",
               fontSize: "18px",
-              transform: "translateX(0%)", 
+              transform: "translateX(0%)",
             },
           });
-
         } else {
           console.error("Delete request failed:", deleteResponse);
           toast.error(deleteResponse.data.message || "Delete request failed", {
             position: "top-right",
-            
+
             style: {
               minWidth: "300px",
               maxWidth: "400px",
               minHeight: "80px",
               fontSize: "18px",
-              transform: "translateX(0%)", 
+              transform: "translateX(0%)",
             },
           });
-
         }
       } catch (error) {
         console.error("Error deleting or fetching data:", error);
@@ -116,18 +140,43 @@ const Table: React.FC = () => {
       .catch((error) => console.error("Error fetching data:", error));
   };
 
-  const tableHeaders = ["Id", "Email", "Contact", "Subject", "Address", "Message","Actions"];
-
+  const tableHeaders = [
+    "Id",
+    "Email",
+    "Contact",
+    "Subject",
+    "Address",
+    "Message",
+    "Actions",
+  ];
+    if (loading) {
+      return <Loader />;
+    }
   return (
-    <div className="overflow-x-auto">
-      <StyledTable2
-        data={data}
-        headers={tableHeaders}
-        tdClass="text-blue-500 font-semibold"
-        onDeleteClick={handleDeleteClick}
-        
-      />
-    </div>
+    <>
+      {auth ? (
+        <div className="overflow-x-auto">
+          <SectionTitle title="Contact Us Portal" paragraph="" center mb="10" />
+          <div className="p-5 mt-5">
+            <StyledTable2
+              data={data}
+              headers={tableHeaders}
+              tdClass="text-blue-500 font-semibold"
+              onDeleteClick={handleDeleteClick}
+            />
+          </div>
+        </div>
+      ) : (
+        <Popup
+          closable={false}
+          message="You are not authenticated"
+          buttonText="Login now"
+          onClick={() => {
+            router.push("/auth");
+          }}
+        />
+      )}
+    </>
   );
 };
 

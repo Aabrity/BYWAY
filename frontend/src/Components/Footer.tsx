@@ -1,13 +1,7 @@
 "use client";
 import React from "react";
 import { IonIcon } from "@ionic/react";
-import {
-  logoFacebook,
-  logoGithub,
-  logoInstagram,
-  logoLinkedin,
-  logoTwitter,
-} from "ionicons/icons";
+import { logoFacebook, logoInstagram } from "ionicons/icons";
 
 interface Link {
   name: string;
@@ -37,11 +31,14 @@ const SocialIcons: React.FC<FooterProps> = ({ Icons }) => {
 
 const Footer: React.FC = () => {
   const Icons = [
-    { name: logoFacebook, link: "#" },
-    { name: logoTwitter, link: "#" },
-    { name: logoGithub, link: "#" },
-    { name: logoLinkedin, link: "#" },
-    { name: logoInstagram, link: "#" },
+    {
+      name: logoFacebook,
+      link: "https://www.facebook.com/profile.php?id=61555729412778",
+    },
+    { name: logoInstagram, link: "https://www.instagram.com/byway_travel07/" },
+    {
+      
+    },
   ];
 
   return (
@@ -59,9 +56,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </div>
-      {/* Divider */}
       <div className=" border-gray-300 w-full"></div>
-      {/* Copyright information */}
       <div className="text-center md:text-end text-gray-400 text-sm py-2 md:mr-10 ">
         <span>© 2020 Appy. All rights reserved.</span>
       </div>
