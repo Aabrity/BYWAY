@@ -62,6 +62,7 @@ const AdminDashboard: React.FC = () => {
         toast.success('Submission deleted successfully', {
           position: "top-right",
           duration: 3000,
+          duration: 3000,
           style: {
             minWidth: "300px",
             maxWidth: "400px",

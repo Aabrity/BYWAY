@@ -46,6 +46,8 @@ const LoginForm: React.FC = () => {
       if (response.data.Status === "Success") {
         toast.success("Login successful", {
           position: "top-right",
+          duration: 3000,
+          
           
           style: {
             minWidth: "300px",
@@ -61,6 +63,8 @@ const LoginForm: React.FC = () => {
       } else {
         toast.error("Invalid username or password", {
           position: "top-right",
+          duration: 3000,
+          
           
           style: {
             minWidth: "300px",

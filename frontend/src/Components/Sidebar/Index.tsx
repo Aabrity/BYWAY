@@ -1,6 +1,7 @@
 import React from "react";
 import { Sidebar, SidebarItem } from "@/Components/Sidebar/Sidebar";
-import { Home, Package, Book, Users, CalendarClock, HelpCircle } from "lucide-react";
+import { Home, Package, Book, Users, CalendarClock, HelpCircle,Map } from "lucide-react";
+
 import Link from "next/link";
 
 export const Index = () => {
@@ -8,7 +9,7 @@ export const Index = () => {
     <div className="h-full w-auto flex flex-col bg-blue-400 border-r shadow-sm">
       <Sidebar>
         <Link href="/admin/dash">
-          <SidebarItem icon={<Home size={20} />} text="Home" />
+          <SidebarItem icon={<Map size={20} />} text="Locations" />
         </Link>
         <Link href="/admin/packages">
           <SidebarItem icon={<Package size={20} />} text="Packages" />

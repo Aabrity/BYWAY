@@ -174,6 +174,7 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
             : "Package added successfully"
             , {
               position: "top-right",
+          duration: 3000,
               
               style: {
                 minWidth: "300px",
@@ -207,6 +208,7 @@ export const PackageForm = ({ id }: { id?: string | number }) => {
             : "Error adding package"
             , {
               position: "top-right",
+          duration: 3000,
               
               style: {
                 minWidth: "300px",

@@ -147,6 +147,7 @@ interface PackageData {
           
           toast.success(`Package ${rowData.packageid} deleted successfully`, {
             position: "top-right",
+          duration: 3000,
             
             style: {
               minWidth: "300px",
@@ -161,6 +162,7 @@ interface PackageData {
           // alert(deleteResponse.data.message || "Delete request failed");
           toast.error(deleteResponse.data.message || "Delete request failed", {
             position: "top-right",
+          duration: 3000,
             
             style: {
               minWidth: "300px",
@@ -176,6 +178,7 @@ interface PackageData {
 
         toast.error("Error deleting or fetching data. Please check the console for more details.", {
           position: "top-right",
+          duration: 3000,
           
           style: {
             minWidth: "300px",

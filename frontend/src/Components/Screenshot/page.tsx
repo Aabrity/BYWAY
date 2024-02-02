@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
 import App from '../../app/reviews/ReviewApp';
+import SectionTitle from '../Common/SectionTitle';
 
 
 interface Photo {
@@ -43,10 +44,9 @@ const PhotoGallery: React.FC = () => {
     : {};
 
   return (
-    <div className='flex flex-col justify-center items-center min-w-0 max-w-6xl   mx-auto p-10 border border-green-700 border-solid rounded-md mt-48'>
+    <div className='flex flex-col justify-center items-center min-w-0 max-w-6xl mx-auto p-10 rounded-md mt-72'>
       
-      <h1 className='font-semibold text-black-100 text-3xl mt-10'>Screenshot Testimonials</h1>
-
+      <SectionTitle title='Screenshot Testimonials' mb='1' paragraph=''/>
       <div className='max-w-[1400px] h-[780px] w-full m-auto py-16 px-4 relative group'>
         <div
           style={{ ...backgroundImageStyle }}

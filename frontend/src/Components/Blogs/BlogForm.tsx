@@ -161,6 +161,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
           isUpdateMode ? "Blog updated successfully" : "Blog added successfully"
         , {
               position: "top-right",
+          duration: 3000,
               
               style: {
                 minWidth: "300px",

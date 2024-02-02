@@ -77,7 +77,8 @@ export default function Page({ params }: { params: { package_id: string } }) {
     numericPrice - (numericPrice * discountPercentage) / 100;
 
   const sanitizeHtml = (html: string) => {
-    const allowedTags = ["p", "strong", "em", "u", "a", "br", "h1", "h2", "h3"];
+   const allowedTags = ["p", "strong", "em", "u", "a", "br", "h1", "h2", "h3", "ul", "li"];
+
     const doc = new DOMParser().parseFromString(html, "text/html");
 
     doc.body.querySelectorAll("*").forEach((node) => {
@@ -164,15 +165,15 @@ export default function Page({ params }: { params: { package_id: string } }) {
                       {/* Uncommented ExpandableSection */}
                       <ExpandableSection
                         buttonLabel="What to expect"
-                        expandedContent={<p>{data.what_to_expect}</p>}
+                        expandedContent={data.what_to_expect}
                       />
                       <ExpandableSection
                         buttonLabel="What is included"
-                        expandedContent={<p>{sanitizedwhatincluded}</p>}
+                        expandedContent={sanitizedwhatincluded}
                       />
                       <ExpandableSection
                         buttonLabel="Additional Information"
-                        expandedContent={<p>{data.additional_info}</p>}
+                        expandedContent={data.additional_info}
                       />
                       <div className="pb-4"></div>
                     </div>
