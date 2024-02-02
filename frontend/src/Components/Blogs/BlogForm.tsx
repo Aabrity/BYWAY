@@ -200,6 +200,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ id }) => {
           image: null,
           category: "",
           description: "",
+          location_id:"",
         });
       }
     } catch (error) {

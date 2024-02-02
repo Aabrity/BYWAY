@@ -135,7 +135,7 @@ const PackageItem: React.FC<PackageItemProps> = ({
           </div>
 
           <div className="flex justify-between">
-            <div className="mt-1">{duration}</div>
+            <div className="mt-1">{duration} days</div>
           </div>
           <hr className="mt-2 mb-2 border-white" />
           <div className="mt-2">{about}</div>

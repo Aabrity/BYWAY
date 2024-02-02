@@ -25,7 +25,6 @@ app.use(
 );
 
 
-// Routes setup
 app.use("/auth", authRoutes);
 app.use("/packages", packagesRoutes);
 app.use("/contactus", contactusRoutes);

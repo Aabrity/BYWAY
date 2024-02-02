@@ -82,7 +82,6 @@ const BlogContainer: React.FC<BlogContainerProps> = ({
     return doc.body.innerHTML;
   };
 
-  // Sanitize HTML content
   const sanitizedDescription = sanitizeHtml(description);
 
   return (
