@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 interface Review {
   id: number;
@@ -19,13 +19,12 @@ interface CardProps {
 const ReviewCard: React.FC<CardProps> = (props) => {
   const { reviews, currentIndex, Decrement, Increment } = props;
   const review = reviews[currentIndex];
-  const [showMore, setShowMore] = useState(false);
 
   return (
-    <div className='card-container flex flex-col w-full sm:w-96 md:w-800 mx-auto bg-white shadow-md rounded-lg p-8 space-y-3'>
+    <div className='card-container flex flex-col  sm:w-96 md:w-800 bg-white shadow-md rounded-lg p-8 space-y-3'>
       <div className='flex justify-end'>
         <a
-          className='flex justify-center items-center bg-green-600 text-white font-mono font-bold text-lg rounded-md p-1'
+          className='flex justify-center items-center bg-green-600 text-white font-mono text-lg rounded-md p-1'
           href="./reviews"
         >
           Write a review
@@ -44,18 +43,8 @@ const ReviewCard: React.FC<CardProps> = (props) => {
             </div>
           </div>
           <div className='title-desc font-mono'>
-            <h5 className='title mt-2 font-mono font-bold'>{review.title.toUpperCase()}</h5>
-            <p className={`description ${showMore ? 'h-auto' : 'h-20 overflow-hidden'}`}>
-              {review.reviewDetails}
-            </p>
-            {review.reviewDetails.length > 200 && (
-              <button
-                className='text-blue-500 cursor-pointer'
-                onClick={() => setShowMore(!showMore)}
-              >
-                {showMore ? 'See Less' : 'See More'}
-              </button>
-            )}
+            <h5 className='title font-bold'>{review.title.toUpperCase()}</h5>
+            <p className='description'>{review.reviewDetails}</p>
           </div>
         </div>
       )}
@@ -77,4 +66,5 @@ const ReviewCard: React.FC<CardProps> = (props) => {
     </div>
   );
 };
-export default ReviewCard
+
+export default ReviewCard;

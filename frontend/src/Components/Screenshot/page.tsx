@@ -3,13 +3,13 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
-import App from './ReviewApp';
+import App from '../../app/reviews/ReviewApp';
+
 
 interface Photo {
   id: number;
   image: Buffer;
 }
-
 
 
 const PhotoGallery: React.FC = () => {
@@ -43,8 +43,9 @@ const PhotoGallery: React.FC = () => {
     : {};
 
   return (
-    <div className='flex flex-col  min-w-0 max-w-screen-xl  bg-gray-50  mx-auto p-32  border border-gray-300 border-solid rounded-md mt-48'>
-      <h1 className='font-semibold text-black-100 text-3xl'>Screenshot Testimonials</h1>
+    <div className='flex flex-col justify-center items-center min-w-0 max-w-6xl   mx-auto p-10 border border-green-700 border-solid rounded-md mt-48'>
+      
+      <h1 className='font-semibold text-black-100 text-3xl mt-10'>Screenshot Testimonials</h1>
 
       <div className='max-w-[1400px] h-[780px] w-full m-auto py-16 px-4 relative group'>
         <div
@@ -74,6 +75,7 @@ const PhotoGallery: React.FC = () => {
 
       <div>
         <App/>
+      
       </div>
 
     </div>
