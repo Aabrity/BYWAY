@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import StyledTable from "../Common/StyledTable";
 import { PopupModal } from "../Common/ContainerModal";
-
+import{toast} from "sonner";
 
 import BlogForm from "./BlogForm";
 export const BlogTable = () => {
@@ -159,14 +159,15 @@ export const BlogTable = () => {
           setTableData(modifiedData);
 
           // Display alert after updating state
-          alert(`Package ${rowData.blogid} deleted successfully`);
+          toast.success(`Package ${rowData.blogid} deleted successfully`);
         } else {
           console.error("Delete request failed:", deleteResponse);
-          alert(deleteResponse.data.message || "Delete request failed");
+          toast.error("Failed to delete")
+         
         }
       } catch (error) {
         console.error("Error deleting or fetching data:", error);
-        alert(
+        toast.error(
           "Error deleting or fetching data. Please check the console for more details."
         );
       }

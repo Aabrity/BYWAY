@@ -138,23 +138,17 @@ router.get("/getBlogs", (req, res) => {
   });
 });
 
-router.get("/getSelectedBlog/:id", (req, res) => {
+router.get('/getblogs/:id', (req, res) => {
   const blogId = req.params.id;
-  const selectQuery = "SELECT * FROM blogtable WHERE id = ?";
+  const sql = 'SELECT id, image, description, title, category,published_date FROM blogtable WHERE id = ?';
 
-  db.query(selectQuery, [blogId], (err, result) => {
+  db.query(sql, [blogId], (err, result) => {
     if (err) {
-      console.error("Error executing query:", err);
-      return res.status(500).json({ status: "Error", message: "Fetch error" });
+      console.error('Error fetching blog details:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(200).json(result[0]); 
     }
-
-    if (result.length === 0) {
-      return res
-        .status(404)
-        .json({ status: "Error", message: "Blog not found" });
-    }
-
-    return res.status(200).json({ status: "Success", blog: result[0] });
   });
 });
 
