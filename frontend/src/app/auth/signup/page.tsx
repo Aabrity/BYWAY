@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Admin from "@/../../backend/model/AdminModel";
-import {toast, Toaster} from 'sonner';
+import { toast, Toaster } from "sonner";
 
 interface SignupFormData {
   email: string;
@@ -19,7 +19,6 @@ const SignupForm: React.FC = () => {
     password: "",
     username: "",
   });
-
 
   const [validationError, setValidationError] = useState<{
     [key in keyof SignupFormData]: string;
@@ -43,13 +42,11 @@ const SignupForm: React.FC = () => {
 
     const email = user.getEmail();
     const password = user.getPassword();
-    const username= user.getUsername();
-   
+    const username = user.getUsername();
+
     setValidationError({
       email: validateEmail(email) ? "" : "Invalid email address.",
-      username: validateUsername(username)
-      ? ""
-      : "",
+      username: validateUsername(username) ? "" : "",
       password: validatePassword(password)
         ? ""
         : "Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character.",
@@ -58,7 +55,6 @@ const SignupForm: React.FC = () => {
     if (Object.values(validationError).some((error) => error !== "")) {
       return;
     }
-
 
     try {
       const response = await axios.post("http://localhost:8081/auth/register", {
@@ -70,33 +66,28 @@ const SignupForm: React.FC = () => {
       if (response.data.Status === "Success") {
         toast.success(`Signup successful for ${username}`, {
           position: "top-right",
-          
+
           style: {
             minWidth: "300px",
             maxWidth: "400px",
             minHeight: "80px",
             fontSize: "18px",
-            transform: "translateX(0%)", 
-          },
-        });
-        
-      } else {
-        console.error(response.data.Error);
-        toast.error("An error occurred during signup"
-        , {
-          position: "top-right",
-          
-          style: {
-            minWidth: "300px",
-            maxWidth: "400px",
-            minHeight: "80px",
-            fontSize: "18px",
-            transform: "translateX(0%)", 
+            transform: "translateX(0%)",
           },
         });
       }
     } catch (error) {
-      console.error("An error occurred during signup:", error);
+      toast.error("An error occurred during signup", {
+        position: "top-right",
+
+        style: {
+          minWidth: "300px",
+          maxWidth: "400px",
+          minHeight: "80px",
+          fontSize: "18px",
+          transform: "translateX(0%)",
+        },
+      });
     }
   };
 
@@ -256,7 +247,10 @@ const SignupForm: React.FC = () => {
             className="w-full my-5 py-2 bg-green-600 shadow-lg shadow-green-600/50 hover:shadow-green-500/80 text-white font-semibold rounded-lg"
           >
             Sign Up
-            <Toaster className="absolute right-0 transform translate-x-16transition-transform duration-300 ease-in-out" richColors />
+            <Toaster
+              className="absolute right-0 transform translate-x-16transition-transform duration-300 ease-in-out"
+              richColors
+            />
           </button>
         </form>
       </div>

@@ -7,7 +7,7 @@ import authRoutes from "./controller/AuthController.js";
 import contactusRoutes from "./controller/ContactController.js";
 import packagesRoutes from "./controller/PackageController.js";
 import blogRoutes from "./controller/BlogController.js";
-import planTripRoutes from "./planTrip.js";
+import planTripRoutes from "./controller/TravelController.js";
 import protectedRoutes from "./middleware.js";
 import mapRoutes from "./controller/LocationController.js";
 dotenv.config();
