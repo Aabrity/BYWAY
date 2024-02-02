@@ -3,8 +3,8 @@ import Features from "@/Components/Features";
 import FooterTab from "@/Components/Footer";
 import HeaderTab from "@/Components/Header";
 import { ClientMap } from "@/Components/Maps/ClientMap";
+import PhotoGallery from "@/Components/Screenshot/page";
 import Image from "next/image";
-import PhotoGallery from "./Screenshot/page";
 export default function Home() {
   return (
     <>
