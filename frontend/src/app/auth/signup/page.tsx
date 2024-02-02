@@ -75,6 +75,7 @@ const SignupForm: React.FC = () => {
             transform: "translateX(0%)", 
           },
         });
+        router.push("/auth");
         
       } else {
         console.error(response.data.Error);
